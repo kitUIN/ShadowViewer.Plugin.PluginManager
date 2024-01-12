@@ -51,7 +51,7 @@ namespace ShadowViewer.Plugin.Example
         /// </summary>
         protected override void PluginEnabled()
         {
-            Logger.Information("[{ID}]´¥·¢PluginEnabled", MetaData.Id);
+            Logger.Information("[{ID}]PluginEnabled", MetaData.Id);
         }
 
         /// <summary>
@@ -59,14 +59,14 @@ namespace ShadowViewer.Plugin.Example
         /// </summary>
         protected override void PluginDisabled()
         {
-            Logger.Information("[{ID}]´¥·¢PluginDisabled", MetaData.Id);
+            Logger.Information("[{ID}]PluginDisabled", MetaData.Id);
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         public override void PluginDeleting()
         {
-            Logger.Information("[{ID}]´¥·¢PluginDeleting", MetaData.Id);
+            Logger.Information("[{ID}]PluginDeleting", MetaData.Id);
         }
     }
 }
