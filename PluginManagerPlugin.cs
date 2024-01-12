@@ -19,20 +19,20 @@ using System.Threading.Tasks;
 namespace ShadowViewer.Plugin.PluginManager
 {
     /// <summary>
-    /// 主类
+    /// ����
     /// </summary>
     [AutoPluginMeta]
     public partial class PluginManagerPlugin : PluginBase
     {
         /// <summary>
-        /// 自动依赖注入
+        /// �Զ�����ע��
         /// </summary>
         public PluginManagerPlugin(ICallableService callableService, ISqlSugarClient sqlSugarClient, CompressService compressServices, IPluginService pluginService, ILogger logger) : base(callableService, sqlSugarClient, compressServices, pluginService, logger)
         {
             DiFactory.Services.Register<PluginViewModel>(reuse: Reuse.Transient);
         }
         /// <summary>
-        /// 直接初始化DI
+        /// ֱ�ӳ�ʼ��DI
         /// </summary>
         public static void PluginServiceInit()
         {

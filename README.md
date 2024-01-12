@@ -6,7 +6,7 @@ ShadowViewer示例插件
 
 ![image](https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager/assets/68675068/32f30d00-c911-4a7f-a548-b9422dd7b36f)
 
-2.全局替换`PluginManager`为你的插件ID(比如: `Bika`)
+2.全局替换`Example`为你的插件ID(比如: `Bika`),文件名记得替换
 
 3.修改插件元数据文件`.csproj`
 
