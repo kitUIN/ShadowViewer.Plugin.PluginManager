@@ -21,7 +21,8 @@ public class PluginManagerNavigationResponder : NavigationResponderBase
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public PluginManagerNavigationResponder(ICallableService callableService, ISqlSugarClient sqlSugarClient, CompressService compressServices, IPluginService pluginService, string id) : base(callableService, sqlSugarClient, compressServices, pluginService, id)
+    public PluginManagerNavigationResponder(ICallableService callableService, ISqlSugarClient sqlSugarClient,
+        CompressService compressServices, PluginLoader pluginService, string id) : base(callableService, sqlSugarClient, compressServices, pluginService, id)
     {
     }
     /// <summary>

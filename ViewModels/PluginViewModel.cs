@@ -1,32 +1,36 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Serilog;
-using ShadowViewer.Analyzer.Attributes;
 using ShadowViewer.Extensions;
 using ShadowViewer.Helpers;
-using ShadowViewer.Plugins;
-using ShadowViewer.Services;
+using SqlSugar;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.Storage.Pickers;
+using ShadowViewer.Plugins;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels
 {
-    [AutoDI(true,true,false,false,true)]
+
     public partial class PluginViewModel: ObservableObject
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public PluginLoader PluginService { get; }
+        private ILogger Logger { get; }
 
+        public PluginViewModel(PluginLoader pluginService, ISqlSugarClient sqlSugarClient, ILogger logger)
+        {
+            PluginService = pluginService;
+            Logger = logger;
+        }
         /// <summary>
         /// 插件列表
         /// </summary>
-        public ObservableCollection<IPlugin> Plugins { get; } = new ObservableCollection<IPlugin>();
+        public ObservableCollection<PluginBase> Plugins { get; } = new();
 
         /// <summary>
         /// 初始化插件列表
@@ -48,7 +52,7 @@ namespace ShadowViewer.Plugin.PluginManager.ViewModels
             var file = await FileHelper.SelectFileAsync(root, PickerLocationId.Downloads, PickerViewMode.List, ".zip", ".rar", ".7z", ".tar");
             if (file != null)
             {
-                Caller.ImportPlugin(this, new List<StorageFile> { file });
+                // Caller.ImportPlugin(this, new List<StorageFile> { file });
             }
         }
         /// <summary>

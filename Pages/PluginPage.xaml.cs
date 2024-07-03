@@ -62,14 +62,14 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         private void More_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement source) return;
-            if (sender is FrameworkElement { Tag: IPlugin { CanOpenFolder: false, CanDelete: false } })return;
+            if (sender is FrameworkElement { Tag: PluginBase { CanOpenFolder: false, CanDelete: false } })return;
             var flyout = FlyoutBase.GetAttachedFlyout(source);
             flyout?.ShowAt(source);
         }
 
         private async void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is not FrameworkElement { Tag: IPlugin plugin }) return;
+            if (sender is not FrameworkElement { Tag: PluginBase plugin }) return;
             try
             {
                 var file = await plugin.GetType().Assembly.Location.GetFile();
@@ -84,7 +84,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
 
         private void More_Loaded(object sender, RoutedEventArgs e)
         {
-            if (sender is FrameworkElement { Tag: IPlugin { CanOpenFolder: false, CanDelete: false } } source)
+            if (sender is FrameworkElement { Tag: PluginBase { CanOpenFolder: false, CanDelete: false } } source)
             {
                 source.Visibility = Visibility.Collapsed;
             }

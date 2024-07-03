@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:ShadowViewer.Plugin.PluginManager.Extensions"
     xmlns:icons="using:FluentIcon.WinUI"
-    xmlns:interfaces="using:ShadowViewer.Services"
     xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugins="using:ShadowViewer.Plugins"
@@ -57,12 +56,12 @@
                         <icons:FluentRegularIcon Symbol="AddCircle32Regular" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="{x:Bind interfaces:IPluginService.MinVersion}">
+                <AppBarButton Label="{x:Bind ViewModel.PluginService.MinVersion}">
                     <ToolTipService.ToolTip>
                         <ToolTip>
                             <TextBlock>
                                 <Run Text="{ex:Locale Key=MinVersion}" />
-                                <Run Text="{x:Bind interfaces:IPluginService.MinVersion}" />
+                                <Run Text="{x:Bind ViewModel.PluginService.MinVersion}" />
                             </TextBlock>
                         </ToolTip>
                     </ToolTipService.ToolTip>
@@ -87,7 +86,7 @@
             ItemsSource="{x:Bind ViewModel.Plugins, Mode=OneWay}"
             SelectionMode="None">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="plugins:IPlugin">
+                <DataTemplate x:DataType="plugins:PluginBase">
                     <Grid
                         Width="300"
                         Height="200"
@@ -127,7 +126,7 @@
                                         TextTrimming="CharacterEllipsis" />
                                     <TextBlock
                                         Foreground="Gray"
-                                        Text="{x:Bind MetaData.Author}"
+                                        Text="{x:Bind MetaData.Authors}"
                                         TextTrimming="CharacterEllipsis" />
                                 </StackPanel>
 
