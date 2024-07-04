@@ -4,11 +4,11 @@
         <!-- Whether the current project is a PluginLoader -->
         <IsPluginLoader>false</IsPluginLoader>
         <!-- Whether the current project is a Plugin -->
-        <IsPlugin>false</IsPlugin>
+        <IsPlugin>true</IsPlugin>
         <!-- Whether the current project is a built-in Plugin -->
-        <BuiltIn>false</BuiltIn>
+        <BuiltIn>true</BuiltIn>
         <!-- Auto Pack Plugin -->
-        <AutoPluginPackage>true</AutoPluginPackage>
+        <AutoPluginPackage>false</AutoPluginPackage>
         <!-- Auto Generate I18N -->
         <AutoGenerateI18N>true</AutoGenerateI18N>
     </PropertyGroup>

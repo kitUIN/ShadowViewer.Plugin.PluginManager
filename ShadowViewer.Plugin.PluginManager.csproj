@@ -12,8 +12,6 @@
 	  
 	  <!--插件版本号(nuget包版本号)-->
 	  <Version>1.0.0.8</Version>
-	  <!--插件仓库地址(nuget包仓库地址)-->
-	  <RepositoryUrl>https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager</RepositoryUrl>
 	  <!--插件介绍(nuget包介绍)-->
 	  <Description>ShadowViewer插件可视化管理插件</Description>
 	  <!--插件作者(nuget包作者)-->
@@ -21,7 +19,8 @@
 	  
 	  <!--nuget数据 -->
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+	  <PackageProjectUrl>https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager</PackageProjectUrl>
+	  <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
 	  <Copyright>Copyright 2023-2024</Copyright>
 	  <PackageTags>kitUIN;wasdk;ShadowViewer;plugin;winui</PackageTags>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -30,12 +29,12 @@
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <!--插件元数据 -->
 	  <PluginMeta>
-		  <PackageId>PluginManager</PackageId>
+		  <PackageId>$(PackageId)</PackageId>
 		  <PluginName>插件管理器</PluginName>
 		  <Version>$(Version)</Version>
 		  <Logo>fluent://regular/\uE433</Logo>
 		  <PluginLang>zh-CN</PluginLang>
-		  <WebUrl>$(RepositoryUrl)</WebUrl>
+		  <WebUri>$(PackageProjectUrl)</WebUri>
 		  <Description>$(Description)</Description>
 		  <Authors>$(Authors)</Authors>
 	  </PluginMeta>

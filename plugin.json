@@ -1,8 +1,9 @@
 {
   "Description": "ShadowViewer\u63D2\u4EF6\u53EF\u89C6\u5316\u7BA1\u7406\u63D2\u4EF6",
   "Authors": "kitUIN",
+  "WebUri": "https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager",
   "Logo": "fluent://regular/\\uE433",
-  "Id": "PluginManager",
+  "Id": "ShadowViewer.Plugin.PluginManager",
   "Name": "\u63D2\u4EF6\u7BA1\u7406\u5668",
   "Version": "1.0.0.8",
   "Dependencies": []
