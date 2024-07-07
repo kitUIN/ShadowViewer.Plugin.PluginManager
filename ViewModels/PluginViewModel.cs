@@ -10,27 +10,18 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using ShadowViewer.Plugins;
+using ShadowViewer.Analyzer.Attributes;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels
 {
-
+    [AutoDi]
     public partial class PluginViewModel: ObservableObject
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public PluginLoader PluginService { get; }
-        private ILogger Logger { get; }
-
-        public PluginViewModel(PluginLoader pluginService, ISqlSugarClient sqlSugarClient, ILogger logger)
-        {
-            PluginService = pluginService;
-            Logger = logger;
-        }
+        
         /// <summary>
         /// 插件列表
         /// </summary>
-        public ObservableCollection<PluginBase> Plugins { get; } = new();
+        public ObservableCollection<PluginBase> Plugins { get; } = [];
 
         /// <summary>
         /// 初始化插件列表

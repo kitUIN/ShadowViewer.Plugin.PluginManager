@@ -57,6 +57,7 @@
 	  </AdditionalFiles>
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference  OutputItemType="Analyzer" Include="..\ShadowViewer.Analyzer\ShadowViewer.Analyzer\ShadowViewer.Analyzer.csproj" />
 	  <ProjectReference Include="..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>

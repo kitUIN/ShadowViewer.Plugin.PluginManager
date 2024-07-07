@@ -16,15 +16,17 @@ namespace ShadowViewer.Plugin.PluginManager.Responders;
 /// <summary>
 /// 自定义导航响应
 /// </summary>
-public class PluginManagerNavigationResponder : NavigationResponderBase
+/// <remarks>
+/// <inheritdoc/>
+/// </remarks>
+public class PluginManagerNavigationResponder(
+    ICallableService callableService, 
+    ISqlSugarClient sqlSugarClient,
+    CompressService compressServices, 
+    PluginLoader pluginService, 
+    string id) : NavigationResponderBase(
+    callableService, sqlSugarClient, compressServices, pluginService, id)
 {
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    public PluginManagerNavigationResponder(ICallableService callableService, ISqlSugarClient sqlSugarClient,
-        CompressService compressServices, PluginLoader pluginService, string id) : base(callableService, sqlSugarClient, compressServices, pluginService, id)
-    {
-    }
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
