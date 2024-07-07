@@ -6,6 +6,7 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
 	  <UseWinUI>true</UseWinUI>
 	  <Nullable>enable</Nullable>
+	  <LangVersion>12</LangVersion>
 	  <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 
 	  <PackageId>ShadowViewer.Plugin.PluginManager</PackageId>
@@ -29,7 +30,7 @@
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <!--插件元数据 -->
 	  <PluginMeta>
-		  <PackageId>$(PackageId)</PackageId>
+		  <PackageId>PluginManager</PackageId>
 		  <PluginName>插件管理器</PluginName>
 		  <Version>$(Version)</Version>
 		  <Logo>fluent://regular/\uE433</Logo>

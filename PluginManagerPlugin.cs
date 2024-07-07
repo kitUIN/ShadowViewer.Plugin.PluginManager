@@ -62,12 +62,7 @@ namespace ShadowViewer.Plugin.PluginManager
         public override bool CanOpenFolder => false;
 
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public override string GetId()
-        {
-            return Meta.Id;
-        }
+        /// <inheritdoc />
+        public override string DisplayName  => "插件管理器";
     }
 }

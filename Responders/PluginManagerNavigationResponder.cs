@@ -31,26 +31,20 @@ public class PluginManagerNavigationResponder : NavigationResponderBase
     public override IEnumerable<IShadowNavigationItem> NavigationViewFooterItems { get; } =
         new List<IShadowNavigationItem>
         {
-            new ShadowNavigationItem
-            {
-                Icon = new FontIcon { Glyph = "\uE74C" },
-                Id = "PluginManager",
-                Content = I18N.PluginManager
-            }
+            new ShadowNavigationItem(pluginId:PluginManagerPlugin.Meta.Id, id: "PluginManager",icon: new FontIcon { Glyph = "\uE74C" }, 
+                content: I18N.PluginManager)
         };
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public override void NavigationViewItemInvokedHandler(IShadowNavigationItem item, ref Type? page,
-        ref object? parameter)
+    public override ShadowNavigation? NavigationViewItemInvokedHandler(IShadowNavigationItem item)
     {
-        switch (item.Id)
+        return item.Id switch
         {
-            case "PluginManager":
-                page = typeof(PluginPage);
-                break;
-        }
+            "PluginManager" => new ShadowNavigation(typeof(PluginPage)),
+            _ => null
+        };
     }
 
 }
