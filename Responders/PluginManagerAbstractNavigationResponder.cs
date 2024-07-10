@@ -19,12 +19,12 @@ namespace ShadowViewer.Plugin.PluginManager.Responders;
 /// <remarks>
 /// <inheritdoc/>
 /// </remarks>
-public class PluginManagerNavigationResponder(
+public class PluginManagerAbstractNavigationResponder(
     ICallableService callableService, 
     ISqlSugarClient sqlSugarClient,
     CompressService compressServices, 
     PluginLoader pluginService, 
-    string id) : NavigationResponderBase(
+    string id) : AbstractNavigationResponder(
     callableService, sqlSugarClient, compressServices, pluginService, id)
 {
     /// <summary>
