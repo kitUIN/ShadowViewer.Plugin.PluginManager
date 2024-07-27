@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:ShadowViewer.Plugin.PluginManager.Extensions"
     xmlns:icons="using:FluentIcon.WinUI"
+    xmlns:local="using:ShadowViewer"
     xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugins="using:ShadowViewer.Plugins"
@@ -56,12 +57,12 @@
                         <icons:FluentRegularIcon Symbol="AddCircle32Regular" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="{x:Bind ViewModel.PluginService.MinVersion}">
+                <AppBarButton Label="{x:Bind local:PluginLoader.CoreVersion}">
                     <ToolTipService.ToolTip>
                         <ToolTip>
                             <TextBlock>
                                 <Run Text="{ex:Locale Key=MinVersion}" />
-                                <Run Text="{x:Bind ViewModel.PluginService.MinVersion}" />
+                                <Run Text="{x:Bind local:PluginLoader.CoreVersion}" />
                             </TextBlock>
                         </ToolTip>
                     </ToolTipService.ToolTip>

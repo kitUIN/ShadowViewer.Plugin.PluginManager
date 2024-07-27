@@ -57,14 +57,13 @@
 	  </AdditionalFiles>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference  OutputItemType="Analyzer" Include="..\ShadowViewer.Analyzer\ShadowViewer.Analyzer\ShadowViewer.Analyzer.csproj" />
 
-		<PackageReference Include="ShadowViewer.Core" Version="2024.7.27.2" />
+		<PackageReference Include="ShadowViewer.Core" Version="2024.7.27.14" />
+		<PackageReference Include="ShadowViewer.Analyzer" Version="1.2.1.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Pages\PluginPage.xaml">
 	    <SubType>Designer</SubType>
 	  </Page>
 	</ItemGroup>
-
 </Project>

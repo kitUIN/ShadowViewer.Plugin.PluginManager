@@ -3,3 +3,5 @@ obj/
 bin/
 Packages/
 NugetPackages/
+/Assets/FluentSystemIcons-Filled.ttf
+/Assets/FluentSystemIcons-Regular.ttf
