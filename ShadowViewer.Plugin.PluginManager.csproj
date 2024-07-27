@@ -30,8 +30,8 @@
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <!--插件元数据 -->
 	  <PluginMeta>
-		  <PackageId>PluginManager</PackageId>
-		  <PluginName>插件管理器</PluginName>
+		  <Id>PluginManager</Id>
+		  <Name>插件管理器</Name>
 		  <Version>$(Version)</Version>
 		  <Logo>fluent://regular/\uE433</Logo>
 		  <PluginLang>zh-CN</PluginLang>
@@ -57,8 +57,9 @@
 	  </AdditionalFiles>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference  OutputItemType="Analyzer" Include="..\ShadowViewer.Analyzer\ShadowViewer.Analyzer\ShadowViewer.Analyzer.csproj" />
-	  <ProjectReference Include="..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />
+		<ProjectReference  OutputItemType="Analyzer" Include="..\ShadowViewer.Analyzer\ShadowViewer.Analyzer\ShadowViewer.Analyzer.csproj" />
+
+		<PackageReference Include="ShadowViewer.Core" Version="2024.7.27.2" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Pages\PluginPage.xaml">
