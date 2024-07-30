@@ -8,6 +8,7 @@ using ShadowViewer.Services;
 using SqlSugar;
 using System;
 using ShadowPluginLoader.MetaAttributes;
+using ShadowPluginLoader.WinUI;
 
 namespace ShadowViewer.Plugin.PluginManager
 {
@@ -16,7 +17,7 @@ namespace ShadowViewer.Plugin.PluginManager
     /// 插件管理器主类
     /// </summary>
     [AutoPluginMeta]
-    public partial class PluginManagerPlugin : PluginBase
+    public partial class PluginManagerPlugin : AShadowViewerPlugin
     {
 
         /// <inheritdoc />

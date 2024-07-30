@@ -12,7 +12,7 @@
 	  <PackageId>ShadowViewer.Plugin.PluginManager</PackageId>
 	  
 	  <!--插件版本号(nuget包版本号)-->
-	  <Version>1.0.0.8</Version>
+	  <Version>1.0.2.1</Version>
 	  <!--插件介绍(nuget包介绍)-->
 	  <Description>ShadowViewer插件可视化管理插件</Description>
 	  <!--插件作者(nuget包作者)-->
@@ -25,7 +25,7 @@
 	  <Copyright>Copyright 2023-2024</Copyright>
 	  <PackageTags>kitUIN;wasdk;ShadowViewer;plugin;winui</PackageTags>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <PackageOutputPath>.\NugetPackages</PackageOutputPath>
+	  <PackageOutputPath>..\..\NugetPackages</PackageOutputPath>
 	  <NoWarn>MSB3277</NoWarn>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <!--插件元数据 -->
@@ -42,24 +42,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Strings/**/*" />
-		<AdditionalFiles Include="plugin.json" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Pages\PluginPage.xaml" />
-	  <None Remove="plugin.d.json" />
-	  <None Remove="plugin.json" />
-	</ItemGroup>
-	<ItemGroup>
-	  <AdditionalFiles Include="plugin.d.json" />
-	  <AdditionalFiles Include="plugin.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AdditionalFiles>
-	</ItemGroup>
-	<ItemGroup>
-
-		<PackageReference Include="ShadowViewer.Core" Version="2024.7.27.14" />
-		<PackageReference Include="ShadowViewer.Analyzer" Version="1.2.1.1" />
+		<PackageReference Include="ShadowViewer.Core" Version="2024.7.31.3" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Pages\PluginPage.xaml">

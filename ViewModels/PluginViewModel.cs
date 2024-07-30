@@ -21,7 +21,7 @@ namespace ShadowViewer.Plugin.PluginManager.ViewModels
         /// <summary>
         /// 插件列表
         /// </summary>
-        public ObservableCollection<PluginBase> Plugins { get; } = [];
+        public ObservableCollection<AShadowViewerPlugin> Plugins { get; } = [];
 
         /// <summary>
         /// 初始化插件列表
@@ -40,7 +40,7 @@ namespace ShadowViewer.Plugin.PluginManager.ViewModels
         [RelayCommand]
         private async Task AddPlugin(XamlRoot root)
         {
-            var file = await FileHelper.SelectFileAsync(root, PickerLocationId.Downloads, PickerViewMode.List, ".zip", ".rar", ".7z", ".tar");
+            var file = await FileHelper.SelectFileAsync(root, "AddPlugin", PickerViewMode.List, ".zip", ".rar", ".7z", ".tar");
             if (file != null)
             {
                 // Caller.ImportPlugin(this, new List<StorageFile> { file });

@@ -87,7 +87,7 @@
             ItemsSource="{x:Bind ViewModel.Plugins, Mode=OneWay}"
             SelectionMode="None">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="plugins:PluginBase">
+                <DataTemplate x:DataType="plugins:AShadowViewerPlugin">
                     <Grid
                         Width="300"
                         Height="200"
