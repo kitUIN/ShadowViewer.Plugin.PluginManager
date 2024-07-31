@@ -4,7 +4,6 @@ using ShadowViewer.Models;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowViewer.Plugins;
 using ShadowViewer.Services;
-
 using SqlSugar;
 using System;
 using ShadowPluginLoader.MetaAttributes;

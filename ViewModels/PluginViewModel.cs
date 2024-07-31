@@ -40,20 +40,20 @@ namespace ShadowViewer.Plugin.PluginManager.ViewModels
         [RelayCommand]
         private async Task AddPlugin(XamlRoot root)
         {
-            var file = await FileHelper.SelectFileAsync(root, "AddPlugin", PickerViewMode.List, ".zip", ".rar", ".7z", ".tar");
+            var file = await FileHelper.SelectFileAsync(root, "ShadowViewer_AddPlugin", 
+                PickerViewMode.List, FileHelper.Zips);
             if (file != null)
             {
-                // Caller.ImportPlugin(this, new List<StorageFile> { file });
+                try
+                {
+                    await PluginService.ImportFromZipAsync(file.Path);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("添加插件失败:{Ex}", ex);
+                }
+                InitPlugins();
             }
-        }
-        /// <summary>
-        /// 更多
-        /// </summary>
-        [RelayCommand]
-        private void GoPluginTip()
-        {
-            var url = new Uri("https://github.com/kitUIN/ShadowViewer/blob/master/README.md#%E6%8F%92%E4%BB%B6%E5%88%97%E8%A1%A8");
-            url.LaunchUriAsync();
         }
     }
 }
