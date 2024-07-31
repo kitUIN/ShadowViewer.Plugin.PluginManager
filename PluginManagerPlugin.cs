@@ -20,15 +20,8 @@ namespace ShadowViewer.Plugin.PluginManager
     {
 
         /// <inheritdoc />
-        public PluginManagerPlugin(ICallableService callableService,
-            ISqlSugarClient sqlSugarClient,
-            CompressService compressServices,
-            PluginLoader pluginService,
-            ILogger logger) :
-            base(callableService,
-                sqlSugarClient,
-                compressServices,
-                pluginService, logger)
+        public PluginManagerPlugin(ICallableService caller, ISqlSugarClient db, CompressService compressService, ILogger logger, PluginLoader pluginService, INotifyService notifyService) :
+            base(caller, db, compressService, logger, pluginService, notifyService)
         {
             DiFactory.Services.Register<PluginViewModel>(reuse: Reuse.Transient);
         }

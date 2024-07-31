@@ -33,7 +33,7 @@
 		  <Id>PluginManager</Id>
 		  <Name>插件管理器</Name>
 		  <Version>$(Version)</Version>
-		  <Logo>fluent://regular/\uE433</Logo>
+		  <Logo>fluent://regular/\uF599</Logo>
 		  <PluginLang>zh-CN</PluginLang>
 		  <WebUri>$(PackageProjectUrl)</WebUri>
 		  <Description>$(Description)</Description>
@@ -47,5 +47,8 @@
 	  <Page Update="Pages\PluginPage.xaml">
 	    <SubType>Designer</SubType>
 	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\" />
 	</ItemGroup>
 </Project>

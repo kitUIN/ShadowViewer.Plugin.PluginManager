@@ -10,7 +10,7 @@
     various data types are done through the TypeConverter classes 
     associated with the data types.
     
-    PluginManager:
+    Example:
     
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
@@ -134,5 +134,11 @@
   </data>
   <data name="GoPluginTip" xml:space="preserve">
     <value>前往挑选插件</value>
+  </data>
+  <data name="PluginFolder" xml:space="preserve">
+    <value>插件文件夹</value>
+  </data>
+  <data name="PluginFolderDescription" xml:space="preserve">
+    <value>存放插件的文件夹</value>
   </data>
 </root>
