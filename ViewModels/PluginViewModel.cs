@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using Serilog;
-using ShadowViewer.Extensions;
 using ShadowViewer.Helpers;
-using SqlSugar;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -14,7 +11,7 @@ using ShadowViewer.Analyzer.Attributes;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels
 {
-    [AutoDi]
+    [AutoDi(true, false, false, false, true, false, false)]
     public partial class PluginViewModel: ObservableObject
     {
         
