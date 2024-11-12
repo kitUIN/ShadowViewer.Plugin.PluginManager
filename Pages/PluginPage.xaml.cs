@@ -8,6 +8,7 @@ using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowViewer.Plugins;
 using System;
 using ShadowPluginLoader.WinUI;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace ShadowViewer.Plugin.PluginManager.Pages
 {
@@ -17,6 +18,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
     public sealed partial class PluginPage : Page
     {
         private PluginViewModel ViewModel { get; } = DiFactory.Services.Resolve<PluginViewModel>();
+        private PluginLoader PluginService { get; } = DiFactory.Services.Resolve<PluginLoader>();
         
         /// <summary>
         /// 默认构造函数
@@ -33,12 +35,12 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as HyperlinkButton;
-            /*if(button!=null&& button.Tag is string tag &&PluginService.GetPlugin(tag) is { SettingsPage: not null } plugin)
+            if(button!=null&& button.Tag is string tag &&PluginService.GetPlugin(tag) is { SettingsPage: not null } plugin)
             {
                 Frame.Navigate(plugin.SettingsPage, null,
                     new SlideNavigationTransitionInfo { 
                         Effect = SlideNavigationTransitionEffect.FromRight });
-            }*/
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
