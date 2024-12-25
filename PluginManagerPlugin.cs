@@ -11,17 +11,16 @@ using ShadowPluginLoader.WinUI;
 
 namespace ShadowViewer.Plugin.PluginManager
 {
-
     /// <summary>
     /// 插件管理器主类
     /// </summary>
     [AutoPluginMeta]
     public partial class PluginManagerPlugin : AShadowViewerPlugin
     {
-
         /// <inheritdoc />
-        public PluginManagerPlugin(ICallableService caller, ISqlSugarClient db, CompressService compressService, ILogger logger, PluginLoader pluginService, INotifyService notifyService) :
-            base(caller, db, compressService, logger, pluginService, notifyService)
+        public PluginManagerPlugin(ICallableService caller, ISqlSugarClient db, PluginEventService pluginEventService,
+            CompressService compressService, ILogger logger, PluginLoader pluginService, INotifyService notifyService) :
+            base(caller, db, pluginEventService, compressService, logger, pluginService, notifyService)
         {
             DiFactory.Services.Register<PluginViewModel>(reuse: Reuse.Transient);
         }
@@ -56,6 +55,6 @@ namespace ShadowViewer.Plugin.PluginManager
 
 
         /// <inheritdoc />
-        public override string DisplayName  => "插件管理器";
+        public override string DisplayName => "插件管理器";
     }
 }

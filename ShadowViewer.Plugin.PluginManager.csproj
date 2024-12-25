@@ -41,7 +41,7 @@
 	  </PluginMeta>
   </PropertyGroup>
   <ItemGroup>
-	  <PackageReference Include="ShadowViewer.Core" Version="2024.11.12.2" />
+	  <PackageReference Include="ShadowViewer.Core" Version="2024.12.25.1" />
 	  <!--<ProjectReference Include="..\..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />-->
   </ItemGroup>
 	<ItemGroup>
