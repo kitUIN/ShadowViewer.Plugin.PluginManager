@@ -12,7 +12,7 @@
 	  <PackageId>ShadowViewer.Plugin.PluginManager</PackageId>
 	  
 	  <!--插件版本号(nuget包版本号)-->
-	  <Version>1.0.3.1</Version>
+	  <Version>1.2.0</Version>
 	  <!--插件介绍(nuget包介绍)-->
 	  <Description>ShadowViewer插件可视化管理插件</Description>
 	  <!--插件作者(nuget包作者)-->
@@ -41,7 +41,7 @@
 	  </PluginMeta>
   </PropertyGroup>
   <ItemGroup>
-	  <PackageReference Include="ShadowViewer.Core" Version="2024.12.26.12" />
+	  <PackageReference Include="ShadowViewer.Core" Version="2024.12.31.6" />
 	  <!--<ProjectReference Include="..\..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />-->
   </ItemGroup>
 	<ItemGroup>
