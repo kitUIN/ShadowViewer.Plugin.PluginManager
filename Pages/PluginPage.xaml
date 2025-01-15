@@ -73,15 +73,13 @@
                         <icons:FluentRegularIcon Symbol="Premium32Regular" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="{ex:Locale Key=GoPluginTip}" ToolTipService.ToolTip="{ex:Locale Key=GoPluginTip}">
+                <AppBarButton
+                    Click="ButtonBase_OnClick"
+                    Label="{ex:Locale Key=PluginStore}"
+                    ToolTipService.ToolTip="{ex:Locale Key=GoPluginTip}">
                     <AppBarButton.Icon>
                         <icons:FluentRegularIcon Symbol="Search32Regular" />
                     </AppBarButton.Icon>
-                    <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Click">
-                            <behaviors:NavigateToUriAction NavigateUri="https://github.com/kitUIN/ShadowViewer/blob/master/README.md#%E6%8F%92%E4%BB%B6%E5%88%97%E8%A1%A8" />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
                 </AppBarButton>
             </CommandBar>
         </Grid>
@@ -187,8 +185,7 @@
                                 <ImageIcon
                                     Width="25"
                                     Height="25"
-                                    Foreground="White"
-                                    Source="ms-appx:///Assets/Icons/github.png" />
+                                    Source="{ThemeResource GithubIcon}" />
                             </HyperlinkButton>
                             <HyperlinkButton
                                 x:Name="More"
