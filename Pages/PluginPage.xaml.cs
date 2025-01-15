@@ -45,7 +45,9 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            /*if (sender is not FrameworkElement { Tag: IPlugin plugin }) return;
+            if (sender is not FrameworkElement { Tag: AShadowViewerPlugin  plugin }) return;
+            PluginService.RemovePlugin(plugin.Id);
+            /*
             var contentDialog= XamlHelper.CreateMessageDialog(XamlRoot,
                 ResourcesHelper.GetString(ResourceKey.DeletePlugin) + plugin.MetaData.Name,
                 ResourcesHelper.GetString(ResourceKey.DeletePluginMessage));
@@ -91,6 +93,14 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
                 source.Visibility = Visibility.Collapsed;
             }
         }
-        
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(PluginStorePage), null,
+                new SlideNavigationTransitionInfo
+                {
+                    Effect = SlideNavigationTransitionEffect.FromRight
+                });
+        }
     }
 }

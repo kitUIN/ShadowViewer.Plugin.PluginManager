@@ -141,4 +141,28 @@
   <data name="PluginFolderDescription" xml:space="preserve">
     <value>存放插件的文件夹</value>
   </data>
+  <data name="PluginStore" xml:space="preserve">
+    <value>插件商店</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>已安装</value>
+  </data>
+  <data name="Upgrade" xml:space="preserve">
+    <value>升级</value>
+  </data>
+  <data name="UpdatedAt" xml:space="preserve">
+    <value>更新时间</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentIcon.WinUI;
 using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Interfaces;
 using ShadowViewer.Models;
