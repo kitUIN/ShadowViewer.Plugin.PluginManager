@@ -44,7 +44,7 @@
     <None Remove="Pages\PluginStorePage.xaml" />
   </ItemGroup>
   <ItemGroup>
-	  <PackageReference Include="ShadowViewer.Core" Version="2025.1.15.3" />
+	  <PackageReference Include="ShadowViewer.Core" Version="2025.1.16.1" />
 	  <!--<ProjectReference Include="..\..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />-->
   </ItemGroup>
  
