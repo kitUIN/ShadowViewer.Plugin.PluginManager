@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentIcon.WinUI;
+﻿using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
-using ShadowViewer.Interfaces;
 using ShadowViewer.Models;
+using ShadowViewer.Models.Interfaces;
 using ShadowViewer.Responders;
 using ShadowViewer.Services;
 using ShadowViewer.Plugin.PluginManager.Helpers;
-
 using SqlSugar;
 using ShadowViewer.Plugin.PluginManager.Pages;
 
@@ -26,7 +22,7 @@ public class PluginManagerNavigationResponder(
     CompressService compressServices, 
     PluginLoader pluginService, 
     string id) : AbstractNavigationResponder(
-    callableService, sqlSugarClient, compressServices, pluginService, id)
+    id,callableService, sqlSugarClient, compressServices, pluginService)
 {
     /// <summary>
     /// <inheritdoc/>

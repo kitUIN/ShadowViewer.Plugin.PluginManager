@@ -1,5 +1,5 @@
 ﻿using ShadowViewer.Configs;
-using ShadowViewer.Interfaces;
+using ShadowViewer.Models.Interfaces;
 using ShadowViewer.Plugin.PluginManager.Helpers;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;

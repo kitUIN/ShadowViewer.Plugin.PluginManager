@@ -44,11 +44,12 @@
     <None Remove="Pages\PluginStorePage.xaml" />
   </ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<ProjectReference Include="..\..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />
+		<ProjectReference Include="..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<PackageReference Include="ShadowViewer.Core" Version="2025.1.16.2" />
-	</ItemGroup>
+	</ItemGroup> 
+	  
 	<ItemGroup>
 	  <Page Update="Pages\PluginPage.xaml">
 	    <SubType>Designer</SubType>
