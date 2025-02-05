@@ -9,6 +9,9 @@ using ShadowViewer.Plugins;
 using System;
 using ShadowPluginLoader.WinUI;
 using Microsoft.UI.Xaml.Media.Animation;
+using ShadowViewer.Helpers;
+using ShadowViewer.Plugin.PluginManager.Enums;
+using ShadowViewer.Plugin.PluginManager.Helpers;
 
 namespace ShadowViewer.Plugin.PluginManager.Pages
 {
@@ -43,24 +46,29 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
             }
         }
 
-        private void Delete_Click(object sender, RoutedEventArgs e)
+        private async void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement { Tag: AShadowViewerPlugin  plugin }) return;
-            PluginService.RemovePlugin(plugin.Id);
-            /*
-            var contentDialog= XamlHelper.CreateMessageDialog(XamlRoot,
-                ResourcesHelper.GetString(ResourceKey.DeletePlugin) + plugin.MetaData.Name,
-                ResourcesHelper.GetString(ResourceKey.DeletePluginMessage));
-            contentDialog.IsPrimaryButtonEnabled = true;
-            contentDialog.DefaultButton = ContentDialogButton.Close;
-            contentDialog.PrimaryButtonText = ResourcesHelper.GetString(ResourceKey.Confirm) ;
-            contentDialog.PrimaryButtonClick += async (dialog, args) =>
+
+            var dialog = new ContentDialog
             {
-                var flag = await PluginService.DeleteAsync(plugin.MetaData.Id);
-                    
+                XamlRoot = XamlRoot,
+                Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                DefaultButton = ContentDialogButton.Primary,
+                Title = I18N.Delete,
+                Content = I18N.Delete,
+                IsPrimaryButtonEnabled = false,
+                CloseButtonText = ResourcesHelper.GetString(ResourceKey.Cancel)
             };
-            await contentDialog.ShowAsync();
-            */
+            dialog.IsPrimaryButtonEnabled = true;
+            dialog.DefaultButton = ContentDialogButton.Close;
+            dialog.PrimaryButtonText = I18N.Accept;
+            dialog.PrimaryButtonClick += async (sender, args) =>
+            {
+                PluginService.RemovePlugin(plugin.Id);
+            };
+            await dialog.ShowAsync();
+            
         }
 
         private void More_Click(object sender, RoutedEventArgs e)
