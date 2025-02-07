@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Serilog;
 using ShadowPluginLoader.MetaAttributes;
-using ShadowViewer.Plugins;
 using ShadowViewer.Core.Helpers;
 using ShadowViewer.Core;
+using ShadowViewer.Core.Plugins;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 

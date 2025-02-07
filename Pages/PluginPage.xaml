@@ -9,7 +9,7 @@
     xmlns:icons="using:FluentIcon.WinUI"
     xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:plugins="using:ShadowViewer.Plugins"
+    xmlns:plugins="using:ShadowViewer.Core.Plugins"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
     <Page.Resources>

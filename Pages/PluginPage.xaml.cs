@@ -4,13 +4,13 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Serilog;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
-using ShadowViewer.Plugins;
 using System;
 using ShadowPluginLoader.WinUI;
 using Microsoft.UI.Xaml.Media.Animation;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Core;
 using ShadowViewer.Core.Extensions;
+using ShadowViewer.Core.Plugins;
 
 namespace ShadowViewer.Plugin.PluginManager.Pages
 {

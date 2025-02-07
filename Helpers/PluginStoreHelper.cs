@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Serilog;
-using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Plugin.PluginManager.Responses;
-using ShadowViewer.Plugins;
 
 namespace ShadowViewer.Plugin.PluginManager.Helpers;
 

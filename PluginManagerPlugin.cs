@@ -1,7 +1,7 @@
 using DryIoc;
 using Serilog;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
-using ShadowViewer.Plugins;
+
 using SqlSugar;
 using System;
 using ShadowPluginLoader.MetaAttributes;
