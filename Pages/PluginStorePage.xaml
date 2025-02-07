@@ -6,8 +6,7 @@
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:converters2="using:ShadowViewer.Plugin.PluginManager.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:extensions="using:ShadowViewer.Plugin.PluginManager.Extensions"
-    xmlns:local="using:ShadowViewer.Plugin.PluginManager.Pages"
+    xmlns:i18N="using:ShadowViewer.Plugin.PluginManager.I18n"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     xmlns:responses="using:ShadowViewer.Plugin.PluginManager.Responses"
@@ -16,9 +15,9 @@
     <Page.Resources>
         <converters2:PluginInstallButtonConverter
             x:Name="PluginInstallButtonConverter"
-            InstallValue="{extensions:Locale Key=Install}"
-            InstalledValue="{extensions:Locale Key=Installed}"
-            UpgradeValue="{extensions:Locale Key=Upgrade}" />
+            InstallValue="{i18N:Locale Key=Install}"
+            InstalledValue="{i18N:Locale Key=Installed}"
+            UpgradeValue="{i18N:Locale Key=Upgrade}" />
         <converters:FileSizeToFriendlyStringConverter x:Key="FileSizeToFriendlyStringConverter" />
 
 
@@ -142,10 +141,10 @@
         </GridView>
         <ContentDialog
             x:Name="UpgradeSelectContentDialog"
-            Title="{extensions:Locale Key=Upgrade}"
-            CloseButtonText="{extensions:Locale Key=Cancel}"
+            Title="{i18N:Locale Key=Upgrade}"
+            CloseButtonText="{i18N:Locale Key=Cancel}"
             IsPrimaryButtonEnabled="True"
-            PrimaryButtonText="{extensions:Locale Key=Accept}">
+            PrimaryButtonText="{i18N:Locale Key=Accept}">
             <ContentDialog.Content>
                 <GridView x:Name="UpgradeSelectGridView" SelectionMode="Single">
                     <GridView.ItemTemplate>
@@ -178,14 +177,14 @@
                                     Spacing="4">
                                     <StackPanel Orientation="Horizontal" Spacing="2">
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{extensions:Locale Key=CreatedAt}" />
+                                            <ToolTip Content="{i18N:Locale Key=CreatedAt}" />
                                         </ToolTipService.ToolTip>
                                         <winUi:FluentFilledIcon Symbol="Calendar3Day16Filled" />
                                         <TextBlock Text="{x:Bind CreatedAt}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="2">
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{extensions:Locale Key=UpdatedAt}" />
+                                            <ToolTip Content="{i18N:Locale Key=UpdatedAt}" />
                                         </ToolTipService.ToolTip>
                                         <winUi:FluentFilledIcon Symbol="History16Filled" />
                                         <TextBlock Text="{x:Bind UpdatedAt}" />

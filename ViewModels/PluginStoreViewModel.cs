@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShadowViewer.Plugin.PluginManager.Helpers;
 using ShadowViewer.Plugin.PluginManager.Models;
+using ShadowViewer.Core;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 public class PluginStoreViewModel : ObservableObject

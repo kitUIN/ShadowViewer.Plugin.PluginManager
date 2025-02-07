@@ -1,19 +1,30 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using ShadowViewer.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
+using Serilog;
+using ShadowPluginLoader.MetaAttributes;
 using ShadowViewer.Plugins;
-using ShadowViewer.Analyzer.Attributes;
+using ShadowViewer.Core.Helpers;
+using ShadowViewer.Core;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
-[AutoDi(true, false, false, false, false, true, false, false)]
 public partial class PluginViewModel : ObservableObject
 {
+    /// <summary>
+    /// 插件服务
+    /// </summary>
+    [Autowired]
+    public PluginLoader PluginService { get; }
+    /// <summary>
+    /// 日志服务
+    /// </summary>
+    [Autowired]
+    public ILogger Logger { get; }
     /// <summary>
     /// 插件列表
     /// </summary>

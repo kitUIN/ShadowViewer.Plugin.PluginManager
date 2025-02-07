@@ -1,13 +1,15 @@
 using DryIoc;
 using Serilog;
-using ShadowViewer.Models;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowViewer.Plugins;
-using ShadowViewer.Services;
 using SqlSugar;
 using System;
 using ShadowPluginLoader.MetaAttributes;
 using ShadowPluginLoader.WinUI;
+using ShadowViewer.Core.Plugins;
+using ShadowViewer.Core.Services;
+using ShadowViewer.Core;
+using ShadowViewer.Core.Models;
 
 namespace ShadowViewer.Plugin.PluginManager
 {

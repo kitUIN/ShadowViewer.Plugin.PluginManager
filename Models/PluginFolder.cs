@@ -1,6 +1,6 @@
-﻿using ShadowViewer.Configs;
-using ShadowViewer.Models.Interfaces;
-using ShadowViewer.Plugin.PluginManager.Helpers;
+﻿using ShadowViewer.Core;
+using ShadowViewer.Core.Models.Interfaces;
+using ShadowViewer.Plugin.PluginManager.I18n;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -29,8 +29,8 @@ public class PluginFolder: ISettingFolder
     /// <inheritdoc />
     public string Path
     {
-        get => Config.PluginsPath;
-        set => Config.PluginsPath = value;
+        get => CoreSettings.PluginsPath;
+        set => CoreSettings.PluginsPath = value;
     }
 
     /// <inheritdoc />

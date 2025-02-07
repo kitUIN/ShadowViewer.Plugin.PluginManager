@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using DryIoc;
 using ShadowPluginLoader.WinUI;
+using ShadowViewer.Core;
 using ShadowViewer.Plugin.PluginManager.Enums;
 using ShadowViewer.Plugin.PluginManager.Responses;
 
