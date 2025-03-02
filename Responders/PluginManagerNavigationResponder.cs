@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Models;
 using ShadowViewer.Core.Responders;
@@ -18,21 +18,24 @@ namespace ShadowViewer.Plugin.PluginManager.Responders;
 /// <remarks>
 /// <inheritdoc/>
 /// </remarks>
-public class PluginManagerNavigationResponder(
-    ICallableService callableService, 
-    ISqlSugarClient sqlSugarClient,
-    CompressService compressServices, 
-    PluginLoader pluginService, 
-    string id) : AbstractNavigationResponder(
-    id,callableService, sqlSugarClient, compressServices, pluginService)
+public partial class PluginManagerNavigationResponder : AbstractNavigationResponder
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    public PluginManagerNavigationResponder(string id) : base(id)
+    {
+    }
+
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
     public override IEnumerable<IShadowNavigationItem> NavigationViewFooterItems { get; } =
         new List<IShadowNavigationItem>
         {
-            new ShadowNavigationItem(pluginId:PluginManagerPlugin.Meta.Id, id: "PluginManager",icon: new FontIcon { Glyph = "\uE74C" }, 
+            new ShadowNavigationItem(pluginId: PluginManagerPlugin.Meta.Id, id: "PluginManager",
+                icon: new FontIcon { Glyph = "\uE74C" },
                 content: I18N.PluginManager)
         };
 
@@ -47,5 +50,4 @@ public class PluginManagerNavigationResponder(
             _ => null
         };
     }
-
 }

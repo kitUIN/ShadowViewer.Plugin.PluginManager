@@ -1,7 +1,6 @@
 using DryIoc;
 using Serilog;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
-
 using SqlSugar;
 using System;
 using ShadowPluginLoader.MetaAttributes;
@@ -34,7 +33,8 @@ namespace ShadowViewer.Plugin.PluginManager
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public override LocalTag AffiliationTag { get; } = new LocalTag("PluginManager", "#000000", "#ffd657");
+        public override ShadowTag AffiliationTag { get; } =
+            new ShadowTag("PluginManager", "#ffd657", "#000000", null, "PluginManager");
 
         /// <summary>
         /// <inheritdoc/>
