@@ -165,4 +165,40 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="PluginSecurityStatement" xml:space="preserve">
+    <value>插件安全声明</value>
+  </data>
+  <data name="PluginSecurityCheck" xml:space="preserve">
+    <value>我已阅读并接受该插件加载安全声明，并自行承担使用插件的风险。</value>
+  </data>
+  <data name="PluginSecurity_Responsibility" xml:space="preserve">
+    <value>责任声明</value>
+  </data>
+  <data name="PluginSecurity_CodeRisk" xml:space="preserve">
+    <value>代码执行风险</value>
+  </data>
+  <data name="PluginSecurity_Permission" xml:space="preserve">
+    <value>权限与数据访问</value>
+  </data>
+  <data name="PluginSecurity_Source" xml:space="preserve">
+    <value>插件来源风险</value>
+  </data>
+  <data name="PluginSecurity_Start" xml:space="preserve">
+    <value>在您加载第三方插件前，请务必阅读并理解以下安全声明：</value>
+  </data>
+  <data name="PluginSecurity_Source_Content" xml:space="preserve">
+    <value>仅从可信赖的来源下载和安装插件。恶意插件可能包含病毒、木马或其他恶意代码，可能会对您的设备和数据造成损害。</value>
+  </data>
+  <data name="PluginSecurity_Permission_Content" xml:space="preserve">
+    <value>插件可能需要访问您的系统资源、网络或敏感数据。请务必检查插件的权限请求，避免授予不必要的访问权限，以降低潜在的安全风险。</value>
+  </data>
+  <data name="PluginSecurity_CodeRisk_Content" xml:space="preserve">
+    <value>任何插件在加载后都可以执行任意代码，可能偷取您的个人信息，甚至造成数据与财产丢失。请谨慎选择并使用插件，以确保其安全性和可靠性。</value>
+  </data>
+  <data name="PluginSecurity_Responsibility_Content" xml:space="preserve">
+    <value>本软件提供的插件加载功能仅作为扩展机制，不对任何第三方插件的安全性、合法性或行为负责。因使用第三方插件导致的任何损失或数据泄露，责任由用户自行承担。</value>
+  </data>
+  <data name="PluginSecurityConfirm" xml:space="preserve">
+    <value>接受并继续</value>
+  </data>
 </root>

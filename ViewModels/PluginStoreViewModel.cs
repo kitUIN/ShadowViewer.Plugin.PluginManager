@@ -10,6 +10,9 @@ using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Core;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
+/// <summary>
+/// 
+/// </summary>
 public class PluginStoreViewModel : ObservableObject
 {
     /// <summary>

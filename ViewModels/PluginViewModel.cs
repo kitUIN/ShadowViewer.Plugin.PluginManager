@@ -16,6 +16,13 @@ namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 public partial class PluginViewModel : ObservableObject
 {
     /// <summary>
+    /// 插件安全声明弹出框确定
+    /// </summary>
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
+    private bool pluginSecurityCheck;
+
+    /// <summary>
     /// 插件服务
     /// </summary>
     [Autowired]
@@ -43,9 +50,18 @@ public partial class PluginViewModel : ObservableObject
     }
 
     /// <summary>
-    /// 加载插件
+    /// 同意安全声明
     /// </summary>
     [RelayCommand]
+    private Task SecurityConfirm()
+    {
+        PluginManagerPlugin.Setting.PluginSecurityStatement = PluginSecurityCheck;
+        return Task.CompletedTask;
+    }
+    /// <summary>
+    /// 加载插件
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(PluginSecurityCheck))]
     private async Task AddPlugin(XamlRoot root)
     {
         var file = await FileHelper.SelectFileAsync(root, "ShadowViewer_AddPlugin",

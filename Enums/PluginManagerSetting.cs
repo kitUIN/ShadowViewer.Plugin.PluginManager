@@ -13,4 +13,15 @@ public enum PluginManagerSetting
     /// </summary>
     [ShadowSetting(typeof(string), "https://mirror.ghproxy.com/", "Github代理域名")]
     GithubProxyDomain,
+
+    /// <summary>
+    /// 插件安全声明
+    /// </summary>
+    [ShadowSetting(typeof(bool), "false", "插件安全声明")]
+    PluginSecurityStatement,
+    /// <summary>
+    /// 插件安全声明版本号
+    /// </summary>
+    [ShadowSetting(typeof(string), "0.1.0", "插件安全声明版本号")]
+    PluginSecurityStatementVersion,
 }

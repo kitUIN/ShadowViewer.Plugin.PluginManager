@@ -109,5 +109,10 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
                     Effect = SlideNavigationTransitionEffect.FromRight
                 });
         }
+
+        private async void SecurityContentDialog_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            await SecurityContentDialog.ShowAsync();
+        }
     }
 }
