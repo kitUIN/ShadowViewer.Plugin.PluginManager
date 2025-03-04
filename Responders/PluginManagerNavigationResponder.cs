@@ -2,11 +2,8 @@ using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Models;
 using ShadowViewer.Core.Responders;
-using SqlSugar;
 using ShadowViewer.Plugin.PluginManager.Pages;
 using ShadowViewer.Core.Models.Interfaces;
-using ShadowViewer.Core;
-using ShadowViewer.Core.Services;
 using ShadowViewer.Core.Models;
 using ShadowViewer.Plugin.PluginManager.I18n;
 

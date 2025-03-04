@@ -12,44 +12,64 @@ using ShadowViewer.Plugin.PluginManager.ViewModels;
 
 namespace ShadowViewer.Plugin.PluginManager.Pages;
 
+/// <summary>
+/// ÉÌµêÒ³
+/// </summary>
 public sealed partial class PluginStorePage : Page
 {
+    /// <summary>
+    /// ViewModel
+    /// </summary>
     private PluginStoreViewModel ViewModel { get; } = DiFactory.Services.Resolve<PluginStoreViewModel>();
 
+    /// <summary>
+    /// 
+    /// </summary>
     public PluginStorePage()
     {
         this.InitializeComponent();
     }
-
+    /// <summary>
+    /// Éý¼¶µã»÷
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void UpgradeClick(object sender, RoutedEventArgs e)
     {
-        if (sender is not Button { Tag: PluginStoreModel model }) return;
-        var asset = "";
-        if (model.MetaData.Assets.Count > 1)
+        try
         {
-            UpgradeSelectGridView.ItemsSource = model.MetaData.Assets;
-            var result = await UpgradeSelectContentDialog.ShowAsync();
-            Log.Information("{e}", result);
-            if (result == ContentDialogResult.Primary && UpgradeSelectGridView.SelectedIndex >= 0)
+            if (sender is not Button { Tag: PluginStoreModel model }) return;
+            var asset = "";
+            if (model.MetaData.Assets.Count > 1)
             {
-                asset = model.MetaData.Assets[UpgradeSelectGridView.SelectedIndex].BrowserDownloadUrl;
+                UpgradeSelectGridView.ItemsSource = model.MetaData.Assets;
+                var result = await UpgradeSelectContentDialog.ShowAsync();
+                Log.Information("{e}", result);
+                if (result == ContentDialogResult.Primary && UpgradeSelectGridView.SelectedIndex >= 0)
+                {
+                    asset = model.MetaData.Assets[UpgradeSelectGridView.SelectedIndex].BrowserDownloadUrl;
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
-                return;
+                asset = model.MetaData.Assets[0].BrowserDownloadUrl;
+            }
+            if (model.CouldUpdate)
+            { 
+                ViewModel.Upgrade(model.Id,asset);
+            }
+            else
+            {
+                ViewModel.Install(asset);
             }
         }
-        else
+        catch (Exception ex)
         {
-            asset = model.MetaData.Assets[0].BrowserDownloadUrl;
-        }
-        if (model.CouldUpdate)
-        { 
-            ViewModel.Upgrade(model.Id,asset);
-        }
-        else
-        {
-            ViewModel.Install(asset);
+            Log.Error("UpgradeClick ERROR:{ex}", ex);
         }
     }
 }

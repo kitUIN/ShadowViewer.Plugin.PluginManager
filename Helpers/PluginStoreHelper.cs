@@ -17,10 +17,12 @@ public class PluginStoreHelper
     /// 
     /// </summary>
     public static PluginStoreHelper Instance { get; } = new();
+
     /// <summary>
     /// 
     /// </summary>
     private readonly HttpClient client = new(new HttpClientHandler());
+
     /// <summary>
     /// 创建HttpRequestMessage
     /// </summary>
@@ -28,29 +30,30 @@ public class PluginStoreHelper
     /// <param name="url"></param>
     /// <param name="headers"></param>
     /// <returns></returns>
-    private HttpRequestMessage CreateRequestMessage(HttpMethod method, string url, Dictionary<string, string>? headers = null)
+    private static HttpRequestMessage CreateRequestMessage(HttpMethod method, string url,
+        Dictionary<string, string>? headers = null)
     {
         var reqUrl = url;
-        if (!string.IsNullOrEmpty(PluginManagerPlugin.Setting.GithubProxyDomain))
+        if (!string.IsNullOrEmpty(PluginManagerPlugin.Setting.GithubMirror) &&
+            reqUrl.StartsWith("https://raw.githubusercontent.com") )
         {
-            reqUrl = PluginManagerPlugin.Setting.GithubProxyDomain + reqUrl;
+            reqUrl = PluginManagerPlugin.Setting.GithubMirror + reqUrl;
         }
+
         var httpRequestMessage = new HttpRequestMessage(method, reqUrl);
         if (headers == null) return httpRequestMessage;
         foreach (var header in headers)
         {
             httpRequestMessage.Headers.Add(header.Key, header.Value);
         }
+
         return httpRequestMessage;
     }
 
     /// <summary>
     /// Get Async
     /// </summary>
-    /// <typeparam name="T">返回类型</typeparam>
-    /// <param name="api">Pica API</param>
-    /// <returns></returns>
-    private async Task<T> GetAsync<T>(string url) 
+    private async Task<T?> GetAsync<T>(string url)
     {
         try
         {
@@ -58,10 +61,8 @@ public class PluginStoreHelper
             using var response = await client.SendAsync(request);
             var resp = await response.Content.ReadAsStringAsync();
             Log.Debug("\n[GET]{Api}:\nproxy:{Proxy}\nreturn:{Resp}", url,
-                PluginManagerPlugin.Setting.GithubProxyDomain, resp);
-            var res = JsonSerializer.Deserialize<T>(resp);
-
-            return res;
+                PluginManagerPlugin.Setting.GithubMirror, resp);
+            return JsonSerializer.Deserialize<T>(resp);
         }
         catch (Exception exception)
         {
@@ -71,11 +72,10 @@ public class PluginStoreHelper
     }
 
     /// <summary>
-    ///
+    /// 获取插件列表
     /// </summary>
-    public async Task<PluginItem[]> GetPluginList(int page=1)
+    public async Task<PluginItem[]?> GetPluginList(int page = 1)
     {
-        return await GetAsync<PluginItem[]>($"https://raw.githubusercontent.com/kitUIN/ShadowViewer.PluginStore/refs/heads/main/plugin.json");
+        return await GetAsync<PluginItem[]>(PluginManagerPlugin.Setting.StoreUri);
     }
 }
-

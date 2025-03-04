@@ -28,6 +28,7 @@
 	  <PackageOutputPath>..\..\NugetPackages</PackageOutputPath>
 	  <NoWarn>MSB3277</NoWarn>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <!--插件元数据 -->
 	  <PluginMeta>
 		  <Id>PluginManager</Id>

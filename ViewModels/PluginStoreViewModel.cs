@@ -19,6 +19,9 @@ public class PluginStoreViewModel : ObservableObject
     /// 插件列表
     /// </summary>
     public ObservableCollection<PluginStoreModel> Models { get; } = [];
+    /// <summary>
+    /// PluginService
+    /// </summary>
     public PluginLoader PluginService { get; }
     /// <summary>
     /// 
@@ -29,10 +32,14 @@ public class PluginStoreViewModel : ObservableObject
         Init();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public async void Init()
     {
         Models.Clear();
         var pluginList = await PluginStoreHelper.Instance.GetPluginList();
+        if (pluginList == null) return;
         foreach (var meta in pluginList)
         {
             var model = new PluginStoreModel(meta);
@@ -40,10 +47,19 @@ public class PluginStoreViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uri"></param>
     public async void Install(string uri)
     {
         await PluginService.ImportFromZipAsync(uri);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="uri"></param>
     public async void Upgrade(string id ,string uri)
     {
         await PluginService.UpgradePlugin(id,uri);

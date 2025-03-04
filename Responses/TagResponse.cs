@@ -1,12 +1,10 @@
-﻿using Serilog;
-using System;
-using System.Net.Http;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using FluentIcon.WinUI;
 
 namespace ShadowViewer.Plugin.PluginManager.Responses;
+#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
 /// <summary>
 /// 
 /// </summary>
@@ -58,7 +56,9 @@ public class AssetsItem
     /// 是否是Zip
     /// </summary>
     [JsonIgnore()]
-    public FluentFilledIconSymbol IsZip => ContentType == "application/x-zip-compressed"? FluentFilledIconSymbol.FolderZip16Filled : FluentFilledIconSymbol.Document10016Filled;
+    public FluentFilledIconSymbol IsZip => ContentType == "application/x-zip-compressed"
+        ? FluentFilledIconSymbol.FolderZip16Filled
+        : FluentFilledIconSymbol.Document10016Filled;
 }
 
 /// <summary>
@@ -116,3 +116,4 @@ public class PluginItem
     /// </summary>
     public List<AssetsItem> Assets { get; set; }
 }
+#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
