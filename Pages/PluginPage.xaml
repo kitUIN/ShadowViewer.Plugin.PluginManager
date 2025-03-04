@@ -10,14 +10,18 @@
     xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugins="using:ShadowViewer.Core.Plugins"
+    xmlns:converters1="using:ShadowViewer.Plugin.PluginManager.Converters"
+    xmlns:extensions="using:ShadowViewer.Core.Extensions"
+    x:Name="ThisPage"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
     <Page.Resources>
-        <x:Double x:Key="InfoIconSize">17</x:Double>
         <converters:EmptyObjectToObjectConverter
             x:Key="EmptyObjectToVisibilityConverter"
             EmptyValue="Collapsed"
             NotEmptyValue="Visible" />
+        <converters1:PluginMoreVisibilityConverter
+            x:Key="PluginMoreVisibilityConverter" />
     </Page.Resources>
     <Grid
         Background="{ThemeResource LayerFillColorDefaultBrush}"
@@ -73,7 +77,8 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        Click="ButtonBase_OnClick"
+                        IsEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
+                        Click="PluginStore_OnClick"
                         Label="{i18N:Locale Key=PluginStore}"
                         ToolTipService.ToolTip="{i18N:Locale Key=GoPluginTip}">
                         <AppBarButton.Icon>
@@ -191,16 +196,15 @@
                                     Width="37"
                                     Height="37"
                                     Padding="5"
-                                    Click="More_Click"
-                                    Loaded="More_Loaded"
-                                    Tag="{x:Bind}">
+                                    extensions:ButtonExtensions.ClickShowFlyout="True"
+                                    Visibility="{x:Bind Converter={StaticResource PluginMoreVisibilityConverter}}">
                                     <icons:FluentRegularIcon FontSize="25" Symbol="MoreHorizontal20Regular" />
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout Placement="Right">
                                             <MenuFlyoutItem
-                                                Click="OpenFolder_Click"
+                                                Command="{Binding ElementName=ThisPage,Path=ViewModel.OpenFolderCommand}"
                                                 Icon="Folder"
-                                                Tag="{x:Bind}"
+                                                CommandParameter="{x:Bind}"
                                                 Text="{i18N:Locale Key=OpenFolder}"
                                                 Visibility="{x:Bind CanOpenFolder}" />
                                             <MenuFlyoutItem
@@ -266,7 +270,8 @@
                     <LineBreak /><Run Text="{i18N:Locale Key=PluginSecurity_Responsibility_Content}" />
                 </TextBlock>
 
-                <CheckBox Content="{i18N:Locale Key=PluginSecurityCheck}" IsChecked="{x:Bind ViewModel.PluginSecurityCheck, Mode=TwoWay}" />
+                <CheckBox Content="{i18N:Locale Key=PluginSecurityCheck}"
+                          IsChecked="{x:Bind ViewModel.PluginSecurityCheck, Mode=TwoWay}" />
             </StackPanel>
         </ContentDialog>
     </Grid>
