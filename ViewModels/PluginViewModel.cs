@@ -95,7 +95,7 @@ public partial class PluginViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(PluginSecurityCheck))]
     private async Task AddPlugin(XamlRoot root)
     {
-        var file = await FileHelper.SelectFileAsync(root, "ShadowViewer_AddPlugin",
+        var file = await FileHelper.SelectFileAsync("ShadowViewer_AddPlugin",
             PickerViewMode.List, FileHelper.Zips);
         if (file != null)
         {
