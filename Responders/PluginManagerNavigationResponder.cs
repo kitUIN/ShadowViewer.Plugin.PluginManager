@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
-using ShadowViewer.Models;
+using ShadowViewer.Core.Models;
 using ShadowViewer.Core.Responders;
 using ShadowViewer.Plugin.PluginManager.Pages;
 using ShadowViewer.Core.Models.Interfaces;
