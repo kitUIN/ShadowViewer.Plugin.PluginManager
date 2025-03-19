@@ -9,6 +9,7 @@ using ShadowViewer.Core.Plugins;
 using ShadowViewer.Core.Services;
 using ShadowViewer.Core;
 using ShadowViewer.Core.Models;
+using ShadowViewer.Plugin.PluginManager.Pages;
 
 namespace ShadowViewer.Plugin.PluginManager
 {
@@ -23,6 +24,7 @@ namespace ShadowViewer.Plugin.PluginManager
             ILogger logger, PluginLoader pluginService, INotifyService notifyService) :
             base(caller, db, pluginService, notifyService, logger, pluginEventService)
         {
+            DiFactory.Services.Register<PluginManagerSettingsViewModel>(reuse: Reuse.Transient);
             DiFactory.Services.Register<PluginViewModel>(reuse: Reuse.Transient);
             DiFactory.Services.Register<PluginStoreViewModel>(reuse: Reuse.Transient);
         }
@@ -39,7 +41,7 @@ namespace ShadowViewer.Plugin.PluginManager
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public override Type? SettingsPage => null;
+        public override Type? SettingsPage => typeof(PluginManagerSettingsPage);
 
         /// <summary>
         /// <inheritdoc/>

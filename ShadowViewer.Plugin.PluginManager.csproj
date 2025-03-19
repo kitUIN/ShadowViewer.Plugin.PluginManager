@@ -49,6 +49,11 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<PackageReference Include="ShadowViewer.Core" Version="2025.3.19.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Pages\PluginManagerSettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup> 
 	  
 	<ItemGroup>

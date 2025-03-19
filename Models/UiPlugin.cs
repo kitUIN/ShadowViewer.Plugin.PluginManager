@@ -18,7 +18,7 @@ public partial class UiPlugin : ObservableObject
     [ObservableProperty] private PluginMetaData metaData;
 
     /// <summary>
-    /// <inheritdoc cref="AShadowViewerPlugin.IsEnabled"/>
+    /// 是否开启插件
     /// </summary>
     [ObservableProperty] private bool isEnabled;
 

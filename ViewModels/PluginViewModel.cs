@@ -67,10 +67,9 @@ public partial class PluginViewModel : ObservableObject
     /// 同意安全声明
     /// </summary>
     [RelayCommand]
-    private Task SecurityConfirm()
+    private void SecurityConfirm()
     {
         PluginManagerPlugin.Setting.PluginSecurityStatement = PluginSecurityCheck;
-        return Task.CompletedTask;
     }
 
     /// <summary>
