@@ -21,7 +21,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         /// <summary>
         /// ViewModel
         /// </summary>
-        public PluginViewModel ViewModel { get; private set; } 
+        public PluginViewModel ViewModel { get; private set; } = DiFactory.Services.Resolve<PluginViewModel>();
 
         private PluginLoader PluginService { get; set; } 
 

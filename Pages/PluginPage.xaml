@@ -10,6 +10,7 @@
     xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugins="using:ShadowViewer.Core.Plugins"
+    xmlns:fluent="using:FluentIcons.WinUI"
     xmlns:converters1="using:ShadowViewer.Plugin.PluginManager.Converters"
     xmlns:extensions="using:ShadowViewer.Core.Extensions"
     x:Name="ThisPage"
@@ -58,12 +59,12 @@
                         Command="{x:Bind ViewModel.AddPluginCommand}"
                         CommandParameter="{x:Bind XamlRoot}"
                         Label="{i18N:Locale Key=AddPlugin}"
+                        Icon="{fluent:SymbolIcon Symbol=AddCircle}"
                         ToolTipService.ToolTip="{i18N:Locale Key=AddPlugin}">
-                        <AppBarButton.Icon>
-                            <icons:FluentRegularIcon Symbol="AddCircle32Regular" />
-                        </AppBarButton.Icon>
+
                     </AppBarButton>
-                    <AppBarButton Label="{x:Bind core:PluginLoader.CoreVersion}">
+                    <AppBarButton
+                        Icon="{fluent:SymbolIcon Symbol=Premium}" Label="{x:Bind core:PluginLoader.CoreVersion}">
                         <ToolTipService.ToolTip>
                             <ToolTip>
                                 <TextBlock>
@@ -72,18 +73,14 @@
                                 </TextBlock>
                             </ToolTip>
                         </ToolTipService.ToolTip>
-                        <AppBarButton.Icon>
-                            <icons:FluentRegularIcon Symbol="Premium32Regular" />
-                        </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
+                        Icon="{fluent:SymbolIcon Symbol=Search}"
                         IsEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
                         Click="PluginStore_OnClick"
                         Label="{i18N:Locale Key=PluginStore}"
                         ToolTipService.ToolTip="{i18N:Locale Key=GoPluginTip}">
-                        <AppBarButton.Icon>
-                            <icons:FluentRegularIcon Symbol="Search32Regular" />
-                        </AppBarButton.Icon>
+
                     </AppBarButton>
                 </CommandBar>
             </Grid>
@@ -120,12 +117,11 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <local2:PluginLogo
+                                    <Viewbox
                                         Grid.Column="0"
                                         Width="60"
                                         Height="60"
-                                        FontIconSize="35"
-                                        LogoSource="{x:Bind MetaData.Logo, Converter={StaticResource PluginPathConverter}}" />
+                                        extensions:PluginLogoViewboxExtensions.PluginLogo="{x:Bind MetaData.Logo, Converter={StaticResource PluginPathConverter}}" />
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                         <TextBlock
                                             FontSize="20"
@@ -156,11 +152,11 @@
                                         Orientation="Vertical"
                                         Spacing="3">
                                         <StackPanel Orientation="Horizontal" Spacing="3">
-                                            <icons:FluentRegularIcon Symbol="Predictions20Regular" />
+                                            <fluent:SymbolIcon Symbol="Predictions" />
                                             <TextBlock Text="{x:Bind MetaData.Id}" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Spacing="3">
-                                            <icons:FluentRegularIcon Symbol="TargetArrow20Regular" />
+                                            <fluent:SymbolIcon Symbol="TargetArrow" />
                                             <TextBlock Text="{x:Bind MetaData.Version}" />
                                         </StackPanel>
                                     </StackPanel>
@@ -198,7 +194,7 @@
                                     Padding="5"
                                     extensions:ButtonExtensions.ClickShowFlyout="True"
                                     Visibility="{x:Bind Converter={StaticResource PluginMoreVisibilityConverter}}">
-                                    <icons:FluentRegularIcon FontSize="25" Symbol="MoreHorizontal20Regular" />
+                                    <fluent:SymbolIcon Symbol="MoreHorizontal" />
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout Placement="Right">
                                             <MenuFlyoutItem
@@ -224,7 +220,7 @@
                                     Click="Settings_Click"
                                     Tag="{x:Bind MetaData.Id}"
                                     Visibility="{x:Bind SettingsPage, Converter={StaticResource EmptyObjectToVisibilityConverter}}">
-                                    <icons:FluentRegularIcon FontSize="25" Symbol="Settings20Regular" />
+                                    <fluent:SymbolIcon Symbol="Settings" />
                                 </HyperlinkButton>
                             </Grid>
                         </Grid>
