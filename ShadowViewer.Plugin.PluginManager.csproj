@@ -34,7 +34,7 @@
 		  <Id>PluginManager</Id>
 		  <Name>插件管理器</Name>
 		  <Version>$(Version)</Version>
-		  <Logo>fluent://regular/\uF599</Logo>
+		  <Logo>fluent://regular/Apps</Logo>
 		  <PluginLang>zh-CN</PluginLang>
 		  <WebUri>$(PackageProjectUrl)</WebUri>
 		  <Description>$(Description)</Description>

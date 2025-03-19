@@ -1,8 +1,7 @@
-﻿using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml;
-using ShadowViewer.Plugin.PluginManager.ViewModels;
 using System;
-using ShadowViewer.Core.Plugins;
+using ShadowViewer.Plugin.PluginManager.Models;
 
 namespace ShadowViewer.Plugin.PluginManager.Converters;
 
@@ -16,7 +15,7 @@ public class PluginMoreVisibilityConverter : IValueConverter
     /// </summary>
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        return value is AShadowViewerPlugin { CanOpenFolder: false, CanDelete: false }
+        return value is UiPlugin { CanOpenFolder: false, CanDelete: false }
             ? Visibility.Collapsed
             : Visibility.Visible;
     }

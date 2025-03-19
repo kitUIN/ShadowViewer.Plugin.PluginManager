@@ -6,13 +6,13 @@
     xmlns:core="using:ShadowViewer.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i18N="using:ShadowViewer.Plugin.PluginManager.I18n"
-    xmlns:icons="using:FluentIcon.WinUI"
     xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugins="using:ShadowViewer.Core.Plugins"
     xmlns:fluent="using:FluentIcons.WinUI"
     xmlns:converters1="using:ShadowViewer.Plugin.PluginManager.Converters"
     xmlns:extensions="using:ShadowViewer.Core.Extensions"
+    xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     x:Name="ThisPage"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
@@ -77,10 +77,8 @@
                     <AppBarButton
                         Icon="{fluent:SymbolIcon Symbol=Search}"
                         IsEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
-                        Click="PluginStore_OnClick"
                         Label="{i18N:Locale Key=PluginStore}"
                         ToolTipService.ToolTip="{i18N:Locale Key=GoPluginTip}">
-
                     </AppBarButton>
                 </CommandBar>
             </Grid>
@@ -91,7 +89,7 @@
                 ItemsSource="{x:Bind ViewModel.Plugins, Mode=OneWay}"
                 SelectionMode="None">
                 <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="plugins:AShadowViewerPlugin">
+                    <DataTemplate x:DataType="models:UiPlugin">
                         <Grid
                             Width="300"
                             Height="200"
@@ -119,17 +117,18 @@
                                     </Grid.ColumnDefinitions>
                                     <Viewbox
                                         Grid.Column="0"
-                                        Width="60"
-                                        Height="60"
-                                        extensions:PluginLogoViewboxExtensions.PluginLogo="{x:Bind MetaData.Logo, Converter={StaticResource PluginPathConverter}}" />
+                                        Margin="6"
+                                        Width="48"
+                                        Height="48"
+                                        extensions:PluginLogoViewboxExtensions.PluginLogo="{x:Bind MetaData.Logo,Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                         <TextBlock
                                             FontSize="20"
-                                            Text="{x:Bind MetaData.Name}"
+                                            Text="{x:Bind MetaData.Name,Mode=OneWay}"
                                             TextTrimming="CharacterEllipsis" />
                                         <TextBlock
                                             Foreground="Gray"
-                                            Text="{x:Bind MetaData.Authors}"
+                                            Text="{x:Bind MetaData.Authors,Mode=OneWay}"
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
 
@@ -137,7 +136,7 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     Margin="10,0"
-                                    Text="{x:Bind MetaData.Description}"
+                                    Text="{x:Bind MetaData.Description,Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="Wrap" />
                                 <Grid Grid.Row="2">
@@ -150,21 +149,22 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Orientation="Vertical"
+                                        Margin="0,0,0,5"
                                         Spacing="3">
                                         <StackPanel Orientation="Horizontal" Spacing="3">
                                             <fluent:SymbolIcon Symbol="Predictions" />
-                                            <TextBlock Text="{x:Bind MetaData.Id}" />
+                                            <TextBlock Text="{x:Bind MetaData.Id,Mode=OneWay}" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Spacing="3">
                                             <fluent:SymbolIcon Symbol="TargetArrow" />
-                                            <TextBlock Text="{x:Bind MetaData.Version}" />
+                                            <TextBlock Text="{x:Bind MetaData.Version,Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
                                     <ToggleSwitch
                                         Grid.Column="1"
                                         VerticalAlignment="Bottom"
                                         IsOn="{x:Bind IsEnabled, Mode=TwoWay}"
-                                        Visibility="{x:Bind CanSwitch}" />
+                                        Visibility="{x:Bind CanSwitch,Mode=OneWay}" />
                                 </Grid>
                             </Grid>
                             <Grid Grid.Column="1">
@@ -180,7 +180,7 @@
                                     Width="37"
                                     Height="37"
                                     Padding="5"
-                                    NavigateUri="{x:Bind MetaData.WebUri}">
+                                    NavigateUri="{x:Bind MetaData.WebUri,Mode=OneWay}">
                                     <ImageIcon
                                         Width="25"
                                         Height="25"
@@ -200,15 +200,15 @@
                                             <MenuFlyoutItem
                                                 Command="{Binding ElementName=ThisPage,Path=ViewModel.OpenFolderCommand}"
                                                 Icon="Folder"
-                                                CommandParameter="{x:Bind}"
+                                                CommandParameter="{x:Bind PluginType, Mode=OneWay}"
                                                 Text="{i18N:Locale Key=OpenFolder}"
-                                                Visibility="{x:Bind CanOpenFolder}" />
+                                                Visibility="{x:Bind CanOpenFolder,Mode=OneWay}" />
                                             <MenuFlyoutItem
-                                                Click="Delete_Click"
+                                                Command="{Binding ElementName=ThisPage,Path=ViewModel.DeleteCommand}"
                                                 Icon="Delete"
-                                                Tag="{x:Bind}"
+                                                CommandParameter="{x:Bind MetaData.Id,Mode=OneWay}"
                                                 Text="{i18N:Locale Key=Delete}"
-                                                Visibility="{x:Bind CanDelete}" />
+                                                Visibility="{x:Bind CanDelete,Mode=OneWay}" />
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                 </HyperlinkButton>
@@ -217,9 +217,9 @@
                                     Width="37"
                                     Height="37"
                                     Padding="5"
-                                    Click="Settings_Click"
-                                    Tag="{x:Bind MetaData.Id}"
-                                    Visibility="{x:Bind SettingsPage, Converter={StaticResource EmptyObjectToVisibilityConverter}}">
+                                    Command="{Binding ElementName=ThisPage,Path=ViewModel.ToPluginSettingPageCommand }"
+                                    CommandParameter="{x:Bind SettingsPage,Mode=OneWay}"
+                                    Visibility="{x:Bind SettingsPage,Mode=OneWay, Converter={StaticResource EmptyObjectToVisibilityConverter}}">
                                     <fluent:SymbolIcon Symbol="Settings" />
                                 </HyperlinkButton>
                             </Grid>

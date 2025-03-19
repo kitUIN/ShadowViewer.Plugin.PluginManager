@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     xmlns:responses="using:ShadowViewer.Plugin.PluginManager.Responses"
-    xmlns:winUi="using:FluentIcon.WinUI"
+    xmlns:winUi="using:FluentIcons.WinUI"
     mc:Ignorable="d">
     <Page.Resources>
         <converters2:PluginInstallButtonConverter
@@ -93,11 +93,11 @@
                                     Orientation="Vertical"
                                     Spacing="3">
                                     <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <winUi:FluentRegularIcon Symbol="Predictions20Regular" />
+                                        <winUi:FluentIcon Icon="Predictions" />
                                         <TextBlock Text="{x:Bind MetaData.Id}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <winUi:FluentRegularIcon Symbol="TargetArrow20Regular" />
+                                        <winUi:FluentIcon Icon="TargetArrow" />
                                         <TextBlock Text="{x:Bind CurrentVersion}" Visibility="{x:Bind CouldUpdate}" />
                                         <TextBlock Text="➡" Visibility="{x:Bind CouldUpdate}" />
                                         <TextBlock Text="{x:Bind MetaData.Version}" />
@@ -130,7 +130,8 @@
                                 Click="UpgradeClick"
                                 IsEnabled="{x:Bind ButtonEnabled}"
                                 Tag="{x:Bind}">
-                                <TextBlock Text="{x:Bind InstallStatus, Mode=OneWay, Converter={StaticResource PluginInstallButtonConverter}}" />
+                                <TextBlock
+                                    Text="{x:Bind InstallStatus, Mode=OneWay, Converter={StaticResource PluginInstallButtonConverter}}" />
                             </Button>
                         </Grid>
                     </Grid>
@@ -153,11 +154,11 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <winUi:FluentFilledIcon
+                                <winUi:FluentIcon
                                     Grid.Column="0"
                                     Width="32"
-                                    Height="32"
-                                    Symbol="{x:Bind IsZip}" />
+                                    Height="32" IconVariant="Filled"
+                                    Icon="{x:Bind IsZip}" />
                                 <StackPanel
                                     Grid.Column="1"
                                     Orientation="Vertical"
@@ -167,7 +168,8 @@
                                             <ToolTip Content="{x:Bind Name}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
-                                    <TextBlock Text="{x:Bind Size, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
+                                    <TextBlock
+                                        Text="{x:Bind Size, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
                                 </StackPanel>
                                 <StackPanel
                                     Grid.Column="2"
@@ -177,14 +179,14 @@
                                         <ToolTipService.ToolTip>
                                             <ToolTip Content="{i18N:Locale Key=CreatedAt}" />
                                         </ToolTipService.ToolTip>
-                                        <winUi:FluentFilledIcon Symbol="Calendar3Day16Filled" />
+                                        <winUi:FluentIcon IconVariant="Filled" Icon="Calendar3Day" />
                                         <TextBlock Text="{x:Bind CreatedAt}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="2">
                                         <ToolTipService.ToolTip>
                                             <ToolTip Content="{i18N:Locale Key=UpdatedAt}" />
                                         </ToolTipService.ToolTip>
-                                        <winUi:FluentFilledIcon Symbol="History16Filled" />
+                                        <winUi:FluentIcon Icon="History" IconVariant="Filled" />
                                         <TextBlock Text="{x:Bind UpdatedAt}" />
                                     </StackPanel>
                                 </StackPanel>

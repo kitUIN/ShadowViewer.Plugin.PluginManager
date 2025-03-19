@@ -5,16 +5,12 @@ using Serilog;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using System;
 using ShadowPluginLoader.WinUI;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using ShadowViewer.Plugin.PluginManager.I18n;
-using ShadowViewer.Core;
-using ShadowViewer.Core.Plugins;
 
 namespace ShadowViewer.Plugin.PluginManager.Pages
 {
     /// <summary>
-    /// ≤Âº˛π‹¿Ì∆˜ “≥√Ê
+    /// Êèí‰ª∂ÁÆ°ÁêÜÂô® È°µÈù¢
     /// </summary>
     public sealed partial class PluginPage : Page
     {
@@ -23,10 +19,8 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         /// </summary>
         public PluginViewModel ViewModel { get; private set; } = DiFactory.Services.Resolve<PluginViewModel>();
 
-        private PluginLoader PluginService { get; set; } 
-
         /// <summary>
-        /// ƒ¨»œππ‘Ï∫Ø ˝
+        /// ÈªòËÆ§ÊûÑÈÄ†ÂáΩÊï∞
         /// </summary>
         public PluginPage()
         {
@@ -34,84 +28,15 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         }
 
         /// <summary>
-        /// «∞Õ˘≤Âº˛…Ë÷√
-        /// </summary>
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as HyperlinkButton;
-            if (button != null && button.Tag is string tag && PluginService.GetPlugin(tag) is
-                    { SettingsPage: not null } plugin)
-            {
-                Frame.Navigate(plugin.SettingsPage, null,
-                    new SlideNavigationTransitionInfo
-                    {
-                        Effect = SlideNavigationTransitionEffect.FromRight
-                    });
-            }
-        }
-        /// <summary>
-        /// …æ≥˝µ„ª˜
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is not FrameworkElement { Tag: AShadowViewerPlugin plugin }) return;
-
-                var dialog = new ContentDialog
-                {
-                    XamlRoot = XamlRoot,
-                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                    DefaultButton = ContentDialogButton.Close,
-                    Title = I18N.Delete,
-                    Content = I18N.Delete,
-                    IsPrimaryButtonEnabled = false,
-                    PrimaryButtonText = I18N.Accept,
-                    CloseButtonText = I18N.Cancel,
-                };
-                dialog.PrimaryButtonClick += (_, _) => PluginService.RemovePlugin(plugin.Id);
-                await dialog.ShowAsync();
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Delete_Click Error,{ex}", ex);
-            }
-        }
-        /// <summary>
-        /// Ã¯◊™…ÃµÍ“≥
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void PluginStore_OnClick(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(PluginStorePage), null,
-                new SlideNavigationTransitionInfo
-                {
-                    Effect = SlideNavigationTransitionEffect.FromRight
-                });
-        }
-
-        /// <summary>
-        /// µ⁄“ª¥ŒΩ¯»Î ±’π æÀµ√˜
+        /// Á¨¨‰∏ÄÊ¨°ËøõÂÖ•Êó∂Â±ïÁ§∫ËØ¥Êòé
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void SecurityContentDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        /// <inheritdoc />
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
             try
             {
-                ViewModel ??= DiFactory.Services.Resolve<PluginViewModel>();
                 ViewModel.InitPlugins();
-                PluginService ??= DiFactory.Services.Resolve<PluginLoader>();
                 if (PluginManagerPlugin.Setting.PluginSecurityStatement) return;
                 await SecurityContentDialog.ShowAsync();
             }
@@ -119,6 +44,12 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
             {
                 Log.Error("SecurityContentDialog_OnLoaded Error,{ex}", ex);
             }
+        }
+
+        /// <inheritdoc />
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            
         }
     }
 }
