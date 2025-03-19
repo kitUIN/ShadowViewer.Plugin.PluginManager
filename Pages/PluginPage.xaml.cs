@@ -6,6 +6,7 @@ using ShadowViewer.Plugin.PluginManager.ViewModels;
 using System;
 using ShadowPluginLoader.WinUI;
 using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Navigation;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Core;
 using ShadowViewer.Core.Plugins;
@@ -20,9 +21,9 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         /// <summary>
         /// ViewModel
         /// </summary>
-        public PluginViewModel ViewModel { get; } = DiFactory.Services.Resolve<PluginViewModel>();
+        public PluginViewModel ViewModel { get; private set; } 
 
-        private PluginLoader PluginService { get; } = DiFactory.Services.Resolve<PluginLoader>();
+        private PluginLoader PluginService { get; set; } 
 
         /// <summary>
         /// 默认构造函数
@@ -100,9 +101,17 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         /// <param name="e"></param>
         private async void SecurityContentDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
+            
+        }
+
+        /// <inheritdoc />
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
             try
             {
+                ViewModel ??= DiFactory.Services.Resolve<PluginViewModel>();
                 ViewModel.InitPlugins();
+                PluginService ??= DiFactory.Services.Resolve<PluginLoader>();
                 if (PluginManagerPlugin.Setting.PluginSecurityStatement) return;
                 await SecurityContentDialog.ShowAsync();
             }
