@@ -11,6 +11,7 @@
     xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     xmlns:responses="using:ShadowViewer.Plugin.PluginManager.Responses"
     xmlns:winUi="using:FluentIcons.WinUI"
+    xmlns:extensions="using:ShadowViewer.Core.Extensions"
     mc:Ignorable="d">
     <Page.Resources>
         <converters2:PluginInstallButtonConverter
@@ -58,11 +59,12 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <controls:PluginLogo
+                                <Viewbox
                                     Grid.Column="0"
-                                    Width="60"
-                                    Height="60"
-                                    LogoSource="{x:Bind MetaData.Logo, Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
+                                    Margin="6"
+                                    Width="48"
+                                    Height="48"
+                                    extensions:PluginLogoViewboxExtensions.PluginLogo="{x:Bind MetaData.Logo,Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock
                                         FontSize="20"

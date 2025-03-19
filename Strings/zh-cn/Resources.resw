@@ -220,7 +220,7 @@
     <value>查阅插件安全声明</value>
   </data>
   <data name="GithubMirror" xml:space="preserve">
-    <value>Github代理域名</value>
+    <value>Github镜像域名</value>
   </data>
   <data name="StoreUri" xml:space="preserve">
     <value>插件商店请求地址</value>
@@ -230,5 +230,14 @@
   </data>
   <data name="StorePing" xml:space="preserve">
     <value>插件商店连通性</value>
+  </data>
+  <data name="StorePingDescription" xml:space="preserve">
+    <value>测试插件商店是否允许访问</value>
+  </data>
+  <data name="StoreUriDescription" xml:space="preserve">
+    <value>从该地址获取插件列表</value>
+  </data>
+  <data name="GithubMirrorDescription" xml:space="preserve">
+    <value>如果是Github链接,使用该镜像域名访问</value>
   </data>
 </root>

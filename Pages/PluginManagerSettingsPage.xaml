@@ -49,7 +49,7 @@
                         <StackPanel Spacing="4" Orientation="Horizontal">
                             <winUi:FluentIcon VerticalAlignment="Center"
                                               Foreground="{x:Bind ViewModel.PluginSecurityStatementColor,Mode=OneWay}"
-                                              Icon="{x:Bind ViewModel.PluginSecurityStatementIcon}"
+                                              Icon="{x:Bind ViewModel.PluginSecurityStatementIcon,Mode=OneWay}"
                                               IconVariant="Filled" />
                             <TextBlock VerticalAlignment="Center"
                                        Text="{x:Bind ViewModel.PluginSecurityStatementText,Mode=OneWay}"
@@ -64,13 +64,16 @@
                                Text="{i18N:Locale Key=StoreSetting}" />
                     <controls:SettingsExpander IsExpanded="True"
                                                Header="{i18N:Locale Key=StorePing}"
+                                               Description="{i18N:Locale Key=StorePingDescription}"
                                                HeaderIcon="{winUi:SymbolIcon Symbol=WindowApps}">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=AppsList}"
+                            <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=GlobeSearch}"
+                                                   Description="{i18N:Locale Key=StoreUriDescription}"
                                                    Header="{i18N:Locale Key=StoreUri}">
                                 <TextBox Text="{x:Bind ViewModel.StoreUri,Mode=TwoWay}"></TextBox>
                             </controls:SettingsCard>
                             <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=ArrowTrendingWrench}"
+                                                   Description="{i18N:Locale Key=GithubMirrorDescription}"
                                                    Header="{i18N:Locale Key=GithubMirror}">
                                 <TextBox Text="{x:Bind ViewModel.GithubMirror,Mode=TwoWay}"></TextBox>
                             </controls:SettingsCard>
