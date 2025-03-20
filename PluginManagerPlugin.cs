@@ -37,28 +37,7 @@ namespace ShadowViewer.Plugin.PluginManager
         /// </summary>
         public override ShadowTag AffiliationTag { get; } =
             new ShadowTag("PluginManager", "#ffd657", "#000000", null, "PluginManager");
-
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public override Type? SettingsPage => typeof(PluginManagerSettingsPage);
-
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public override bool CanSwitch => false;
-
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public override bool CanDelete => false;
-
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public override bool CanOpenFolder => false;
-
-
+         
         /// <inheritdoc />
         public override string DisplayName => "插件管理器";
     }

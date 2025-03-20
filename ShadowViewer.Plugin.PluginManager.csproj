@@ -39,6 +39,10 @@
 		  <WebUri>$(PackageProjectUrl)</WebUri>
 		  <Description>$(Description)</Description>
 		  <Authors>$(Authors)</Authors>
+		  <CanOpenFolder>false</CanOpenFolder>
+		  <CanDelete>false</CanDelete>
+		  <CanSwitch>false</CanSwitch>
+		  <SettingsPage>ShadowViewer.Plugin.PluginManager.Pages.PluginManagerSettingsPage</SettingsPage>
 	  </PluginMeta>
   </PropertyGroup>
   <ItemGroup>

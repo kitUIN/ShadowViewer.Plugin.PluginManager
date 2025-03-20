@@ -23,17 +23,17 @@ public partial class UiPlugin : ObservableObject
     [ObservableProperty] private bool isEnabled;
 
     /// <summary>
-    /// <inheritdoc cref="AShadowViewerPlugin.CanSwitch"/>
+    /// <inheritdoc cref="PluginMetaData.CanSwitch"/>
     /// </summary>
     [ObservableProperty] private bool canSwitch;
 
     /// <summary>
-    /// <inheritdoc cref="AShadowViewerPlugin.CanDelete"/>
+    /// <inheritdoc cref="PluginMetaData.CanDelete"/>
     /// </summary>
     [ObservableProperty] private bool canDelete;
 
     /// <summary>
-    /// <inheritdoc cref="AShadowViewerPlugin.CanOpenFolder"/>
+    /// <inheritdoc cref="PluginMetaData.CanOpenFolder"/>
     /// </summary>
     [ObservableProperty] private bool canOpenFolder;
 
@@ -55,9 +55,9 @@ public partial class UiPlugin : ObservableObject
     {
         this.metaData = plugin.MetaData;
         this.isEnabled = plugin.IsEnabled;
-        this.canOpenFolder = plugin.CanOpenFolder;
-        this.canSwitch = plugin.CanSwitch;
-        this.canDelete = plugin.CanDelete;
+        this.canOpenFolder = plugin.MetaData.CanOpenFolder;
+        this.canSwitch = plugin.MetaData.CanSwitch;
+        this.canDelete = plugin.MetaData.CanDelete;
         this.settingsPage = plugin.SettingsPage;
         this.pluginType = plugin.GetType();
     }

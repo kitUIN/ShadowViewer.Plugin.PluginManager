@@ -144,15 +144,6 @@ public partial class PluginViewModel : ObservableObject
         }
     }
 
-    /// <summary>
-    /// 判断是否展示更多按钮
-    /// </summary>
-    /// <param name="plugin"></param>
-    /// <returns></returns>
-    public static Visibility CheckMoreVisible(AShadowViewerPlugin plugin)
-    {
-        return plugin is { CanOpenFolder: false, CanDelete: false } ? Visibility.Collapsed : Visibility.Visible;
-    }
 
     /// <summary>
     /// 加载插件
