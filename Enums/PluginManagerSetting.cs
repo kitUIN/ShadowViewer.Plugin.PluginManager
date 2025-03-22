@@ -1,11 +1,10 @@
-﻿using ShadowPluginLoader.MetaAttributes;
+using ShadowPluginLoader.Attributes;
 
 namespace ShadowViewer.Plugin.PluginManager.Enums;
 /// <summary>
 /// Setting
 /// </summary>
-[ShadowPluginSettingClass(typeof(PluginManagerPlugin), "Setting")]
-[ShadowSettingClass("ShadowViewer.Plugin.PluginManager", "PluginManagerSettings")]
+[ShadowSettingClass(Container = "ShadowViewer.Plugin.PluginManager",ClassName = "PluginManagerSettings")]
 public enum PluginManagerSetting
 {
     /// <summary>

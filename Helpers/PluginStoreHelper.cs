@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
@@ -34,10 +34,10 @@ public class PluginStoreHelper
         Dictionary<string, string>? headers = null)
     {
         var reqUrl = url;
-        if (!string.IsNullOrEmpty(PluginManagerPlugin.Setting.GithubMirror) &&
+        if (!string.IsNullOrEmpty(PluginManagerPlugin.Settings.GithubMirror) &&
             reqUrl.StartsWith("https://raw.githubusercontent.com") )
         {
-            reqUrl = PluginManagerPlugin.Setting.GithubMirror + reqUrl;
+            reqUrl = PluginManagerPlugin.Settings.GithubMirror + reqUrl;
         }
 
         var httpRequestMessage = new HttpRequestMessage(method, reqUrl);
@@ -61,7 +61,7 @@ public class PluginStoreHelper
             using var response = await client.SendAsync(request);
             var resp = await response.Content.ReadAsStringAsync();
             Log.Debug("\n[GET]{Api}:\nproxy:{Proxy}\nreturn:{Resp}", url,
-                PluginManagerPlugin.Setting.GithubMirror, resp);
+                PluginManagerPlugin.Settings.GithubMirror, resp);
             return JsonSerializer.Deserialize<T>(resp);
         }
         catch (Exception exception)
@@ -76,6 +76,6 @@ public class PluginStoreHelper
     /// </summary>
     public async Task<PluginItem[]?> GetPluginList(int page = 1)
     {
-        return await GetAsync<PluginItem[]>(PluginManagerPlugin.Setting.StoreUri);
+        return await GetAsync<PluginItem[]>(PluginManagerPlugin.Settings.StoreUri);
     }
 }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Microsoft.UI.Xaml.Media.Animation;
 using Serilog;
-using ShadowPluginLoader.MetaAttributes;
 using ShadowViewer.Core.Helpers;
 using ShadowViewer.Core;
 using ShadowViewer.Core.Plugins;
@@ -15,6 +14,7 @@ using ShadowViewer.Core.Extensions;
 using ShadowViewer.Core.Services;
 using ShadowViewer.Plugin.PluginManager.Models;
 using Microsoft.UI.Xaml.Controls;
+using ShadowPluginLoader.Attributes;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Plugin.PluginManager.Pages;
 
@@ -26,7 +26,7 @@ public partial class PluginViewModel : ObservableObject
     /// 插件安全声明弹出框确定
     /// </summary>
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
-    private bool pluginSecurityCheck = PluginManagerPlugin.Setting.PluginSecurityStatement;
+    private bool pluginSecurityCheck = PluginManagerPlugin.Settings.PluginSecurityStatement;
 
     /// <summary>
     /// 插件服务
@@ -69,7 +69,7 @@ public partial class PluginViewModel : ObservableObject
     [RelayCommand]
     private void SecurityConfirm()
     {
-        PluginManagerPlugin.Setting.PluginSecurityStatement = PluginSecurityCheck;
+        PluginManagerPlugin.Settings.PluginSecurityStatement = PluginSecurityCheck;
     }
 
     /// <summary>
@@ -157,7 +157,8 @@ public partial class PluginViewModel : ObservableObject
         {
             try
             {
-                await PluginService.ImportFromZipAsync(file.Path);
+                await PluginService.ImportAsync(file.Path);
+                await PluginService.Load();
             }
             catch (Exception ex)
             {

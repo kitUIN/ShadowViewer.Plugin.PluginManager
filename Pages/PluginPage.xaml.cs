@@ -37,7 +37,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
             try
             {
                 ViewModel.InitPlugins();
-                if (PluginManagerPlugin.Setting.PluginSecurityStatement) return;
+                if (PluginManagerPlugin.Settings.PluginSecurityStatement) return;
                 await SecurityContentDialog.ShowAsync();
             }
             catch (Exception ex)

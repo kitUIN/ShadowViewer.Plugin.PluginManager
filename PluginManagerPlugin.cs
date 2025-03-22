@@ -3,7 +3,7 @@ using Serilog;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using SqlSugar;
 using System;
-using ShadowPluginLoader.MetaAttributes;
+using ShadowPluginLoader.Attributes;
 using ShadowPluginLoader.WinUI;
 using ShadowViewer.Core.Plugins;
 using ShadowViewer.Core.Services;
@@ -16,7 +16,7 @@ namespace ShadowViewer.Plugin.PluginManager
     /// <summary>
     /// 插件管理器主类
     /// </summary>
-    [AutoPluginMeta]
+    [MainPlugin]
     public partial class PluginManagerPlugin : AShadowViewerPlugin
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace ShadowViewer.Plugin.PluginManager
         /// </summary>
         public override ShadowTag AffiliationTag { get; } =
             new ShadowTag("PluginManager", "#ffd657", "#000000", null, "PluginManager");
-         
+
         /// <inheritdoc />
         public override string DisplayName => "插件管理器";
     }

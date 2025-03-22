@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +10,7 @@ using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Core;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
+
 /// <summary>
 /// 
 /// </summary>
@@ -19,10 +20,12 @@ public class PluginStoreViewModel : ObservableObject
     /// 插件列表
     /// </summary>
     public ObservableCollection<PluginStoreModel> Models { get; } = [];
+
     /// <summary>
     /// PluginService
     /// </summary>
     public PluginLoader PluginService { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -53,15 +56,17 @@ public class PluginStoreViewModel : ObservableObject
     /// <param name="uri"></param>
     public async void Install(string uri)
     {
-        await PluginService.ImportFromZipAsync(uri);
+        await PluginService.ImportAsync(uri);
+        await PluginService.Load();
     }
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id"></param>
     /// <param name="uri"></param>
-    public async void Upgrade(string id ,string uri)
+    public async void Upgrade(string id, string uri)
     {
-        await PluginService.UpgradePlugin(id,uri);
+        await PluginService.UpgradePlugin(id, uri);
     }
 }

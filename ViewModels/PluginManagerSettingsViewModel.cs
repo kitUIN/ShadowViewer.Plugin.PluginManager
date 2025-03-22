@@ -17,13 +17,13 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementVisible))]
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementText))]
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementIcon))]
-    private bool pluginSecurityStatement = PluginManagerPlugin.Setting.PluginSecurityStatement;
+    private bool pluginSecurityStatement = PluginManagerPlugin.Settings.PluginSecurityStatement;
 
     /// <summary>
     /// <inheritdoc cref="Enums.PluginManagerSettings.PluginSecurityStatementVersion"/>
     /// </summary>
     [ObservableProperty]
-    private string pluginSecurityStatementVersion = PluginManagerPlugin.Setting.PluginSecurityStatementVersion;
+    private string pluginSecurityStatementVersion = PluginManagerPlugin.Settings.PluginSecurityStatementVersion;
 
     /// <summary>
     /// 安全声明图标
@@ -52,7 +52,7 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     /// <summary>
     /// <inheritdoc cref="Enums.PluginManagerSettings.PluginSecurityStatement"/>
     /// </summary>
-    [ObservableProperty] private bool pluginSecurityCheck = PluginManagerPlugin.Setting.PluginSecurityStatement;
+    [ObservableProperty] private bool pluginSecurityCheck = PluginManagerPlugin.Settings.PluginSecurityStatement;
 
     /// <summary>
     /// 同意安全声明
@@ -60,17 +60,17 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     [RelayCommand]
     private void SecurityConfirm()
     {
-        PluginManagerPlugin.Setting.PluginSecurityStatement = PluginSecurityCheck;
+        PluginManagerPlugin.Settings.PluginSecurityStatement = PluginSecurityCheck;
         if (PluginSecurityCheck) PluginSecurityStatement = PluginSecurityCheck;
     }
 
     /// <summary>
     /// <inheritdoc cref="Enums.PluginManagerSettings.GithubMirror"/>
     /// </summary>
-    [ObservableProperty] private string githubMirror = PluginManagerPlugin.Setting.GithubMirror;
+    [ObservableProperty] private string githubMirror = PluginManagerPlugin.Settings.GithubMirror;
 
     /// <summary>
     /// <inheritdoc cref="Enums.PluginManagerSettings.StoreUri"/>
     /// </summary>
-    [ObservableProperty] private string storeUri = PluginManagerPlugin.Setting.StoreUri;
+    [ObservableProperty] private string storeUri = PluginManagerPlugin.Settings.StoreUri;
 }
