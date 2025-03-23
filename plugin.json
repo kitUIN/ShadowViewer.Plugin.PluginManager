@@ -10,6 +10,6 @@
   "SettingsPage": "ShadowViewer.Plugin.PluginManager.Pages.PluginManagerSettingsPage",
   "Id": "PluginManager",
   "Name": "插件管理器",
-  "Version": "1.3.6",
+  "Version": "1.3.8",
   "Dependencies": []
 }
