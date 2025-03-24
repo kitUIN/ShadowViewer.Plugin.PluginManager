@@ -12,7 +12,7 @@
 		<PackageId>ShadowViewer.Plugin.PluginManager</PackageId>
 
 		<!--插件版本号(nuget包版本号)-->
-		<Version>1.3.8</Version>
+		<Version>1.3.10</Version>
 		<!--插件介绍(nuget包介绍)-->
 		<Description>ShadowViewer插件可视化管理插件</Description>
 		<!--插件作者(nuget包作者)-->
@@ -46,16 +46,6 @@
 		</PluginMeta>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="$(OutputPath)\$(PackageId)\**\*.xbf" Pack="true" PackagePath="lib\net8.0-windows10.0.22621\$(PackageId)" />
-		<None Include="$(OutputPath)\$(PackageId)\**\plugin.json" Pack="true" PackagePath="contentTransitive/$(PackageId)"></None>
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="$(OutputPath)\$(PackageId)\Assets\plugin.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-			<TargetPath>$(PackageId)\Assets\plugin.json</TargetPath>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
 		<None Remove="Pages\PluginStorePage.xaml" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
@@ -63,7 +53,6 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<PackageReference Include="ShadowViewer.Core" Version="2025.03.22.16" />
-		<PackageReference Include="ShadowPluginLoader.Tool" Version="2.1.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Pages\PluginManagerSettingsPage.xaml">
