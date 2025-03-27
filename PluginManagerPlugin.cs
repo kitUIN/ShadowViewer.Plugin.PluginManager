@@ -2,14 +2,11 @@ using DryIoc;
 using Serilog;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using SqlSugar;
-using System;
 using ShadowPluginLoader.Attributes;
 using ShadowPluginLoader.WinUI;
 using ShadowViewer.Core.Plugins;
 using ShadowViewer.Core.Services;
 using ShadowViewer.Core;
-using ShadowViewer.Core.Models;
-using ShadowViewer.Plugin.PluginManager.Pages;
 
 namespace ShadowViewer.Plugin.PluginManager
 {
@@ -31,12 +28,6 @@ namespace ShadowViewer.Plugin.PluginManager
 
         /// <inheritdoc />
         public override PluginMetaData MetaData => Meta;
-
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public override ShadowTag AffiliationTag { get; } =
-            new ShadowTag("PluginManager", "#ffd657", "#000000", null, "PluginManager");
 
         /// <inheritdoc />
         public override string DisplayName => "插件管理器";

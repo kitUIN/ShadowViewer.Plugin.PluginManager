@@ -157,7 +157,7 @@ public partial class PluginViewModel : ObservableObject
         {
             try
             {
-                await PluginService.ImportAsync(file.Path);
+                await PluginService.ScanAsync(file.Path);
                 await PluginService.Load();
             }
             catch (Exception ex)

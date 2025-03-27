@@ -56,7 +56,7 @@ public class PluginStoreViewModel : ObservableObject
     /// <param name="uri"></param>
     public async void Install(string uri)
     {
-        await PluginService.ImportAsync(uri);
+        await PluginService.ScanAsync(uri);
         await PluginService.Load();
     }
 

@@ -58,7 +58,7 @@ public partial class UiPlugin : ObservableObject
         this.canOpenFolder = plugin.MetaData.CanOpenFolder;
         this.canSwitch = plugin.MetaData.CanSwitch;
         this.canDelete = plugin.MetaData.CanDelete;
-        this.settingsPage = plugin.SettingsPage;
+        this.settingsPage = plugin.MetaData.SettingsPage;
         this.pluginType = plugin.GetType();
     }
 
