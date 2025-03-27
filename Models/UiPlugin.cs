@@ -23,22 +23,22 @@ public partial class UiPlugin : ObservableObject
     [ObservableProperty] private bool isEnabled;
 
     /// <summary>
-    /// <inheritdoc cref="PluginMetaData.CanSwitch"/>
+    /// <inheritdoc cref="PluginManage.CanSwitch"/>
     /// </summary>
     [ObservableProperty] private bool canSwitch;
 
     /// <summary>
-    /// <inheritdoc cref="PluginMetaData.CanDelete"/>
+    /// <inheritdoc cref="PluginManage.CanDelete"/>
     /// </summary>
     [ObservableProperty] private bool canDelete;
 
     /// <summary>
-    /// <inheritdoc cref="PluginMetaData.CanOpenFolder"/>
+    /// <inheritdoc cref="PluginManage.CanOpenFolder"/>
     /// </summary>
     [ObservableProperty] private bool canOpenFolder;
 
     /// <summary>
-    /// <inheritdoc cref="AShadowViewerPlugin.SettingsPage"/>
+    /// <inheritdoc cref="PluginManage.SettingsPage"/>
     /// </summary>
     [ObservableProperty] private Type? settingsPage;
 
@@ -53,13 +53,13 @@ public partial class UiPlugin : ObservableObject
     /// <param name="plugin"></param>
     public UiPlugin(AShadowViewerPlugin plugin)
     {
-        this.metaData = plugin.MetaData;
-        this.isEnabled = plugin.IsEnabled;
-        this.canOpenFolder = plugin.MetaData.CanOpenFolder;
-        this.canSwitch = plugin.MetaData.CanSwitch;
-        this.canDelete = plugin.MetaData.CanDelete;
-        this.settingsPage = plugin.MetaData.SettingsPage;
-        this.pluginType = plugin.GetType();
+        metaData = plugin.MetaData;
+        isEnabled = plugin.IsEnabled;
+        canOpenFolder = plugin.MetaData.PluginManage.CanOpenFolder;
+        canSwitch = plugin.MetaData.PluginManage.CanSwitch;
+        canDelete = plugin.MetaData.PluginManage.CanDelete;
+        settingsPage = plugin.MetaData.PluginManage.SettingsPage;
+        pluginType = plugin.GetType();
     }
 
     /// <summary>
