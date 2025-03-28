@@ -4,13 +4,14 @@ using CommunityToolkit.WinUI.Helpers;
 using FluentIcons.Common;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using ShadowViewer.Plugin.PluginManager.Settings;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
 public partial class PluginManagerSettingsViewModel : ObservableObject
 {
     /// <summary>
-    /// <inheritdoc cref="Enums.PluginManagerSettings.PluginSecurityStatement"/>
+    /// <inheritdoc cref="PluginManagerSettings.PluginSecurityStatement"/>
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementColor))]
@@ -20,7 +21,7 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     private bool pluginSecurityStatement = PluginManagerPlugin.Settings.PluginSecurityStatement;
 
     /// <summary>
-    /// <inheritdoc cref="Enums.PluginManagerSettings.PluginSecurityStatementVersion"/>
+    /// <inheritdoc cref="PluginManagerSettings.PluginSecurityStatementVersion"/>
     /// </summary>
     [ObservableProperty]
     private string pluginSecurityStatementVersion = PluginManagerPlugin.Settings.PluginSecurityStatementVersion;
@@ -50,7 +51,7 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
         PluginSecurityStatement ? I18n.I18N.Agree : I18n.I18N.Refuse;
 
     /// <summary>
-    /// <inheritdoc cref="Enums.PluginManagerSettings.PluginSecurityStatement"/>
+    /// <inheritdoc cref="PluginManagerSettings.PluginSecurityStatement"/>
     /// </summary>
     [ObservableProperty] private bool pluginSecurityCheck = PluginManagerPlugin.Settings.PluginSecurityStatement;
 
@@ -65,12 +66,12 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     }
 
     /// <summary>
-    /// <inheritdoc cref="Enums.PluginManagerSettings.GithubMirror"/>
+    /// <inheritdoc cref="PluginManagerSettings.GithubMirror"/>
     /// </summary>
     [ObservableProperty] private string githubMirror = PluginManagerPlugin.Settings.GithubMirror;
 
     /// <summary>
-    /// <inheritdoc cref="Enums.PluginManagerSettings.StoreUri"/>
+    /// <inheritdoc cref="PluginManagerSettings.StoreUri"/>
     /// </summary>
     [ObservableProperty] private string storeUri = PluginManagerPlugin.Settings.StoreUri;
 }
