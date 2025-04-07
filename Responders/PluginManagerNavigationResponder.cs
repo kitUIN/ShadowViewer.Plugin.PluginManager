@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
+using ShadowPluginLoader.Attributes;
 using ShadowViewer.Core.Models;
 using ShadowViewer.Core.Responders;
 using ShadowViewer.Plugin.PluginManager.Pages;
 using ShadowViewer.Core.Models.Interfaces;
+using ShadowViewer.Core.Plugins;
 using ShadowViewer.Core.Utils;
 using ShadowViewer.Plugin.PluginManager.I18n;
 
@@ -15,6 +17,7 @@ namespace ShadowViewer.Plugin.PluginManager.Responders;
 /// <remarks>
 /// <inheritdoc/>
 /// </remarks>
+[EntryPoint(Name = nameof(PluginResponder.NavigationResponder))]
 public partial class PluginManagerNavigationResponder : AbstractNavigationResponder
 {
     /// <summary>

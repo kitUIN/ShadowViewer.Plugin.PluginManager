@@ -1,4 +1,6 @@
+using ShadowPluginLoader.Attributes;
 using ShadowViewer.Core.Models.Interfaces;
+using ShadowViewer.Core.Plugins;
 using ShadowViewer.Core.Settings;
 using ShadowViewer.Plugin.PluginManager.I18n;
 
@@ -7,7 +9,8 @@ namespace ShadowViewer.Plugin.PluginManager.Models;
 /// <summary>
 /// 插件文件夹
 /// </summary>
-public class PluginFolder: ISettingFolder
+[EntryPoint(Name = nameof(PluginResponder.SettingFolders))]
+public class PluginFolder : ISettingFolder
 {
     /// <summary>
     /// 
@@ -17,6 +20,7 @@ public class PluginFolder: ISettingFolder
     {
         PluginId = pluginId;
     }
+
     /// <inheritdoc />
     public string PluginId { get; }
 
