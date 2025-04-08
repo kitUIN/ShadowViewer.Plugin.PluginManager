@@ -12,7 +12,7 @@
 		<PackageId>ShadowViewer.Plugin.PluginManager</PackageId>
 
 		<!--插件版本号(nuget包版本号)-->
-		<Version>1.3.16</Version>
+		<Version>1.3.17</Version>
 		<!--插件介绍(nuget包介绍)-->
 		<Description>ShadowViewer插件可视化管理插件</Description>
 		<!--插件作者(nuget包作者)-->
@@ -39,7 +39,7 @@
 			<WebUri>$(PackageProjectUrl)</WebUri>
 			<Description>$(Description)</Description>
 			<Authors>$(Authors)</Authors>
-			<CoreVersion>2025.4.8.1</CoreVersion>
+			<CoreVersion>2025.4.8.26</CoreVersion>
 			<PluginManage>
 				<CanOpenFolder>false</CanOpenFolder>
 				<CanDelete>false</CanDelete>
@@ -49,12 +49,13 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="Pages\PluginStorePage.xaml" />
+		<None Remove="plugin.d.json" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<ProjectReference Include="..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="ShadowViewer.Core" Version="2025.4.8.1" />
+		<PackageReference Include="ShadowViewer.Core" Version="2025.4.8.26" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Pages\PluginManagerSettingsPage.xaml">
