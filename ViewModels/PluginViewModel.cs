@@ -17,6 +17,7 @@ using Microsoft.UI.Xaml.Controls;
 using ShadowPluginLoader.Attributes;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Plugin.PluginManager.Pages;
+using System.Linq;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -57,7 +58,7 @@ public partial class PluginViewModel : ObservableObject
     public void InitPlugins()
     {
         Plugins.Clear();
-        foreach (var plugin in PluginService.GetPlugins())
+        foreach (var plugin in PluginService.GetPlugins().OrderBy(f => f.Id))
         {
             Plugins.Add(new UiPlugin(plugin));
         }

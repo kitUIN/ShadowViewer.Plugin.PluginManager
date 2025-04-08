@@ -57,7 +57,7 @@ public partial class UiPlugin : ObservableObject
         isEnabled = plugin.IsEnabled;
         canOpenFolder = plugin.MetaData.PluginManage.CanOpenFolder;
         canSwitch = plugin.MetaData.PluginManage.CanSwitch;
-        canDelete = plugin.MetaData.PluginManage.CanDelete;
+        canDelete = !plugin.MetaData.BuiltIn;
         settingsPage = plugin.MetaData.PluginManage.SettingsPage;
         pluginType = plugin.GetType();
     }
