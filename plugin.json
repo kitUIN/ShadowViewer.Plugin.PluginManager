@@ -6,7 +6,6 @@
   "Logo": "fluent://regular/Apps",
   "PluginManage": {
     "CanSwitch": false,
-    "CanDelete": false,
     "CanOpenFolder": false
   },
   "CoreVersion": "2025.4.8.26",
