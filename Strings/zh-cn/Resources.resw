@@ -190,7 +190,7 @@
     <value>仅从可信赖的来源下载和安装插件。恶意插件可能包含病毒、木马或其他恶意代码，可能会对您的设备和数据造成损害。</value>
   </data>
   <data name="PluginSecurity_Permission_Content" xml:space="preserve">
-    <value>插件可能需要访问您的系统资源、网络或敏感数据。请务必检查插件的权限请求，避免授予不必要的访问权限，以降低潜在的安全风险。</value>
+    <value>插件可能需要访问您的系统资源、网络或敏感数据。默认拥有所有权限，请务必确定插件的来自可信来源，避免自动授予访问权限后造成损失。</value>
   </data>
   <data name="PluginSecurity_CodeRisk_Content" xml:space="preserve">
     <value>任何插件在加载后都可以执行任意代码，可能偷取您的个人信息，甚至造成数据与财产丢失。请谨慎选择并使用插件，以确保其安全性和可靠性。</value>

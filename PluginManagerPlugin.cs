@@ -3,6 +3,7 @@ using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowPluginLoader.Attributes;
 using ShadowPluginLoader.WinUI;
 using ShadowViewer.Core.Plugins;
+using ShadowViewer.Plugin.PluginManager.I18n;
 
 namespace ShadowViewer.Plugin.PluginManager
 {
@@ -24,6 +25,6 @@ namespace ShadowViewer.Plugin.PluginManager
         }
 
         /// <inheritdoc />
-        public override string DisplayName => "插件管理器";
+        public override string DisplayName => I18N.PluginManager;
     }
 }
