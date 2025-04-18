@@ -46,7 +46,7 @@ public partial class PluginManagerNavigationResponder : AbstractNavigationRespon
     {
         return item.Id switch
         {
-            "PluginManager" => new ShadowNavigation(typeof(PluginPage)),
+            "PluginManager" => new ShadowNavigation(typeof(PluginPage), SelectItemId: item.Id),
             _ => null
         };
     }

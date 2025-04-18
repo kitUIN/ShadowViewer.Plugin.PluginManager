@@ -6,9 +6,7 @@
     xmlns:core="using:ShadowViewer.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i18N="using:ShadowViewer.Plugin.PluginManager.I18n"
-    xmlns:local2="using:ShadowViewer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:plugins="using:ShadowViewer.Core.Plugins"
     xmlns:fluent="using:FluentIcons.WinUI"
     xmlns:converters1="using:ShadowViewer.Plugin.PluginManager.Converters"
     xmlns:extensions="using:ShadowViewer.Core.Extensions"
@@ -228,7 +226,7 @@
                 </GridView.ItemTemplate>
             </GridView>
         </Grid>
-
+        
         <ContentDialog
             x:Name="SecurityContentDialog"
             Title="{i18N:Locale Key=PluginSecurityStatement}"

@@ -39,7 +39,7 @@
 			<WebUri>$(PackageProjectUrl)</WebUri>
 			<Description>$(Description)</Description>
 			<Authors>$(Authors)</Authors>
-			<CoreVersion>2025.4.15.7</CoreVersion>
+			<CoreVersion>2025.4.18.1</CoreVersion>
 			<PluginManage>
 				<CanOpenFolder>false</CanOpenFolder>
 				<CanSwitch>false</CanSwitch>
@@ -51,11 +51,11 @@
 		<None Remove="plugin.d.json" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<PackageReference Include="ShadowViewer.Core" Version="2025.4.15.7" />
+		<PackageReference Include="ShadowViewer.Core" Version="2025.4.18.2" />
 		<!-- <ProjectReference Include="..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" /> -->
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="ShadowViewer.Core" Version="2025.4.15.7" />
+		<PackageReference Include="ShadowViewer.Core" Version="2025.4.18.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Pages\PluginManagerSettingsPage.xaml">
