@@ -29,6 +29,7 @@ public sealed partial class PluginStorePage : Page
     {
         this.InitializeComponent();
     }
+
     /// <summary>
     /// 升级点击
     /// </summary>
@@ -58,9 +59,10 @@ public sealed partial class PluginStorePage : Page
             {
                 asset = model.MetaData.Assets[0].BrowserDownloadUrl;
             }
+
             if (model.CouldUpdate)
-            { 
-                ViewModel.Upgrade(model.Id,asset);
+            {
+                ViewModel.Upgrade(model.Id, asset);
             }
             else
             {
@@ -70,6 +72,26 @@ public sealed partial class PluginStorePage : Page
         catch (Exception ex)
         {
             Log.Error("UpgradeClick ERROR:{ex}", ex);
+        }
+    }
+
+    /// <summary>
+    /// Init
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            await ViewModel.Init();
+            LoadingProgress.Visibility = Visibility.Collapsed;
+        }
+        catch (Exception exception)
+        {
+            Log.Error("获取插件报错:{E}", exception);
+            ViewModel.NotifyService.NotifyTip(this, $"获取插件报错:{exception}",
+                InfoBarSeverity.Error);
         }
     }
 }

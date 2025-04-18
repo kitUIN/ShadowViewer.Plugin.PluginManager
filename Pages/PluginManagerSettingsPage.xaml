@@ -11,6 +11,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:controls1="using:ShadowViewer.Controls"
     xmlns:winUi="using:FluentIcons.WinUI"
+    xmlns:pluginManager="using:ShadowViewer.Plugin.PluginManager"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
@@ -70,12 +71,12 @@
                             <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=GlobeSearch}"
                                                    Description="{i18N:Locale Key=StoreUriDescription}"
                                                    Header="{i18N:Locale Key=StoreUri}">
-                                <TextBox Text="{x:Bind ViewModel.StoreUri,Mode=TwoWay}"></TextBox>
+                                <TextBox   Text="{x:Bind pluginManager:PluginManagerPlugin.Settings.StoreUri, Mode=TwoWay}"  ></TextBox>
                             </controls:SettingsCard>
                             <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=ArrowTrendingWrench}"
                                                    Description="{i18N:Locale Key=GithubMirrorDescription}"
                                                    Header="{i18N:Locale Key=GithubMirror}">
-                                <TextBox Text="{x:Bind ViewModel.GithubMirror,Mode=TwoWay}"></TextBox>
+                                <TextBox  Text="{x:Bind pluginManager:PluginManagerPlugin.Settings.GithubMirror,Mode=TwoWay}"  ></TextBox>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
 

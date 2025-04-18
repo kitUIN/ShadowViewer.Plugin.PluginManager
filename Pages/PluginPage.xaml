@@ -74,6 +74,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Icon="{fluent:SymbolIcon Symbol=Search}"
+                        Command="{x:Bind ViewModel.ToPluginStorePageCommand}"
                         IsEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
                         Label="{i18N:Locale Key=PluginStore}"
                         ToolTipService.ToolTip="{i18N:Locale Key=GoPluginTip}">

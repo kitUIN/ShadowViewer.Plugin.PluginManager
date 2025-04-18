@@ -10,7 +10,7 @@ public enum PluginManagerSetting
     /// <summary>
     /// Github代理域名
     /// </summary>
-    [ShadowSetting(typeof(string), "https://mirror.ghproxy.com/", "Github代理域名")]
+    [ShadowSetting(typeof(string), "https://ghfast.top/", "Github代理域名")]
     GithubMirror,
     
     /// <summary>

@@ -35,9 +35,16 @@ public class PluginStoreHelper
     {
         var reqUrl = url;
         if (!string.IsNullOrEmpty(PluginManagerPlugin.Settings.GithubMirror) &&
-            reqUrl.StartsWith("https://raw.githubusercontent.com") )
+            reqUrl.StartsWith("https://raw.githubusercontent.com"))
         {
-            reqUrl = PluginManagerPlugin.Settings.GithubMirror + reqUrl;
+            if (PluginManagerPlugin.Settings.GithubMirror.EndsWith('/'))
+            {
+                reqUrl = PluginManagerPlugin.Settings.GithubMirror + reqUrl;
+            }
+            else
+            {
+                reqUrl = PluginManagerPlugin.Settings.GithubMirror + "/" + reqUrl;
+            }
         }
 
         var httpRequestMessage = new HttpRequestMessage(method, reqUrl);
@@ -60,7 +67,7 @@ public class PluginStoreHelper
             using var request = CreateRequestMessage(HttpMethod.Get, url);
             using var response = await client.SendAsync(request);
             var resp = await response.Content.ReadAsStringAsync();
-            Log.Debug("\n[GET]{Api}:\nproxy:{Proxy}\nreturn:{Resp}", url,
+            Log.Debug("\n[GET]{Api}:\nmirror:{Mirror}\nreturn:{Resp}", url,
                 PluginManagerPlugin.Settings.GithubMirror, resp);
             return JsonSerializer.Deserialize<T>(resp);
         }

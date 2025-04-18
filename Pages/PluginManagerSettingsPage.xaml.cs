@@ -1,9 +1,11 @@
 using System;
+using Windows.System;
 using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowPluginLoader.WinUI;
 using DryIoc;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 using Serilog;
 using ShadowPluginLoader.Attributes;
 using ShadowViewer.Core.Plugins;
@@ -44,5 +46,6 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
                 Log.Error("SecurityContentDialog_OnClick: {Ex}", ex);
             }
         }
+         
     }
 }

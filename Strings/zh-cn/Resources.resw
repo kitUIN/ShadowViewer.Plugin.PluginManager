@@ -240,4 +240,7 @@
   <data name="GithubMirrorDescription" xml:space="preserve">
     <value>如果是Github链接,使用该镜像域名访问</value>
   </data>
+  <data name="RequestingPlugin" xml:space="preserve">
+    <value>正在获取插件</value>
+  </data>
 </root>
