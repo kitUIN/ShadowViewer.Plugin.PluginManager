@@ -4,6 +4,7 @@
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
 		<RootNamespace>ShadowViewer.Plugin.PluginManager</RootNamespace>
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<PlatformTarget>AnyCPU</PlatformTarget>
 		<UseWinUI>true</UseWinUI>
 		<Nullable>enable</Nullable>
 		<LangVersion>12</LangVersion>
@@ -39,7 +40,7 @@
 			<WebUri>$(PackageProjectUrl)</WebUri>
 			<Description>$(Description)</Description>
 			<Authors>$(Authors)</Authors>
-			<CoreVersion>2025.4.18.1</CoreVersion>
+			<CoreVersion>2025.4.18.3</CoreVersion>
 			<PluginManage>
 				<CanOpenFolder>false</CanOpenFolder>
 				<CanSwitch>false</CanSwitch>
@@ -51,11 +52,11 @@
 		<None Remove="plugin.d.json" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<PackageReference Include="ShadowViewer.Core" Version="2025.4.18.2" />
+		<PackageReference Include="ShadowViewer.Core" Version="2025.4.18.3" />
 		<!-- <ProjectReference Include="..\ShadowViewer.Core\ShadowViewer.Core\ShadowViewer.Core.csproj" /> -->
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="ShadowViewer.Core" Version="2025.4.18.2" />
+		<PackageReference Include="ShadowViewer.Core" Version="2025.4.18.3" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Pages\PluginManagerSettingsPage.xaml">
