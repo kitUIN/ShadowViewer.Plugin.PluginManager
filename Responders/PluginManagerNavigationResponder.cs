@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using ShadowPluginLoader.Attributes;
-using ShadowViewer.Core.Models;
-using ShadowViewer.Core.Responders;
+using ShadowViewer.Sdk.Models;
+using ShadowViewer.Sdk.Responders;
 using ShadowViewer.Plugin.PluginManager.Pages;
-using ShadowViewer.Core.Models.Interfaces;
-using ShadowViewer.Core.Plugins;
-using ShadowViewer.Core.Utils;
+using ShadowViewer.Sdk.Models.Interfaces;
+using ShadowViewer.Sdk.Plugins;
+using ShadowViewer.Sdk.Utils;
 using ShadowViewer.Plugin.PluginManager.I18n;
 
 namespace ShadowViewer.Plugin.PluginManager.Responders;
@@ -34,7 +34,9 @@ public partial class PluginManagerNavigationResponder : AbstractNavigationRespon
     public override IEnumerable<IShadowNavigationItem> NavigationViewFooterItems { get; } =
         new List<IShadowNavigationItem>
         {
-            new ShadowNavigationItem(pluginId: PluginManagerPlugin.Meta.Id, id: "PluginManager",
+            new ShadowNavigationItem(
+                pluginId: "ShadowViewer.Plugin.PluginManager",
+                id: "PluginManager",
                 icon: new FontIcon { Glyph = "\uE74C" },
                 content: I18N.PluginManager)
         };

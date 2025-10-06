@@ -7,27 +7,36 @@ using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Microsoft.UI.Xaml.Media.Animation;
 using Serilog;
-using ShadowViewer.Core.Helpers;
-using ShadowViewer.Core;
-using ShadowViewer.Core.Plugins;
-using ShadowViewer.Core.Extensions;
-using ShadowViewer.Core.Services;
+using ShadowViewer.Sdk.Helpers;
+using ShadowViewer.Sdk;
+using ShadowViewer.Sdk.Plugins;
+using ShadowViewer.Sdk.Extensions;
+using ShadowViewer.Sdk.Services;
 using ShadowViewer.Plugin.PluginManager.Models;
 using Microsoft.UI.Xaml.Controls;
 using ShadowPluginLoader.Attributes;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Plugin.PluginManager.Pages;
 using System.Linq;
+using ShadowViewer.Plugin.PluginManager.Configs;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
 public partial class PluginViewModel : ObservableObject
 {
+    [Autowired] public PluginManagerConfig PluginManagerConfig { get; }
+
+    partial void ConstructorInit()
+    {
+        pluginSecurityCheck = PluginManagerConfig.PluginSecurityStatement;
+    }
+
+
     /// <summary>
     /// 插件安全声明弹出框确定
     /// </summary>
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
-    private bool pluginSecurityCheck = PluginManagerPlugin.Settings.PluginSecurityStatement;
+    private bool pluginSecurityCheck;
 
     /// <summary>
     /// 插件服务
@@ -70,7 +79,7 @@ public partial class PluginViewModel : ObservableObject
     [RelayCommand]
     private void SecurityConfirm()
     {
-        PluginManagerPlugin.Settings.PluginSecurityStatement = PluginSecurityCheck;
+        PluginManagerConfig.PluginSecurityStatement = PluginSecurityCheck;
     }
 
     /// <summary>
@@ -156,18 +165,18 @@ public partial class PluginViewModel : ObservableObject
             PickerViewMode.List, FileHelper.Zips);
         if (file != null)
         {
-            try
-            {
-                await PluginService.ScanAsync(file.Path);
-                await PluginService.Load();
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("添加插件失败:{Ex}", ex);
-                return;
-            }
-
-            InitPlugins();
+            // try
+            // {
+            //     await PluginService.ScanAsync(file.Path);
+            //     await PluginService.Load();
+            // }
+            // catch (Exception ex)
+            // {
+            //     Logger.Error("添加插件失败:{Ex}", ex);
+            //     return;
+            // }
+            //
+            // InitPlugins();
         }
     }
 }

@@ -1,7 +1,7 @@
 using ShadowPluginLoader.Attributes;
-using ShadowViewer.Core.Models.Interfaces;
-using ShadowViewer.Core.Plugins;
-using ShadowViewer.Core.Settings;
+using ShadowPluginLoader.WinUI.Config;
+using ShadowViewer.Sdk.Models.Interfaces;
+using ShadowViewer.Sdk.Plugins;
 using ShadowViewer.Plugin.PluginManager.I18n;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
@@ -10,19 +10,17 @@ namespace ShadowViewer.Plugin.PluginManager.Models;
 /// 插件文件夹
 /// </summary>
 [EntryPoint(Name = nameof(PluginResponder.SettingFolders))]
-public class PluginFolder : ISettingFolder
+public partial class PluginFolder : ISettingFolder
 {
+    /// <inheritdoc />
+    [Autowired]
+    public string PluginId { get; }
+
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="pluginId"></param>
-    public PluginFolder(string pluginId)
-    {
-        PluginId = pluginId;
-    }
-
-    /// <inheritdoc />
-    public string PluginId { get; }
+    [Autowired]
+    public BaseSdkConfig BaseSdkConfig { get; }
 
     /// <inheritdoc />
     public string Name => I18N.PluginFolder;
@@ -33,8 +31,8 @@ public class PluginFolder : ISettingFolder
     /// <inheritdoc />
     public string Path
     {
-        get => CoreSettings.Instance.PluginsPath;
-        set => CoreSettings.Instance.PluginsPath = value;
+        get => BaseSdkConfig.PluginFolderPath;
+        set => BaseSdkConfig.PluginFolder = value;
     }
 
     /// <inheritdoc />

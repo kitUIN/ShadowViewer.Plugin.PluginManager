@@ -1,17 +1,18 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Serilog;
+using Serilog.Core;
+using ShadowPluginLoader.Attributes;
+using ShadowViewer.Plugin.PluginManager.Configs;
+using ShadowViewer.Plugin.PluginManager.Helpers;
+using ShadowViewer.Plugin.PluginManager.Models;
+using ShadowViewer.Sdk;
+using ShadowViewer.Sdk.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Serilog;
-using Serilog.Core;
-using ShadowPluginLoader.Attributes;
-using ShadowViewer.Plugin.PluginManager.Helpers;
-using ShadowViewer.Plugin.PluginManager.Models;
-using ShadowViewer.Core;
-using ShadowViewer.Core.Services;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -30,6 +31,8 @@ public partial class PluginStoreViewModel : ObservableObject
     /// </summary>
     [Autowired]
     public PluginLoader PluginService { get; }
+    [Autowired]
+    public PluginManagerConfig PluginManagerConfig { get; }
 
     /// <summary>
     /// Logger
@@ -50,7 +53,7 @@ public partial class PluginStoreViewModel : ObservableObject
     public async Task Init()
     {
         Models.Clear();
-        var pluginList = await PluginStoreHelper.Instance.GetPluginList();
+        var pluginList = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri);
         if (pluginList == null) return;
         foreach (var meta in pluginList)
         {
@@ -65,8 +68,8 @@ public partial class PluginStoreViewModel : ObservableObject
     /// <param name="uri"></param>
     public async void Install(string uri)
     {
-        await PluginService.ScanAsync(uri);
-        await PluginService.Load();
+        // await PluginService.ScanAsync(uri);
+        // await PluginService.Load();
     }
 
     /// <summary>
@@ -76,6 +79,6 @@ public partial class PluginStoreViewModel : ObservableObject
     /// <param name="uri"></param>
     public async void Upgrade(string id, string uri)
     {
-        await PluginService.UpgradePlugin(id, uri);
+        await PluginService.UpgradePlugin(id, new Uri(uri));
     }
 }

@@ -34,19 +34,6 @@ public class PluginStoreHelper
         Dictionary<string, string>? headers = null)
     {
         var reqUrl = url;
-        if (!string.IsNullOrEmpty(PluginManagerPlugin.Settings.GithubMirror) &&
-            reqUrl.StartsWith("https://raw.githubusercontent.com"))
-        {
-            if (PluginManagerPlugin.Settings.GithubMirror.EndsWith('/'))
-            {
-                reqUrl = PluginManagerPlugin.Settings.GithubMirror + reqUrl;
-            }
-            else
-            {
-                reqUrl = PluginManagerPlugin.Settings.GithubMirror + "/" + reqUrl;
-            }
-        }
-
         var httpRequestMessage = new HttpRequestMessage(method, reqUrl);
         if (headers == null) return httpRequestMessage;
         foreach (var header in headers)
@@ -67,8 +54,7 @@ public class PluginStoreHelper
             using var request = CreateRequestMessage(HttpMethod.Get, url);
             using var response = await client.SendAsync(request);
             var resp = await response.Content.ReadAsStringAsync();
-            Log.Debug("\n[GET]{Api}:\nmirror:{Mirror}\nreturn:{Resp}", url,
-                PluginManagerPlugin.Settings.GithubMirror, resp);
+            Log.Debug("\n[GET]{Api}:\n\nreturn:{Resp}", url, resp);
             return JsonSerializer.Deserialize<T>(resp);
         }
         catch (Exception exception)
@@ -81,8 +67,8 @@ public class PluginStoreHelper
     /// <summary>
     /// 获取插件列表
     /// </summary>
-    public async Task<PluginItem[]?> GetPluginList(int page = 1)
+    public async Task<PluginItem[]?> GetPluginList(string storeUri, int page = 1)
     {
-        return await GetAsync<PluginItem[]>(PluginManagerPlugin.Settings.StoreUri);
+        return await GetAsync<PluginItem[]>(storeUri);
     }
 }

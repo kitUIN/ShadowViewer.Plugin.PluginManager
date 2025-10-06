@@ -1,11 +1,12 @@
 using DryIoc;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using Serilog;
+using ShadowPluginLoader.WinUI;
+using ShadowViewer.Plugin.PluginManager.Configs;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using System;
-using ShadowPluginLoader.WinUI;
-using Microsoft.UI.Xaml.Navigation;
 
 namespace ShadowViewer.Plugin.PluginManager.Pages
 {
@@ -37,7 +38,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
             try
             {
                 ViewModel.InitPlugins();
-                if (PluginManagerPlugin.Settings.PluginSecurityStatement) return;
+                if (ViewModel.PluginManagerConfig.PluginSecurityStatement) return;
                 await SecurityContentDialog.ShowAsync();
             }
             catch (Exception ex)

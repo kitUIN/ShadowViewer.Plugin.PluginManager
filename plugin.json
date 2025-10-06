@@ -1,16 +1,13 @@
 {
-  "DllName": "ShadowViewer.Plugin.PluginManager",
-  "Description": "ShadowViewer插件可视化管理插件",
-  "Authors": "kitUIN",
-  "WebUri": "https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager",
+  "Id": "{{ PackageId }}",
+  "Name": "{{ PluginName }}",
+  "Version": "{{ Version }}",
+  "Description": "{{ Description }}",
+  "Authors": "{{ Authors }}",
+  "WebUri": "{{ RepositoryUrl }}",
   "Logo": "fluent://regular/Apps",
   "PluginManage": {
     "CanSwitch": false,
     "CanOpenFolder": false
-  },
-  "CoreVersion": "2025.4.18.5",
-  "Id": "PluginManager",
-  "Name": "插件管理器",
-  "Version": "1.4.0",
-  "Dependencies": []
+  }
 }

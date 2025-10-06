@@ -2,7 +2,7 @@ using DryIoc;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowPluginLoader.Attributes;
 using ShadowPluginLoader.WinUI;
-using ShadowViewer.Core.Plugins;
+using ShadowViewer.Sdk.Plugins;
 using ShadowViewer.Plugin.PluginManager.I18n;
 
 namespace ShadowViewer.Plugin.PluginManager

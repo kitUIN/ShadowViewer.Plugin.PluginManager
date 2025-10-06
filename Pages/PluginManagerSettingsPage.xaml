@@ -44,7 +44,7 @@
                             <TextBlock>
                                 <Run Text="{i18N:Locale Key=PluginSecurityStatementVersion}"></Run>
                                 <Run Text=": "></Run>
-                                <Run Text="{x:Bind ViewModel.PluginSecurityStatementVersion,Mode=OneWay}"></Run>
+                                <Run Text="{x:Bind ViewModel.PluginManagerConfig.PluginSecurityStatementVersion,Mode=OneWay}"></Run>
                             </TextBlock>
                         </controls:SettingsCard.Description>
                         <StackPanel Spacing="4" Orientation="Horizontal">
@@ -71,12 +71,7 @@
                             <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=GlobeSearch}"
                                                    Description="{i18N:Locale Key=StoreUriDescription}"
                                                    Header="{i18N:Locale Key=StoreUri}">
-                                <TextBox   Text="{x:Bind pluginManager:PluginManagerPlugin.Settings.StoreUri, Mode=TwoWay}"  ></TextBox>
-                            </controls:SettingsCard>
-                            <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=ArrowTrendingWrench}"
-                                                   Description="{i18N:Locale Key=GithubMirrorDescription}"
-                                                   Header="{i18N:Locale Key=GithubMirror}">
-                                <TextBox  Text="{x:Bind pluginManager:PluginManagerPlugin.Settings.GithubMirror,Mode=TwoWay}"  ></TextBox>
+                                <TextBox   Text="{x:Bind ViewModel.PluginManagerConfig.StoreUri, Mode=TwoWay}"  ></TextBox>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
 

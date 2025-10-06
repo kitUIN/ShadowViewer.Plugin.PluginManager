@@ -2,8 +2,8 @@ using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DryIoc;
 using ShadowPluginLoader.WinUI;
-using ShadowViewer.Core;
-using ShadowViewer.Core.Plugins;
+using ShadowViewer.Sdk;
+using ShadowViewer.Sdk.Plugins;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -58,7 +58,7 @@ public partial class UiPlugin : ObservableObject
         canOpenFolder = plugin.MetaData.PluginManage.CanOpenFolder;
         canSwitch = plugin.MetaData.PluginManage.CanSwitch;
         canDelete = !plugin.MetaData.BuiltIn;
-        settingsPage = plugin.MetaData.PluginManage.SettingsPage;
+        settingsPage = plugin.MetaData.PluginManage.SettingsPage?.EntryPointType;
         pluginType = plugin.GetType();
     }
 

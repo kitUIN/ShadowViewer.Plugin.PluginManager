@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using DryIoc;
 using ShadowPluginLoader.WinUI;
-using ShadowViewer.Core;
+using ShadowViewer.Sdk;
 using ShadowViewer.Plugin.PluginManager.Enums;
 using ShadowViewer.Plugin.PluginManager.Responses;
 
@@ -54,11 +54,11 @@ public partial class PluginStoreModel : ObservableObject
         var plugin = DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id);
         if (plugin == null) return;
         InstallStatus = PluginInstallStatus.Installed;
-        CurrentVersion = plugin.MetaData.Version;
-        if (new Version(plugin.MetaData.Version) < new Version(MetaData.Version))
-        {
-            InstallStatus = PluginInstallStatus.Upgrade;
-        }
+        // CurrentVersion = plugin.MetaData.Version;
+        // if (new Version(plugin.MetaData.Version) < new Version(MetaData.Version))
+        // {
+        //     InstallStatus = PluginInstallStatus.Upgrade;
+        // }
     }
 
 }
