@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <Page
     x:Class="ShadowViewer.Plugin.PluginManager.Pages.PluginManagerSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
