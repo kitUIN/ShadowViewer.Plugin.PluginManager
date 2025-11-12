@@ -14,7 +14,7 @@
 
 		<PluginName>插件可视化管理器</PluginName>
 		<!--插件版本号(nuget包版本号)-->
-		<Version>1.4.4.2</Version>
+		<Version>1.4.4.5</Version>
 		<!--插件介绍(nuget包介绍)-->
 		<Description>✨ ShadowViewer 插件 | 插件可视化管理器 ✨</Description>
 		<!--插件作者(nuget包作者)-->
@@ -24,20 +24,24 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager</PackageProjectUrl>
 		<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
-		<Copyright>Copyright 2023-2024</Copyright>
+		<Copyright>Copyright 2023-2025</Copyright>
 		<PackageTags>kitUIN;wasdk;ShadowViewer;plugin;winui</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageOutputPath>..\..\NugetPackages</PackageOutputPath>
+		<PackageOutputPath>..\..\..\NugetPackages</PackageOutputPath>
 		<NoWarn>MSB3277</NoWarn>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<ProjectReference Include="..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" />
+		<ProjectReference Include="..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<PackageReference Include="ShadowViewer.Sdk" Version="3.0.0.7" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="$(OutputDir)\$(MSBuildProjectName)\plugin.json" Pack="true" PackagePath="contentTransitive\$(MSBuildProjectName)\" />
+	</ItemGroup>
+  
 </Project>

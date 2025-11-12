@@ -12,6 +12,6 @@ public static class PluginNameHelper
     /// <returns></returns>
     public static string GetPluginId(string rawName)
     {
-        return rawName.Replace("ShadowViewer.Plugins.", "");
+        return rawName.Replace("ShadowViewer.Plugin.", "");
     }
 }
