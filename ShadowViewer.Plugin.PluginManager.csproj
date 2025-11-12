@@ -14,7 +14,7 @@
 
 		<PluginName>插件可视化管理器</PluginName>
 		<!--插件版本号(nuget包版本号)-->
-		<Version>1.4.4.1</Version>
+		<Version>1.4.4.2</Version>
 		<!--插件介绍(nuget包介绍)-->
 		<Description>✨ ShadowViewer 插件 | 插件可视化管理器 ✨</Description>
 		<!--插件作者(nuget包作者)-->
@@ -37,7 +37,7 @@
 		<ProjectReference Include="..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="ShadowViewer.Sdk" Version="3.0.0.5" />
+		<PackageReference Include="ShadowViewer.Sdk" Version="3.0.0.7" />
 	</ItemGroup>
 
 </Project>
