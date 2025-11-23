@@ -10,7 +10,6 @@
     xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     xmlns:responses="using:ShadowViewer.Plugin.PluginManager.Responses"
     xmlns:winUi="using:FluentIcons.WinUI"
-    xmlns:extensions="using:ShadowViewer.Core.Extensions"
     xmlns:extensions1="using:ShadowViewer.Sdk.Extensions"
     mc:Ignorable="d">
     <Page.Resources>
