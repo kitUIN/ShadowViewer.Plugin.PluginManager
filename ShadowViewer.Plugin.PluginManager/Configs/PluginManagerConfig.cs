@@ -10,7 +10,13 @@ public partial class PluginManagerConfig
     /// </summary>
     [ObservableConfigProperty(Description = "商店列表网址")]
     private string storeUri =
-        "https://raw.githubusercontent.com/kitUIN/ShadowViewer.PluginStore/refs/heads/main/plugin.json";
+        "https://shadowviewerplugin.kituin.fun/api/store/plugins";
+
+    /// <summary>
+    /// github代理下载加速
+    /// </summary>
+    [ObservableConfigProperty(Description = "github代理下载加速")]
+    private string? githubProxyUrl = "https://hk.gh-proxy.org/";
 
     /// <summary>
     /// 插件安全声明

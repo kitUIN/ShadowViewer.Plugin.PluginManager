@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -31,8 +32,11 @@ public partial class PluginStoreViewModel : ObservableObject
     /// </summary>
     [Autowired]
     public PluginLoader PluginService { get; }
-    [Autowired]
-    public PluginManagerConfig PluginManagerConfig { get; }
+
+    /// <summary>
+    /// PluginManagerConfig
+    /// </summary>
+    [Autowired] public PluginManagerConfig PluginManagerConfig { get; }
 
     /// <summary>
     /// Logger
@@ -46,18 +50,33 @@ public partial class PluginStoreViewModel : ObservableObject
     [Autowired]
     public INotifyService NotifyService { get; }
 
+    /// <summary>
+    /// Store Page
+    /// </summary>
+    [ObservableProperty]
+    public partial int Page { get; set; } = 1;
 
     /// <summary>
     /// 
     /// </summary>
-    public async Task Init()
+    public async Task Refresh()
     {
         Models.Clear();
-        var pluginList = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri);
-        if (pluginList == null) return;
-        foreach (var meta in pluginList)
+        var response = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri, Page);
+        if (response == null || response.Items.Count == 0) return;
+        foreach (var model in response.Items)
         {
-            var model = new PluginStoreModel(meta);
+            if (!PluginManagerConfig.GithubProxyUrl.IsNullOrEmpty())
+            {
+                if (model.Logo?.StartsWith("https://raw.githubusercontent.com") == true)
+                {
+                    model.Logo = PluginManagerConfig.GithubProxyUrl + model.Logo;
+                }
+                if (model.DownloadUrl?.StartsWith("https://github.com") == true)
+                {
+                    model.DownloadUrl = PluginManagerConfig.GithubProxyUrl + model.DownloadUrl;
+                }
+            }
             Models.Add(model);
         }
     }

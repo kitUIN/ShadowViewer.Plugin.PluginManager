@@ -67,8 +67,9 @@ public class PluginStoreHelper
     /// <summary>
     /// 获取插件列表
     /// </summary>
-    public async Task<PluginItem[]?> GetPluginList(string storeUri, int page = 1)
+    public async Task<PluginPageResponse?> GetPluginList(string storeUri, int page = 1, int limit = 20)
     {
-        return await GetAsync<PluginItem[]>(storeUri);
+        var urlWithParams = $"{storeUri}?page={page}&limit={limit}";
+        return await GetAsync<PluginPageResponse>(urlWithParams);
     }
 }

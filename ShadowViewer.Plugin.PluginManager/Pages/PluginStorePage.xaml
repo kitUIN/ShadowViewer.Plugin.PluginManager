@@ -63,15 +63,15 @@
                                     Margin="6"
                                     Width="48"
                                     Height="48"
-                                    extensions1:PluginLogoViewboxExtensions.PluginLogo="{x:Bind MetaData.Logo,Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
+                                    extensions1:PluginLogoViewboxExtensions.PluginLogo="{x:Bind Logo,Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock
                                         FontSize="20"
-                                        Text="{x:Bind MetaData.Name}"
+                                        Text="{x:Bind Name}"
                                         TextTrimming="CharacterEllipsis" />
                                     <TextBlock
                                         Foreground="Gray"
-                                        Text="{x:Bind MetaData.Authors}"
+                                        Text="{x:Bind Authors}"
                                         TextTrimming="CharacterEllipsis" />
                                 </StackPanel>
 
@@ -79,7 +79,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Margin="10,0"
-                                Text="{x:Bind MetaData.Description}"
+                                Text="{x:Bind Description}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="Wrap" />
                             <Grid Grid.Row="2">
@@ -95,14 +95,8 @@
                                     Spacing="3">
                                     <StackPanel Orientation="Horizontal" Spacing="3">
                                         <winUi:FluentIcon Icon="Predictions" />
-                                        <TextBlock Text="{x:Bind MetaData.Id}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <winUi:FluentIcon Icon="TargetArrow" />
-                                        <TextBlock Text="{x:Bind CurrentVersion}" Visibility="{x:Bind CouldUpdate}" />
-                                        <TextBlock Text="➡" Visibility="{x:Bind CouldUpdate}" />
-                                        <TextBlock Text="{x:Bind MetaData.Version}" />
-                                    </StackPanel>
+                                        <TextBlock Text="{x:Bind Id}" />
+                                    </StackPanel> 
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -120,7 +114,7 @@
                                 Height="37"
                                 Padding="5"
                                 HorizontalAlignment="Right"
-                                NavigateUri="{x:Bind MetaData.WebUri}">
+                                NavigateUri="{x:Bind WebUri}">
                                 <ImageIcon
                                     Width="25"
                                     Height="25"
@@ -129,74 +123,15 @@
                             <Button
                                 Grid.Row="3"
                                 Click="UpgradeClick"
-                                IsEnabled="{x:Bind ButtonEnabled}"
                                 Tag="{x:Bind}">
                                 <TextBlock
-                                    Text="{x:Bind InstallStatus, Mode=OneWay, Converter={StaticResource PluginInstallButtonConverter}}" />
+                                    Text="{x:Bind InstallButtonText, Mode=OneWay}" />
                             </Button>
                         </Grid>
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <ContentDialog
-            x:Name="UpgradeSelectContentDialog"
-            Title="{i18N:Locale Key=Upgrade}"
-            CloseButtonText="{i18N:Locale Key=Cancel}"
-            IsPrimaryButtonEnabled="True"
-            PrimaryButtonText="{i18N:Locale Key=Accept}">
-            <ContentDialog.Content>
-                <GridView x:Name="UpgradeSelectGridView" SelectionMode="Single">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="responses:AssetsItem">
-                            <Grid Padding="6" ColumnSpacing="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="32" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <winUi:FluentIcon
-                                    Grid.Column="0"
-                                    Width="32"
-                                    Height="32" IconVariant="Filled"
-                                    Icon="{x:Bind IsZip}" />
-                                <StackPanel
-                                    Grid.Column="1"
-                                    Orientation="Vertical"
-                                    Spacing="4">
-                                    <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis">
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind Name}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                    <TextBlock
-                                        Text="{x:Bind Size, Converter={StaticResource FileSizeToFriendlyStringConverter}}" />
-                                </StackPanel>
-                                <StackPanel
-                                    Grid.Column="2"
-                                    Orientation="Vertical"
-                                    Spacing="4">
-                                    <StackPanel Orientation="Horizontal" Spacing="2">
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{i18N:Locale Key=CreatedAt}" />
-                                        </ToolTipService.ToolTip>
-                                        <winUi:FluentIcon IconVariant="Filled" Icon="Calendar3Day" />
-                                        <TextBlock Text="{x:Bind CreatedAt}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="2">
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{i18N:Locale Key=UpdatedAt}" />
-                                        </ToolTipService.ToolTip>
-                                        <winUi:FluentIcon Icon="History" IconVariant="Filled" />
-                                        <TextBlock Text="{x:Bind UpdatedAt}" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-            </ContentDialog.Content>
-        </ContentDialog>
         <StackPanel x:Name="LoadingProgress" Orientation="Vertical" VerticalAlignment="Center"
                     HorizontalAlignment="Center" Spacing="10">
             <ProgressRing IsActive="True" Width="64" Height="64" />

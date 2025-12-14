@@ -63,7 +63,6 @@ public class PluginInstallButtonConverter : DependencyObject, IValueConverter
         {
             PluginInstallStatus.Installed => InstalledValue,
             PluginInstallStatus.Upgrade => UpgradeValue,
-            PluginInstallStatus.None => InstallValue,
             _ => InstallValue
         };
     }

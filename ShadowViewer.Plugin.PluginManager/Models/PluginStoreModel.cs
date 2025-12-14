@@ -1,64 +1,192 @@
-﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DryIoc;
+using NuGet.Versioning;
 using ShadowPluginLoader.WinUI;
-using ShadowViewer.Sdk;
 using ShadowViewer.Plugin.PluginManager.Enums;
 using ShadowViewer.Plugin.PluginManager.Responses;
+using ShadowViewer.Sdk;
+using System;
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
 /// <summary>
-/// 
+/// 插件项，包含插件的详细信息。
 /// </summary>
 public partial class PluginStoreModel : ObservableObject
 {
     /// <summary>
-    /// Plugin Id
+    /// 插件唯一标识
     /// </summary>
-    public string Id => MetaData.Id;
-    /// <summary>
-    /// 
-    /// </summary>
-    public PluginItem MetaData { get; }
+    [JsonPropertyName("Id")]
+    [ObservableProperty]
+    public partial string Id { get; set; } = null!;
 
     /// <summary>
-    /// 能否安装
+    /// 插件名称
     /// </summary>
-    public bool CouldUpdate => InstallStatus == PluginInstallStatus.Upgrade;
+    [JsonPropertyName("Name")]
+    [ObservableProperty]
+    public partial string Name { get; set; } = null!;
 
     /// <summary>
-    /// 控制按钮
+    /// 当前版本号
     /// </summary>
-    public bool ButtonEnabled => InstallStatus != PluginInstallStatus.Installed;
+    [JsonPropertyName("Version")]
+    [ObservableProperty]
+    public partial string Version { get; set; } = null!;
+
+    /// <summary>
+    /// 所有可用版本号
+    /// </summary>
+    [JsonPropertyName("Versions")]
+    public ObservableCollection<string> Versions { get; set; } = [];
+
+    /// <summary>
+    /// 背景颜色（如用于UI展示）
+    /// </summary>
+    [JsonPropertyName("BackgroundColor")]
+    [ObservableProperty]
+    public partial string? BackgroundColor { get; set; }
+
+    /// <summary>
+    /// 插件标签
+    /// </summary>
+    [JsonPropertyName("Tags")]
+    public ObservableCollection<string> Tags { get; set; } = [];
+
+    /// <summary>
+    /// 插件描述
+    /// </summary>
+    [JsonPropertyName("Description")]
+    [ObservableProperty]
+    public partial string? Description { get; set; }
+
+    /// <summary>
+    /// 作者信息
+    /// </summary>
+    [JsonPropertyName("Authors")]
+    [ObservableProperty]
+    public partial string? Authors { get; set; }
+
+    /// <summary>
+    /// 插件主页链接
+    /// </summary>
+    [JsonPropertyName("WebUri")]
+    [ObservableProperty]
+    public partial string? WebUri { get; set; }
+
+    /// <summary>
+    /// 插件Logo图片链接
+    /// </summary>
+    [JsonPropertyName("Logo")]
+    [ObservableProperty]
+    public partial string? Logo { get; set; }
+
+    /// <summary>
+    /// 依赖的SDK版本
+    /// </summary>
+    [JsonPropertyName("SdkVersion")]
+    [ObservableProperty]
+    public partial string SdkVersion { get; set; } = null!;
+
+    /// <summary>
+    /// 插件依赖项列表
+    /// </summary>
+    [JsonPropertyName("Dependencies")]
+    public ObservableCollection<PluginItemDependency> Dependencies { get; set; } = [];
+
+    /// <summary>
+    /// 插件下载链接
+    /// </summary>
+    [JsonPropertyName("DownloadUrl")]
+    [ObservableProperty]
+    public partial string DownloadUrl { get; set; } = null!;
+
+    /// <summary>
+    /// 最后更新时间
+    /// </summary>
+    [JsonPropertyName("LastUpdated")]
+    [ObservableProperty]
+    public partial DateTime LastUpdated { get; set; }
+
 
     /// <summary>
     /// 安装状态说明
     /// </summary> 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ButtonEnabled))]
-    [NotifyPropertyChangedFor(nameof(CouldUpdate))]
-    private PluginInstallStatus installStatus;
+    public partial PluginInstallStatus InstallStatus { get; set; }
+
     /// <summary>
-    /// 当前版本
+    /// 安装按钮文本
     /// </summary>
-    public string CurrentVersion { get; } = string.Empty;
+    [ObservableProperty]
+    public partial string? InstallButtonText { get; set; }
+
+
     /// <summary>
-    /// 
+    /// 已经安装的版本
     /// </summary>
-    /// <param name="data"></param>
-    public PluginStoreModel(PluginItem data)
+    [ObservableProperty]
+    public partial NuGetVersion? InstalledVersion { get; set; }
+
+    partial void OnIdChanged(string oldValue, string newValue)
     {
-        MetaData = data;
-        InstallStatus = PluginInstallStatus.None;
-        var plugin = DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id);
-        if (plugin == null) return;
-        InstallStatus = PluginInstallStatus.Installed;
-        // CurrentVersion = plugin.MetaData.Version;
-        // if (new Version(plugin.MetaData.Version) < new Version(MetaData.Version))
-        // {
-        //     InstallStatus = PluginInstallStatus.Upgrade;
-        // }
+        if (oldValue == newValue) return;
+        InstalledVersion = DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
     }
 
+    partial void OnVersionChanged(string oldValue, string newValue)
+    {
+        if (oldValue == newValue) return;
+        InstalledVersion ??= DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
+        if (InstalledVersion == null)
+        {
+            InstallStatus = PluginInstallStatus.Install;
+            return;
+        }
+        var pluginStoreVersion = new NuGetVersion(Version);
+        if (pluginStoreVersion > InstalledVersion)
+        {
+            InstallStatus = PluginInstallStatus.Upgrade;
+        }
+        else if (pluginStoreVersion == InstalledVersion)
+        {
+            InstallStatus = PluginInstallStatus.Installed;
+        }
+        else
+        {
+            InstallStatus = PluginInstallStatus.Downgrade;
+        }
+    }
+
+    partial void OnInstallStatusChanged(PluginInstallStatus oldValue, PluginInstallStatus newValue)
+    {
+        InstallButtonText = newValue switch
+        {
+            PluginInstallStatus.Upgrade => "升级到",
+            PluginInstallStatus.Downgrade => "降级到",
+            PluginInstallStatus.Installed => "已安装",
+            _ => "安装"
+        } + " " + Version;
+    }
+}
+
+/// <summary>
+/// 插件依赖项，描述依赖的插件及需求。
+/// </summary>
+public class PluginItemDependency
+{
+    /// <summary>
+    /// 依赖插件的唯一标识
+    /// </summary>
+    [JsonPropertyName("Id")]
+    public string Id { get; set; } = null!;
+
+    /// <summary>
+    /// 依赖需求描述
+    /// </summary>
+    [JsonPropertyName("Need")]
+    public string Need { get; set; } = null!;
 }

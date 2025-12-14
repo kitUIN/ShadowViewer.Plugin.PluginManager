@@ -41,33 +41,33 @@ public sealed partial class PluginStorePage : Page
         {
             if (sender is not Button { Tag: PluginStoreModel model }) return;
             var asset = "";
-            if (model.MetaData.Assets.Count > 1)
-            {
-                UpgradeSelectGridView.ItemsSource = model.MetaData.Assets;
-                var result = await UpgradeSelectContentDialog.ShowAsync();
-                Log.Information("{e}", result);
-                if (result == ContentDialogResult.Primary && UpgradeSelectGridView.SelectedIndex >= 0)
-                {
-                    asset = model.MetaData.Assets[UpgradeSelectGridView.SelectedIndex].BrowserDownloadUrl;
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                asset = model.MetaData.Assets[0].BrowserDownloadUrl;
-            }
-
-            if (model.CouldUpdate)
-            {
-                ViewModel.Upgrade(model.Id, asset);
-            }
-            else
-            {
-                ViewModel.Install(asset);
-            }
+            // if (model.MetaData.Assets.Count > 1)
+            // {
+            //     UpgradeSelectGridView.ItemsSource = model.MetaData.Assets;
+            //     var result = await UpgradeSelectContentDialog.ShowAsync();
+            //     Log.Information("{e}", result);
+            //     if (result == ContentDialogResult.Primary && UpgradeSelectGridView.SelectedIndex >= 0)
+            //     {
+            //         asset = model.MetaData.Assets[UpgradeSelectGridView.SelectedIndex].BrowserDownloadUrl;
+            //     }
+            //     else
+            //     {
+            //         return;
+            //     }
+            // }
+            // else
+            // {
+            //     asset = model.MetaData.Assets[0].BrowserDownloadUrl;
+            // }
+            //
+            // if (model.CouldUpdate)
+            // {
+            //     ViewModel.Upgrade(model.Id, asset);
+            // }
+            // else
+            // {
+            //     ViewModel.Install(asset);
+            // }
         }
         catch (Exception ex)
         {
@@ -84,14 +84,18 @@ public sealed partial class PluginStorePage : Page
     {
         try
         {
-            await ViewModel.Init();
-            LoadingProgress.Visibility = Visibility.Collapsed;
+            LoadingProgress.Visibility = Visibility.Visible;
+            await ViewModel.Refresh();
         }
         catch (Exception exception)
         {
             Log.Error("获取插件报错:{E}", exception);
             ViewModel.NotifyService.NotifyTip(this, $"获取插件报错:{exception}",
                 InfoBarSeverity.Error);
+        }
+        finally
+        {
+            LoadingProgress.Visibility = Visibility.Collapsed;
         }
     }
 }

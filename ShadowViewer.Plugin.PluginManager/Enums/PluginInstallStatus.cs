@@ -15,6 +15,10 @@ public enum PluginInstallStatus
     /// </summary>
     None,
     /// <summary>
+    /// 等待安装
+    /// </summary>
+    Install,
+    /// <summary>
     /// 已安装
     /// </summary>
     Installed,
@@ -22,5 +26,9 @@ public enum PluginInstallStatus
     /// 可升级
     /// </summary>
     Upgrade,
+    /// <summary>
+    /// 可降级
+    /// </summary>
+    Downgrade,
 
 }
