@@ -3,11 +3,12 @@ using DryIoc;
 using NuGet.Versioning;
 using ShadowPluginLoader.WinUI;
 using ShadowViewer.Plugin.PluginManager.Enums;
-using ShadowViewer.Plugin.PluginManager.Responses;
 using ShadowViewer.Sdk;
 using System;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -146,6 +147,7 @@ public partial class PluginStoreModel : ObservableObject
             InstallStatus = PluginInstallStatus.Install;
             return;
         }
+
         var pluginStoreVersion = new NuGetVersion(Version);
         if (pluginStoreVersion > InstalledVersion)
         {
@@ -161,15 +163,25 @@ public partial class PluginStoreModel : ObservableObject
         }
     }
 
-    partial void OnInstallStatusChanged(PluginInstallStatus oldValue, PluginInstallStatus newValue)
+    partial void OnInstallStatusChanged(PluginInstallStatus value)
     {
-        InstallButtonText = newValue switch
+        InstallButtonText = value switch
         {
             PluginInstallStatus.Upgrade => "升级到",
             PluginInstallStatus.Downgrade => "降级到",
             PluginInstallStatus.Installed => "已安装",
             _ => "安装"
         } + " " + Version;
+    }
+
+    [RelayCommand]
+    private async Task Install()
+    {
+        var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
+        if (InstallStatus == PluginInstallStatus.Install)
+        {
+            await pluginManager.InstallAsync([DownloadUrl]);
+        }
     }
 }
 

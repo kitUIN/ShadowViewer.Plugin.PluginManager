@@ -121,9 +121,7 @@
                                     Source="{ThemeResource GithubIcon}" />
                             </HyperlinkButton>
                             <Button
-                                Grid.Row="3"
-                                Click="UpgradeClick"
-                                Tag="{x:Bind}">
+                                Grid.Row="3"  Command="{x:Bind InstallCommand}">
                                 <TextBlock
                                     Text="{x:Bind InstallButtonText, Mode=OneWay}" />
                             </Button>

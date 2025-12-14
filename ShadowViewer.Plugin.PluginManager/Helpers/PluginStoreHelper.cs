@@ -1,75 +1,47 @@
+using Serilog;
+using ShadowPluginLoader.WinUI.Helpers;
+using ShadowViewer.Plugin.PluginManager.Responses;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using Serilog;
-using ShadowViewer.Plugin.PluginManager.Responses;
 
 namespace ShadowViewer.Plugin.PluginManager.Helpers;
 
 /// <summary>
 /// PluginStoreHelper
 /// </summary>
-public class PluginStoreHelper
+public class PluginStoreHelper : BaseHttpHelper
 {
     /// <summary>
-    /// 
+    /// PluginStoreHelper
     /// </summary>
-    public static PluginStoreHelper Instance { get; } = new();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private readonly HttpClient client = new(new HttpClientHandler());
-
-    /// <summary>
-    /// 创建HttpRequestMessage
-    /// </summary>
-    /// <param name="method"></param>
-    /// <param name="url"></param>
-    /// <param name="headers"></param>
-    /// <returns></returns>
-    private static HttpRequestMessage CreateRequestMessage(HttpMethod method, string url,
-        Dictionary<string, string>? headers = null)
+    protected PluginStoreHelper() : base()
     {
-        var reqUrl = url;
-        var httpRequestMessage = new HttpRequestMessage(method, reqUrl);
-        if (headers == null) return httpRequestMessage;
-        foreach (var header in headers)
-        {
-            httpRequestMessage.Headers.Add(header.Key, header.Value);
-        }
-
-        return httpRequestMessage;
     }
 
     /// <summary>
-    /// Get Async
+    /// Lazy, thread-safe singleton instance
     /// </summary>
-    private async Task<T?> GetAsync<T>(string url)
-    {
-        try
-        {
-            using var request = CreateRequestMessage(HttpMethod.Get, url);
-            using var response = await client.SendAsync(request);
-            var resp = await response.Content.ReadAsStringAsync();
-            Log.Debug("\n[GET]{Api}:\n\nreturn:{Resp}", url, resp);
-            return JsonSerializer.Deserialize<T>(resp);
-        }
-        catch (Exception exception)
-        {
-            Log.Error("Get Exception: {Ex}", exception);
-            throw;
-        }
-    }
+    private static readonly Lazy<PluginStoreHelper> InnerInstance =
+        new(() => new PluginStoreHelper(), LazyThreadSafetyMode.ExecutionAndPublication);
+
+    /// <summary>
+    /// 获取单例实例（线程安全、惰性初始化）
+    /// </summary>
+    public new static PluginStoreHelper Instance => InnerInstance.Value;
 
     /// <summary>
     /// 获取插件列表
     /// </summary>
     public async Task<PluginPageResponse?> GetPluginList(string storeUri, int page = 1, int limit = 20)
     {
-        var urlWithParams = $"{storeUri}?page={page}&limit={limit}";
-        return await GetAsync<PluginPageResponse>(urlWithParams);
+        return await GetAsync<PluginPageResponse>(storeUri, new Dictionary<string, string>()
+        {
+            { "page", page.ToString() },
+            { "limit", limit.ToString() }
+        });
     }
 }

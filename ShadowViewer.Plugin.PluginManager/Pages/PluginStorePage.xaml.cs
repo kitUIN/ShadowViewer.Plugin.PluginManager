@@ -4,7 +4,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Serilog;
 using ShadowPluginLoader.WinUI;
-using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -15,7 +14,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages;
 /// <summary>
 /// ÉÌµêÒ³
 /// </summary>
-public sealed partial class PluginStorePage : Page
+public sealed partial class PluginStorePage
 {
     /// <summary>
     /// ViewModel
@@ -28,51 +27,6 @@ public sealed partial class PluginStorePage : Page
     public PluginStorePage()
     {
         this.InitializeComponent();
-    }
-
-    /// <summary>
-    /// Éý¼¶µã»÷
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private async void UpgradeClick(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            if (sender is not Button { Tag: PluginStoreModel model }) return;
-            var asset = "";
-            // if (model.MetaData.Assets.Count > 1)
-            // {
-            //     UpgradeSelectGridView.ItemsSource = model.MetaData.Assets;
-            //     var result = await UpgradeSelectContentDialog.ShowAsync();
-            //     Log.Information("{e}", result);
-            //     if (result == ContentDialogResult.Primary && UpgradeSelectGridView.SelectedIndex >= 0)
-            //     {
-            //         asset = model.MetaData.Assets[UpgradeSelectGridView.SelectedIndex].BrowserDownloadUrl;
-            //     }
-            //     else
-            //     {
-            //         return;
-            //     }
-            // }
-            // else
-            // {
-            //     asset = model.MetaData.Assets[0].BrowserDownloadUrl;
-            // }
-            //
-            // if (model.CouldUpdate)
-            // {
-            //     ViewModel.Upgrade(model.Id, asset);
-            // }
-            // else
-            // {
-            //     ViewModel.Install(asset);
-            // }
-        }
-        catch (Exception ex)
-        {
-            Log.Error("UpgradeClick ERROR:{ex}", ex);
-        }
     }
 
     /// <summary>
