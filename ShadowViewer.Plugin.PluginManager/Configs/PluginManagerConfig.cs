@@ -6,11 +6,11 @@ namespace ShadowViewer.Plugin.PluginManager.Configs;
 public partial class PluginManagerConfig
 {
     /// <summary>
-    /// 商店列表网址
+    /// 商店列表api
     /// </summary>
-    [ObservableConfigProperty(Description = "商店列表网址")]
+    [ObservableConfigProperty(Description = "商店列表api")]
     private string storeUri =
-        "https://shadowviewerplugin.kituin.fun/api/store/plugins";
+        "https://shadowviewerplugin.kituin.fun/api";
 
     /// <summary>
     /// github代理下载加速

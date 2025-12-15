@@ -36,7 +36,8 @@ public partial class PluginStoreViewModel : ObservableObject
     /// <summary>
     /// PluginManagerConfig
     /// </summary>
-    [Autowired] public PluginManagerConfig PluginManagerConfig { get; }
+    [Autowired]
+    public PluginManagerConfig PluginManagerConfig { get; }
 
     /// <summary>
     /// Logger
@@ -72,11 +73,13 @@ public partial class PluginStoreViewModel : ObservableObject
                 {
                     model.Logo = PluginManagerConfig.GithubProxyUrl + model.Logo;
                 }
+
                 if (model.DownloadUrl?.StartsWith("https://github.com") == true)
                 {
                     model.DownloadUrl = PluginManagerConfig.GithubProxyUrl + model.DownloadUrl;
                 }
             }
+
             Models.Add(model);
         }
     }
@@ -99,5 +102,22 @@ public partial class PluginStoreViewModel : ObservableObject
     public async void Upgrade(string id, string uri)
     {
         await PluginService.UpgradePlugin(id, new Uri(uri));
+    }
+
+    /// <summary>
+    /// 导航
+    /// </summary>
+    public async Task NavigateTo(Uri uri)
+    {
+        var splitUri = uri.AbsolutePath.Split(['/',], StringSplitOptions.RemoveEmptyEntries);
+        Log.Information("{Uri}", splitUri);
+        if (splitUri.Length != 4) return;
+        if (splitUri[1] == "install")
+        {
+            var model = await PluginStoreHelper.Instance.SearchPlugin(PluginManagerConfig.StoreUri, splitUri[2],
+                splitUri[3]);
+            if (model == null) return;
+            await model.InstallCommand.ExecuteAsync(null);
+        }
     }
 }

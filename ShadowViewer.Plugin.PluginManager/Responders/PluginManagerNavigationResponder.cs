@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using ShadowPluginLoader.Attributes;
@@ -50,6 +51,20 @@ public partial class PluginManagerNavigationResponder : AbstractNavigationRespon
         {
             "PluginManager" => new ShadowNavigation(typeof(PluginPage), SelectItemId: item.Id),
             _ => null
+        };
+    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public override ShadowNavigation? Navigate(Uri uri, string[] urls)
+    {
+        if (urls.Length == 0) return null;
+        return urls[0] switch
+        {
+            "store" => new ShadowNavigation(typeof(PluginStorePage), uri, SelectItemId: "PluginManager"),
+            "settings" => new ShadowNavigation(typeof(PluginManagerSettingsPage), new Uri("shadow://pluginmanager/settings"), SelectItemId: "PluginManager"),
+            _ => new ShadowNavigation(typeof(PluginPage), new Uri("shadow://pluginmanager"), SelectItemId: "PluginManager")
         };
     }
 }
