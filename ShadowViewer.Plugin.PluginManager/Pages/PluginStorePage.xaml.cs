@@ -60,6 +60,6 @@ public sealed partial class PluginStorePage
     /// <param name="e"></param>
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        if (e.Parameter is Uri uri) ViewModel.NavigateTo(uri);
+        if (e.Parameter is Uri uri) _ = ViewModel.NavigateTo(uri);
     }
 }

@@ -1,10 +1,8 @@
 using DryIoc;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Serilog;
 using ShadowPluginLoader.WinUI;
-using ShadowViewer.Plugin.PluginManager.Configs;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using System;
 
@@ -13,7 +11,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
     /// <summary>
     /// 插件管理器 页面
     /// </summary>
-    public sealed partial class PluginPage : Page
+    public sealed partial class PluginPage
     {
         /// <summary>
         /// ViewModel

@@ -15,37 +15,38 @@ public partial class UiPlugin : ObservableObject
     /// <summary>
     /// <inheritdoc cref="AShadowViewerPlugin.MetaData"/>
     /// </summary>
-    [ObservableProperty] private PluginMetaData metaData;
+    [ObservableProperty]
+    public partial PluginMetaData MetaData { get; set; }
 
     /// <summary>
     /// 是否开启插件
     /// </summary>
-    [ObservableProperty] private bool isEnabled;
+    [ObservableProperty] public partial bool IsEnabled { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManage.CanSwitch"/>
     /// </summary>
-    [ObservableProperty] private bool canSwitch;
+    [ObservableProperty] public partial bool CanSwitch { get; set; }
 
     /// <summary>
-    /// <inheritdoc cref="PluginManage.CanDelete"/>
+    /// 
     /// </summary>
-    [ObservableProperty] private bool canDelete;
+    [ObservableProperty] public partial bool CanDelete { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManage.CanOpenFolder"/>
     /// </summary>
-    [ObservableProperty] private bool canOpenFolder;
+    [ObservableProperty] public partial bool CanOpenFolder { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManage.SettingsPage"/>
     /// </summary>
-    [ObservableProperty] private Type? settingsPage;
+    [ObservableProperty] public partial Type? SettingsPage { get; set; }
 
     /// <summary>
     /// 插件Type
     /// </summary>
-    [ObservableProperty] private Type pluginType;
+    [ObservableProperty] public partial Type PluginType { get; set; }
 
     /// <summary>
     /// 
@@ -53,13 +54,13 @@ public partial class UiPlugin : ObservableObject
     /// <param name="plugin"></param>
     public UiPlugin(AShadowViewerPlugin plugin)
     {
-        metaData = plugin.MetaData;
-        isEnabled = plugin.IsEnabled;
-        canOpenFolder = plugin.MetaData.PluginManage.CanOpenFolder;
-        canSwitch = plugin.MetaData.PluginManage.CanSwitch;
-        canDelete = !plugin.MetaData.BuiltIn;
-        settingsPage = plugin.MetaData.PluginManage.SettingsPage?.EntryPointType;
-        pluginType = plugin.GetType();
+        MetaData = plugin.MetaData;
+        IsEnabled = plugin.IsEnabled;
+        CanOpenFolder = plugin.MetaData.PluginManage.CanOpenFolder;
+        CanSwitch = plugin.MetaData.PluginManage.CanSwitch;
+        CanDelete = !plugin.MetaData.BuiltIn;
+        SettingsPage = plugin.MetaData.PluginManage.SettingsPage?.EntryPointType;
+        PluginType = plugin.GetType();
     }
 
     /// <summary>
@@ -71,7 +72,7 @@ public partial class UiPlugin : ObservableObject
     {
         if (oldValue == newValue) return;
         var loader = DiFactory.Services.Resolve<PluginLoader>();
-        if (newValue) loader.EnablePlugin(metaData.Id);
-        else loader.DisablePlugin(metaData.Id);
+        if (newValue) loader.EnablePlugin(MetaData.Id);
+        else loader.DisablePlugin(MetaData.Id);
     }
 }

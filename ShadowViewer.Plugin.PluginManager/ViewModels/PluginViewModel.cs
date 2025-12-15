@@ -9,7 +9,6 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Serilog;
 using ShadowViewer.Sdk.Helpers;
 using ShadowViewer.Sdk;
-using ShadowViewer.Sdk.Plugins;
 using ShadowViewer.Sdk.Extensions;
 using ShadowViewer.Sdk.Services;
 using ShadowViewer.Plugin.PluginManager.Models;
@@ -24,19 +23,24 @@ namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
 public partial class PluginViewModel : ObservableObject
 {
-    [Autowired] public PluginManagerConfig PluginManagerConfig { get; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [Autowired]
+    public PluginManagerConfig PluginManagerConfig { get; }
 
     partial void ConstructorInit()
     {
-        pluginSecurityCheck = PluginManagerConfig.PluginSecurityStatement;
+        PluginSecurityCheck = PluginManagerConfig.PluginSecurityStatement;
     }
 
 
     /// <summary>
     /// 插件安全声明弹出框确定
     /// </summary>
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
-    private bool pluginSecurityCheck;
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
+    public partial bool PluginSecurityCheck { get; set; }
 
     /// <summary>
     /// 插件服务

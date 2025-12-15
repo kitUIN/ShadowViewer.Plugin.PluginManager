@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShadowViewer.Plugin.PluginManager.Enums;
+﻿namespace ShadowViewer.Plugin.PluginManager.Enums;
 /// <summary>
 /// 插件安装状态说明
 /// </summary>

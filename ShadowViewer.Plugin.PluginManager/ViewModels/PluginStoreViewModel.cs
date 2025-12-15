@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Serilog;
-using Serilog.Core;
 using ShadowPluginLoader.Attributes;
 using ShadowViewer.Plugin.PluginManager.Configs;
 using ShadowViewer.Plugin.PluginManager.Helpers;
@@ -8,10 +7,7 @@ using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Sdk;
 using ShadowViewer.Sdk.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 

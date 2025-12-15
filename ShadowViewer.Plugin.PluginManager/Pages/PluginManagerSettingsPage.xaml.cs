@@ -1,11 +1,8 @@
 using System;
-using Windows.System;
-using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using ShadowPluginLoader.WinUI;
 using DryIoc;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Input;
 using Serilog;
 using ShadowPluginLoader.Attributes;
 using ShadowViewer.Sdk.Plugins;
@@ -19,7 +16,7 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     [EntryPoint(Name = nameof(PluginManage.SettingsPage))]
-    public sealed partial class PluginManagerSettingsPage : Page
+    public sealed partial class PluginManagerSettingsPage
     {
         /// <summary>
         /// ViewModel

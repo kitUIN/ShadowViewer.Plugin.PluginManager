@@ -103,7 +103,7 @@ public partial class PluginStoreModel : ObservableObject
     /// </summary>
     [JsonPropertyName("DownloadUrl")]
     [ObservableProperty]
-    public partial string DownloadUrl { get; set; } = null!;
+    public partial string? DownloadUrl { get; set; }
 
     /// <summary>
     /// 最后更新时间

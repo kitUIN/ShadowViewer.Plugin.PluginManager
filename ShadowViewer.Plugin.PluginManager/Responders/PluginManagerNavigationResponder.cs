@@ -19,7 +19,7 @@ namespace ShadowViewer.Plugin.PluginManager.Responders;
 /// <inheritdoc/>
 /// </remarks>
 [EntryPoint(Name = nameof(PluginResponder.NavigationResponder))]
-public partial class PluginManagerNavigationResponder : AbstractNavigationResponder
+public class PluginManagerNavigationResponder : AbstractNavigationResponder
 {
     /// <summary>
     /// 

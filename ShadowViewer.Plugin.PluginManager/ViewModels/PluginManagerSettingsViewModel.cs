@@ -14,7 +14,8 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     /// <summary>
     /// 
     /// </summary>
-    [Autowired] public PluginManagerConfig PluginManagerConfig { get; }
+    [Autowired]
+    public PluginManagerConfig PluginManagerConfig { get; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManagerConfig.PluginSecurityStatement"/>
@@ -24,7 +25,7 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementVisible))]
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementText))]
     [NotifyPropertyChangedFor(nameof(PluginSecurityStatementIcon))]
-    private bool pluginSecurityStatement;
+    public partial bool PluginSecurityStatement { get; set; }
 
 
     /// <summary>
@@ -54,13 +55,13 @@ public partial class PluginManagerSettingsViewModel : ObservableObject
     /// <summary>
     /// <inheritdoc cref="PluginManagerConfig.PluginSecurityStatement"/>
     /// </summary>
-    [ObservableProperty] private bool pluginSecurityCheck;
+    [ObservableProperty] public partial bool PluginSecurityCheck { get; set; }
 
 
     partial void ConstructorInit()
     {
-        pluginSecurityCheck = PluginManagerConfig.PluginSecurityStatement;
-        pluginSecurityStatement = PluginManagerConfig.PluginSecurityStatement;
+        PluginSecurityCheck = PluginManagerConfig.PluginSecurityStatement;
+        PluginSecurityStatement = PluginManagerConfig.PluginSecurityStatement;
     }
 
     /// <summary>

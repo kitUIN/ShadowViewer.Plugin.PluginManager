@@ -1,11 +1,8 @@
-using Serilog;
 using ShadowPluginLoader.WinUI.Helpers;
 using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Plugin.PluginManager.Responses;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +17,7 @@ public class PluginStoreHelper : BaseHttpHelper
     /// <summary>
     /// PluginStoreHelper
     /// </summary>
-    protected PluginStoreHelper() : base()
+    protected PluginStoreHelper()
     {
     }
 
@@ -47,10 +44,17 @@ public class PluginStoreHelper : BaseHttpHelper
         });
     }
 
+    /// <summary>
+    /// Searches the plugin.
+    /// </summary>
+    /// <param name="storeUri">The store URI.</param>
+    /// <param name="pluginId">The plugin identifier.</param>
+    /// <param name="version">The version.</param>
+    /// <returns></returns>
     public async Task<PluginStoreModel?> SearchPlugin(string storeUri, string pluginId, string version)
     {
         return await PostJsonAsync<SearchPluginRequest, PluginStoreModel>(
-            storeUri + "/store/plugins/version", 
+            storeUri + "/store/plugins/version",
             new SearchPluginRequest(pluginId, version));
     }
 }
@@ -65,6 +69,7 @@ public class SearchPluginRequest
     /// </summary>
     [JsonPropertyName("plugin_id")]
     public string PluginId { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
