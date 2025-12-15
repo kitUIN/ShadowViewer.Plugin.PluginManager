@@ -16,17 +16,18 @@ public partial class PluginFolder : ISettingFolder
     [Autowired]
     public string PluginId { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [Autowired]
-    public BaseSdkConfig BaseSdkConfig { get; }
 
     /// <inheritdoc />
     public string Name => I18N.PluginFolder;
 
     /// <inheritdoc />
     public string Description => I18N.PluginFolderDescription;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Autowired]
+    public BaseSdkConfig BaseSdkConfig { get; }
 
     /// <inheritdoc />
     public string Path
