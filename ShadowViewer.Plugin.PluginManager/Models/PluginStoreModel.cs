@@ -121,6 +121,7 @@ public partial class PluginStoreModel : ObservableObject
     /// 安装状态说明
     /// </summary> 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(InstallCommand))]
     public partial PluginInstallStatus InstallStatus { get; set; }
 
     /// <summary>
@@ -129,6 +130,14 @@ public partial class PluginStoreModel : ObservableObject
     [ObservableProperty]
     public partial string? InstallButtonText { get; set; }
 
+    /// <summary>
+    /// Gets a value indicating whether [install button enabled].
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if [install button enabled]; otherwise, <c>false</c>.
+    /// </value>
+    public bool InstallButtonEnabled =>
+        InstallStatus != PluginInstallStatus.Installed && InstallStatus != PluginInstallStatus.None;
 
     /// <summary>
     /// 已经安装的版本
@@ -178,7 +187,7 @@ public partial class PluginStoreModel : ObservableObject
         } + " " + Version;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(InstallButtonEnabled))]
     private async Task Install()
     {
         var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
@@ -209,7 +218,10 @@ public partial class PluginStoreModel : ObservableObject
             var action = InstallStatus == PluginInstallStatus.Upgrade ? I18N.Upgrade : I18N.Downgrade;
             await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(action,
                 await Template.Parse(I18N.UpgradeTextTemplate)
-                    .RenderAsync(new { action = action, name = Id, newVersion = Version, oldVersion = InstalledVersion?.ToString() }),
+                    .RenderAsync(new
+                    {
+                        action = action, name = Id, newVersion = Version, oldVersion = InstalledVersion?.ToString()
+                    }),
                 async void (sender, args) =>
                 {
                     try

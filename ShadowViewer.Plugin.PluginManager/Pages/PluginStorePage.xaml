@@ -33,99 +33,82 @@
             SelectionMode="None">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:PluginStoreModel">
-                    <Grid
-                        Width="300"
-                        Height="200"
-                        Padding="10,5,10,5"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="8"
-                        RowSpacing="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Viewbox
-                                    Grid.Column="0"
-                                    Margin="6"
-                                    Width="48"
-                                    Height="48"
-                                    extensions1:PluginLogoViewboxExtensions.PluginLogo="{x:Bind Logo,Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock
-                                        FontSize="20"
-                                        Text="{x:Bind Name}"
-                                        TextTrimming="CharacterEllipsis" />
-                                    <TextBlock
-                                        Foreground="Gray"
-                                        Text="{x:Bind Authors}"
-                                        TextTrimming="CharacterEllipsis" />
-                                </StackPanel>
-
-                            </Grid>
-                            <TextBlock
-                                Grid.Row="1"
-                                Margin="10,0"
-                                Text="{x:Bind Description}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="Wrap" />
-                            <Grid Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="80" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Orientation="Vertical"
-                                    Spacing="3">
-                                    <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <winUi:FluentIcon Icon="Predictions" />
-                                        <TextBlock Text="{x:Bind Id}" />
-                                    </StackPanel> 
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <HyperlinkButton
-                                Grid.Row="0"
-                                Width="37"
-                                Height="37"
-                                Padding="5"
-                                HorizontalAlignment="Right"
-                                NavigateUri="{x:Bind WebUri}">
+                    <Grid Width="330"
+                          Height="210"
+                          Padding="10,0,10,10"
+                          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                          BorderThickness="1"
+                          CornerRadius="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Viewbox VerticalAlignment="Center"
+                                     Grid.Column="0"
+                                     Margin="6"
+                                     Width="48"
+                                     Height="48"
+                                     extensions1:PluginLogoViewboxExtensions.PluginLogo="{x:Bind Logo, Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
+                            <StackPanel VerticalAlignment="Center" Grid.Column="1" Orientation="Vertical">
+                                <!-- 插件名称：加粗、较大字体 -->
+                                <TextBlock Margin="6,0,0,0" Text="{x:Bind Name, Mode=OneWay}" FontSize="20" FontWeight="Bold"
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTipService.ToolTip="{x:Bind Name, Mode=OneWay}" />
+                                <!-- 版本号：次要信息，灰色小字体 -->
+                                <Button Padding="6,0" Style="{ThemeResource PointerOverButtonStyle}">
+                                    <TextBlock Text="{x:Bind Version, Mode=OneWay}" FontSize="14"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                </Button>
+                            </StackPanel>
+                            <HyperlinkButton Grid.Column="2"
+                                             Grid.Row="0"
+                                             Margin="0,6,0,0"
+                                             Width="37"
+                                             Height="37"
+                                             Padding="5"
+                                             VerticalAlignment="Top"
+                                             HorizontalAlignment="Right"
+                                             NavigateUri="{x:Bind WebUri, Mode=OneWay}">
                                 <ImageIcon
                                     Width="25"
                                     Height="25"
                                     Source="{ThemeResource GithubIcon}" />
                             </HyperlinkButton>
-                            <Button
-                                Grid.Row="3"  Command="{x:Bind InstallCommand}">
-                                <TextBlock
-                                    Text="{x:Bind InstallButtonText, Mode=OneWay}" />
+                        </Grid>
+                        <Grid Grid.Row="1" RowSpacing="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Background="{ThemeResource CardStrokeColorDefaultBrush}">
+                            </Border>
+                            <!-- 作者和更新时间 -->
+                            <Grid Grid.Row="1">
+                                <TextBlock Text="{x:Bind Authors, Mode=OneWay}"  HorizontalAlignment="Left" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <TextBlock Text="{x:Bind LastUpdated, Mode=OneWay}" HorizontalAlignment="Right" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                            </Grid>
+                            <TextBlock Margin="0,4,0,0"
+                                Grid.Row="2"
+                                Text="{x:Bind Description}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
+
+                            <Button Style="{StaticResource AccentButtonStyle}" Grid.Row="3" HorizontalAlignment="Stretch"
+                                    Command="{x:Bind InstallCommand, Mode=OneWay}">
+                                <TextBlock Text="{x:Bind InstallButtonText, Mode=OneWay}" />
                             </Button>
                         </Grid>
+
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
