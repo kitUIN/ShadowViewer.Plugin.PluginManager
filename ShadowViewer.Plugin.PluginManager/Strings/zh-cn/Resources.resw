@@ -243,4 +243,16 @@
   <data name="RequestingPlugin" xml:space="preserve">
     <value>正在获取插件</value>
   </data>
+  <data name="Installing" xml:space="preserve">
+    <value>安装中</value>
+  </data>
+  <data name="InstallTextTemplate" xml:space="preserve">
+    <value>{{ action }}插件 {{ name }} : {{ version }}</value>
+  </data>
+  <data name="UpgradeTextTemplate" xml:space="preserve">
+    <value>{{ action }}插件 {{ name }} : {{ oldVersion }} → {{ newVersion }}</value>
+  </data>
+  <data name="Downgrade" xml:space="preserve">
+    <value>降级</value>
+  </data>
 </root>

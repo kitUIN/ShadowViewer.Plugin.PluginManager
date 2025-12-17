@@ -1,14 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using NuGet.Versioning;
+using Serilog;
 using ShadowPluginLoader.WinUI;
 using ShadowViewer.Plugin.PluginManager.Enums;
+using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Sdk;
+using ShadowViewer.Sdk.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
+using Scriban;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -178,9 +182,49 @@ public partial class PluginStoreModel : ObservableObject
     private async Task Install()
     {
         var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
+        if (DownloadUrl == null) return;
         if (InstallStatus == PluginInstallStatus.Install)
         {
-            await pluginManager.InstallAsync([DownloadUrl]);
+            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(I18N.Install,
+                await Template.Parse(I18N.InstallTextTemplate)
+                    .RenderAsync(new { action = I18N.Install, name = Id, version = Version }),
+                async void (sender, args) =>
+                {
+                    try
+                    {
+                        args.Cancel = true;
+                        sender.PrimaryButtonText = I18N.Installing;
+                        await pluginManager.InstallAsync([DownloadUrl]);
+                        sender.Hide();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "Catch Error in InstallAsync");
+                    }
+                }
+            ));
+        }
+        else if (InstallStatus is PluginInstallStatus.Upgrade or PluginInstallStatus.Downgrade)
+        {
+            var action = InstallStatus == PluginInstallStatus.Upgrade ? I18N.Upgrade : I18N.Downgrade;
+            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(action,
+                await Template.Parse(I18N.UpgradeTextTemplate)
+                    .RenderAsync(new { action = action, name = Id, newVersion = Version, oldVersion = InstalledVersion?.ToString() }),
+                async void (sender, args) =>
+                {
+                    try
+                    {
+                        args.Cancel = true;
+                        sender.PrimaryButtonText = I18N.Installing;
+                        await pluginManager.InstallAsync([DownloadUrl]);
+                        sender.Hide();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "Catch Error in InstallAsync");
+                    }
+                }
+            ));
         }
     }
 }
