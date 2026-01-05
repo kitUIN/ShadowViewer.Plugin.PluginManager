@@ -26,9 +26,9 @@
         Background="{ThemeResource LayerFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1" Loaded="FrameworkElement_OnLoaded"
+        Padding="36"
         CornerRadius="{ThemeResource NavigationViewContentGridCornerRadius}">
         <GridView
-            Margin="20,10,0,0"
             ItemsSource="{x:Bind ViewModel.Models, Mode=OneWay}"
             SelectionMode="None">
             <GridView.ItemTemplate>
@@ -56,7 +56,7 @@
                                      Width="48"
                                      Height="48"
                                      extensions1:PluginLogoViewboxExtensions.PluginLogo="{x:Bind Logo, Mode=OneWay, Converter={StaticResource PluginPathConverter}}" />
-                            <StackPanel VerticalAlignment="Center" Grid.Column="1" Orientation="Vertical">
+                            <StackPanel VerticalAlignment="Center" Grid.Column="1" Orientation="Vertical" Spacing="12">
                                 <!-- 插件名称：加粗、较大字体 -->
                                 <TextBlock Margin="6,0,0,0" Text="{x:Bind Name, Mode=OneWay}" FontSize="20" FontWeight="Bold"
                                            TextTrimming="CharacterEllipsis"
@@ -103,10 +103,19 @@
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="Wrap" />
 
-                            <Button Style="{StaticResource AccentButtonStyle}" Grid.Row="3" HorizontalAlignment="Stretch"
-                                    Command="{x:Bind InstallCommand, Mode=OneWay}">
-                                <TextBlock Text="{x:Bind InstallButtonText, Mode=OneWay}" />
-                            </Button>
+                            <Grid  Grid.Row="3" ColumnSpacing="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Stretch"
+                                        Command="{x:Bind InstallCommand, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind InstallButtonText, Mode=OneWay}" />
+                                </Button>
+                                <Button Grid.Column="1"  >
+                                    <winUi:SymbolIcon Symbol="Info" />
+                                </Button>
+                            </Grid>
                         </Grid>
 
                     </Grid>
