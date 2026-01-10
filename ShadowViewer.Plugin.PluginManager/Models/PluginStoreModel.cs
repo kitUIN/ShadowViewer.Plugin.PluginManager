@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using NuGet.Versioning;
 using ShadowPluginLoader.WinUI;
@@ -8,7 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
+using ShadowViewer.Plugin.PluginManager.I18n;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -36,6 +37,7 @@ public partial class PluginStoreModel : ObservableObject
     /// </summary>
     [JsonPropertyName("Version")]
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(InstallButtonText))]
     public partial string Version { get; set; } = null!;
 
     /// <summary>
@@ -117,14 +119,26 @@ public partial class PluginStoreModel : ObservableObject
     /// 安装状态说明
     /// </summary> 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(InstallButtonText))]
+    [NotifyPropertyChangedFor(nameof(InstallButtonEnabled))]
+    [NotifyCanExecuteChangedFor(nameof(InstallCommand))]
     public partial PluginInstallStatus InstallStatus { get; set; }
 
     /// <summary>
     /// 安装按钮文本
-    /// </summary>
-    [ObservableProperty]
-    public partial string? InstallButtonText { get; set; }
+    /// </summary> 
+    public string InstallButtonText => InstallStatus switch
+    {
+        PluginInstallStatus.Upgrade => I18N.UpgradeAction,
+        PluginInstallStatus.Downgrade => I18N.DowngradeAction,
+        PluginInstallStatus.Installed => I18N.Installed,
+        _ => I18N.Install
+    } + " " + Version;
 
+    /// <summary>
+    /// 安装按钮是否启用
+    /// </summary> 
+    public bool InstallButtonEnabled => InstallStatus != PluginInstallStatus.Installed;
 
     /// <summary>
     /// 已经安装的版本
@@ -163,18 +177,7 @@ public partial class PluginStoreModel : ObservableObject
         }
     }
 
-    partial void OnInstallStatusChanged(PluginInstallStatus value)
-    {
-        InstallButtonText = value switch
-        {
-            PluginInstallStatus.Upgrade => "升级到",
-            PluginInstallStatus.Downgrade => "降级到",
-            PluginInstallStatus.Installed => "已安装",
-            _ => "安装"
-        } + " " + Version;
-    }
-
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(InstallButtonEnabled))]
     private async Task Install()
     {
         var pluginManager = DiFactory.Services.Resolve<PluginLoader>();

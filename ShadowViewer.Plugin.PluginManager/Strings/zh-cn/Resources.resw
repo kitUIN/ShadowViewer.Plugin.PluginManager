@@ -243,4 +243,16 @@
   <data name="RequestingPlugin" xml:space="preserve">
     <value>正在获取插件</value>
   </data>
+  <data name="DependencyCheck" xml:space="preserve">
+    <value>依赖检查</value>
+  </data>
+  <data name="UpgradeAction" xml:space="preserve">
+    <value>升级到</value>
+  </data>
+  <data name="DowngradeAction" xml:space="preserve">
+    <value>降级到</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本号</value>
+  </data>
 </root>
