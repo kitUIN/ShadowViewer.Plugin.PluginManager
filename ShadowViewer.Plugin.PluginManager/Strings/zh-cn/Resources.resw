@@ -273,4 +273,10 @@
   <data name="Downgrade" xml:space="preserve">
     <value>降级</value>
   </data>
+  <data name="NeedVersion" xml:space="preserve">
+    <value>版本要求</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>当前版本</value>
+  </data>
 </root>
