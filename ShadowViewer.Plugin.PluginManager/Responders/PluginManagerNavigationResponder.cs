@@ -9,6 +9,7 @@ using ShadowViewer.Sdk.Models.Interfaces;
 using ShadowViewer.Sdk.Plugins;
 using ShadowViewer.Sdk.Utils;
 using ShadowViewer.Plugin.PluginManager.I18n;
+using ShadowViewer.Sdk.Navigation;
 
 namespace ShadowViewer.Plugin.PluginManager.Responders;
 
@@ -38,6 +39,7 @@ public class PluginManagerNavigationResponder : AbstractNavigationResponder
             new ShadowNavigationItem(
                 pluginId: "ShadowViewer.Plugin.PluginManager",
                 id: "PluginManager",
+                uri: ShadowUri.Parse("shadow://pluginmanager"),
                 icon: new FontIcon { Glyph = "\uE74C" },
                 content: I18N.PluginManager)
         };
@@ -45,26 +47,14 @@ public class PluginManagerNavigationResponder : AbstractNavigationResponder
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public override ShadowNavigation? NavigationViewItemInvokedHandler(IShadowNavigationItem item)
+    public override void Register()
     {
-        return item.Id switch
-        {
-            "PluginManager" => new ShadowNavigation(typeof(PluginPage), SelectItemId: item.Id),
-            _ => null
-        };
-    }
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    public override ShadowNavigation? Navigate(Uri uri, string[] urls)
-    {
-        if (urls.Length == 0) return null;
-        return urls[0] switch
-        {
-            "store" => new ShadowNavigation(typeof(PluginStorePage), uri, SelectItemId: "PluginManager"),
-            "settings" => new ShadowNavigation(typeof(PluginManagerSettingsPage), new Uri("shadow://pluginmanager/settings"), SelectItemId: "PluginManager"),
-            _ => new ShadowNavigation(typeof(PluginPage), new Uri("shadow://pluginmanager"), SelectItemId: "PluginManager")
-        };
+        ShadowRouteRegistry.RegisterPage(new ShadowNavigation(typeof(PluginPage), SelectItemId: "PluginManager"),
+            "pluginmanager");
+        ShadowRouteRegistry.RegisterPage(new ShadowNavigation(typeof(PluginStorePage), SelectItemId: "PluginManager"),
+            "pluginmanager", "store");
+        ShadowRouteRegistry.RegisterPage(
+            new ShadowNavigation(typeof(PluginManagerSettingsPage), SelectItemId: "PluginManager"), "pluginmanager",
+            "settings");
     }
 }
