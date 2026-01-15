@@ -76,6 +76,7 @@ public partial class PluginStoreViewModel : ObservableObject
                 }
             }
 
+            _ = Task.Run(() => model.CheckDependenciesCommand.Execute(null));
             Models.Add(model);
         }
     }

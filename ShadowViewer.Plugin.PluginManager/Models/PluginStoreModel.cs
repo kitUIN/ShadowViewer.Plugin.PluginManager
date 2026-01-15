@@ -1,23 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.Helpers;
 using DryIoc;
+using FluentIcons.Common;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Media;
 using NuGet.Versioning;
+using Scriban;
+using Serilog;
 using ShadowPluginLoader.WinUI;
 using ShadowPluginLoader.WinUI.Converters;
 using ShadowPluginLoader.WinUI.Extensions;
+using ShadowViewer.Plugin.PluginManager.Constants;
 using ShadowViewer.Plugin.PluginManager.Enums;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Sdk;
+using ShadowViewer.Sdk.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using CommunityToolkit.WinUI.Helpers;
-using FluentIcons.Common;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Media;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -60,9 +64,9 @@ public class PluginStoreBaseModel : ObservableObject
     {
         return status switch
         {
-            true => Symbol.ShieldTask,
-            false => Symbol.ShieldDismiss,
-            _ => Symbol.ShieldQuestion
+            true => Symbol.CheckmarkCircle,
+            false => Symbol.DismissCircle,
+            _ => Symbol.Circle
         };
     }
 }
@@ -199,25 +203,17 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     public bool InstallButtonEnabled => InstallStatus != PluginInstallStatus.Installed;
 
     /// <summary>
-    /// 已经安装的Sdk版本
+    /// 已经安装的插件版本
     /// </summary>
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SdkVersionStatus))]
     [JsonIgnore]
-    public partial NuGetVersion? InstalledSdkVersion { get; set; }
+    public partial NuGetVersion? InstalledVersion { get; set; }
 
     /// <summary>
     /// Sdk版本检查状态
     /// </summary>
     [JsonIgnore]
-    public bool? SdkVersionStatus
-    {
-        get
-        {
-            if (InstalledSdkVersion == null) return null;
-            return SdkVersion.Satisfies(InstalledSdkVersion);
-        }
-    }
+    public bool? SdkVersionStatus => SdkVersion.Satisfies(PluginConstants.SdkVersion);
 
     /// <summary>
     /// 依赖检查状态
@@ -229,25 +225,33 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     partial void OnIdChanged(string oldValue, string newValue)
     {
         if (oldValue == newValue) return;
-        InstalledSdkVersion = DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
+        InstalledVersion = DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
     }
 
     partial void OnVersionChanged(string oldValue, string newValue)
     {
         if (oldValue == newValue) return;
-        InstalledSdkVersion ??= DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
-        if (InstalledSdkVersion == null)
+        CheckVersion();
+    }
+
+    /// <summary>
+    /// Checks the version.
+    /// </summary>
+    public void CheckVersion()
+    {
+        InstalledVersion ??= DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
+        if (InstalledVersion == null)
         {
             InstallStatus = PluginInstallStatus.Install;
             return;
         }
 
         var pluginStoreVersion = new NuGetVersion(Version);
-        if (pluginStoreVersion > InstalledSdkVersion)
+        if (pluginStoreVersion > InstalledVersion)
         {
             InstallStatus = PluginInstallStatus.Upgrade;
         }
-        else if (pluginStoreVersion == InstalledSdkVersion)
+        else if (pluginStoreVersion == InstalledVersion)
         {
             InstallStatus = PluginInstallStatus.Installed;
         }
@@ -256,7 +260,6 @@ public partial class PluginStoreModel : PluginStoreBaseModel
             InstallStatus = PluginInstallStatus.Downgrade;
         }
     }
-
     [RelayCommand]
     private void CheckDependencies()
     {
@@ -288,10 +291,60 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     private async Task Install()
     {
         var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
-        if (InstallStatus == PluginInstallStatus.Install && !DownloadUrl.IsNullOrEmpty())
+        if (DownloadUrl == null) return;
+        if (InstallStatus == PluginInstallStatus.Install)
         {
-            var pipeline = pluginManager.CreatePipeline();
-            await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync();
+            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(I18N.Install,
+                await Template.Parse(I18N.InstallTextTemplate)
+                    .RenderAsync(new { action = I18N.Install, name = Id, version = Version }),
+                async void (sender, args) =>
+                {
+                    try
+                    {
+                        args.Cancel = true;
+                        sender.PrimaryButtonText = I18N.Installing;
+                        var pipeline = pluginManager.CreatePipeline();
+                        await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync();
+                        sender.Hide();
+                        CheckVersion();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "Catch Error in InstallAsync");
+                    }
+                }
+            ));
+        }
+        else if (InstallStatus is PluginInstallStatus.Upgrade or PluginInstallStatus.Downgrade)
+        {
+            var action = InstallStatus == PluginInstallStatus.Upgrade ? I18N.Upgrade : I18N.Downgrade;
+            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(action,
+                await Template.Parse(I18N.UpgradeTextTemplate)
+                    .RenderAsync(new
+                    {
+                        action = action,
+                        name = Id,
+                        newVersion = Version,
+                        oldVersion = InstalledVersion?.ToString()
+                    }),
+                async void (sender, args) =>
+                {
+                    try
+                    {
+                        args.Cancel = true;
+                        sender.PrimaryButtonText = I18N.Installing;
+                        var pipeline = pluginManager.CreatePipeline();
+                        await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync();
+                        sender.Hide();
+                        CheckVersion();
+
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "Catch Error in InstallAsync");
+                    }
+                }
+            ));
         }
     }
 }
