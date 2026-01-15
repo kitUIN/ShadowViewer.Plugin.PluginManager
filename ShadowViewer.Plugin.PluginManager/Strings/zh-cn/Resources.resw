@@ -279,4 +279,13 @@
   <data name="CurrentVersion" xml:space="preserve">
     <value>当前版本</value>
   </data>
+  <data name="InstallingTextTemplate" xml:space="preserve">
+    <value>正在{{ action }}插件 {{ name }} : {{ version }}</value>
+  </data>
+  <data name="InstallSuccessTextTemplate" xml:space="preserve">
+    <value>插件 {{ name }} : {{ version }} 安装成功</value>
+  </data>
+  <data name="InstallErrorTextTemplate" xml:space="preserve">
+    <value>插件 {{ name }} : {{ version }} 安装失败</value>
+  </data>
 </root>
