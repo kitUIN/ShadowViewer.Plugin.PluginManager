@@ -13,7 +13,7 @@ namespace ShadowViewer.Plugin.PluginManager.Models;
 public partial class UiPlugin : ObservableObject
 {
     /// <summary>
-    /// <inheritdoc cref="AShadowViewerPlugin.MetaData"/>
+    /// <inheritdoc cref="AbstractPlugin{TMeta}.MetaData"/>
     /// </summary>
     [ObservableProperty]
     public partial PluginMetaData MetaData { get; set; }

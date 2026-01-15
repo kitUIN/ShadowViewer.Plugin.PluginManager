@@ -2,7 +2,9 @@
     x:Class="ShadowViewer.Plugin.PluginManager.Pages.PluginStorePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:ShadowViewer.Sdk.Behaviors"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:converters1="using:ShadowViewer.Sdk.Converters"
     xmlns:converters2="using:ShadowViewer.Plugin.PluginManager.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions1="using:ShadowViewer.Sdk.Extensions"
@@ -12,6 +14,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     xmlns:responses="using:ShadowViewer.Plugin.PluginManager.Responses"
+    xmlns:symbol="using:FluentIcons.Common"
     mc:Ignorable="d">
     <Page.Resources>
         <converters2:PluginInstallButtonConverter
@@ -20,7 +23,6 @@
             InstalledValue="{i18N:Locale Key=Installed}"
             UpgradeValue="{i18N:Locale Key=Upgrade}" />
         <converters:FileSizeToFriendlyStringConverter x:Key="FileSizeToFriendlyStringConverter" />
-
 
     </Page.Resources>
     <Grid
@@ -173,11 +175,104 @@
                                     HorizontalAlignment="Stretch"
                                     ItemsSource="{x:Bind Versions, Mode=OneWay}"
                                     SelectedItem="{x:Bind Version, Mode=TwoWay}" />
-                                <Button Grid.Column="1" Height="32">
+                                <Button
+                                    Grid.Column="1"
+                                    Height="32"
+                                    Command="{x:Bind CheckDependenciesCommand}">
                                     <StackPanel Orientation="Horizontal" Spacing="4">
-                                        <icon:SymbolIcon FontSize="15" Symbol="ShieldCheckmark" />
+                                        <icon:SymbolIcon
+                                            FontSize="16"
+                                            Foreground="{x:Bind GetDependencyColorBrush(DependencyCheckStatus), Mode=OneWay}"
+                                            Symbol="{x:Bind GetDependencyCheckSymbol(DependencyCheckStatus), Mode=OneWay}" />
                                         <TextBlock Text="{i18N:Locale Key=DependencyCheck}" />
                                     </StackPanel>
+                                    <Button.Flyout>
+                                        <Flyout Placement="BottomEdgeAlignedRight">
+                                            <StackPanel Width="280" Spacing="10">
+                                                <StackPanel Spacing="4">
+                                                    <TextBlock
+                                                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                                        Text="{i18N:Locale Key=RuntimeSdk}" />
+                                                    <Grid
+                                                        Margin="0,2"
+                                                        Padding="4"
+                                                        Background="Transparent">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="30" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind Id}"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            ToolTipService.ToolTip="{x:Bind Id}" />
+
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            Margin="8,0"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="12"
+                                                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                                                            Text="{x:Bind InstalledSdkVersion, Mode=OneWay}" />
+
+                                                        <icon:SymbolIcon
+                                                            Grid.Column="2"
+                                                            FontSize="14"
+                                                            Foreground="{x:Bind GetDependencyColorBrush(SdkVersionStatus), Mode=OneWay}"
+                                                            Symbol="{x:Bind GetDependencySymbol(SdkVersionStatus), Mode=OneWay}" />
+                                                    </Grid>
+                                                </StackPanel>
+
+                                                <MenuFlyoutSeparator />
+
+                                                <StackPanel Spacing="4">
+                                                    <TextBlock
+                                                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                                        Text="{i18N:Locale Key=PluginDependencies}" />
+                                                    <ItemsControl ItemsSource="{x:Bind Dependencies, Mode=OneWay}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="models:PluginItemDependency">
+                                                                <Grid
+                                                                    Margin="0,2"
+                                                                    Padding="4"
+                                                                    Background="Transparent">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                        <ColumnDefinition Width="30" />
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <TextBlock
+                                                                        VerticalAlignment="Center"
+                                                                        Text="{x:Bind Id}"
+                                                                        TextTrimming="CharacterEllipsis"
+                                                                        ToolTipService.ToolTip="{x:Bind Id}" />
+
+                                                                    <TextBlock
+                                                                        Grid.Column="1"
+                                                                        Margin="8,0"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="12"
+                                                                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                                                                        Text="{x:Bind Installed, Mode=OneWay}" />
+
+                                                                    <icon:SymbolIcon
+                                                                        Grid.Column="2"
+                                                                        FontSize="14"
+                                                                        Foreground="{x:Bind GetDependencyColorBrush(Status), Mode=OneWay}"
+                                                                        Symbol="{x:Bind GetDependencySymbol(Status), Mode=OneWay}" />
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
                                 </Button>
                             </Grid>
                             <Grid
