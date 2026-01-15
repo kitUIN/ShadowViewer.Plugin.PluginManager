@@ -311,7 +311,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
 
         // 主任务
         var taskGrid = new Grid { ColumnSpacing = 8 };
-        taskGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
+        taskGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60) });
         taskGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         taskGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
@@ -327,7 +327,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
 
         // 子任务
         var subGrid = new Grid { Name = "SubTaskGrid", ColumnSpacing = 8, Margin = new Thickness(20, 0, 0, 0) };
-        subGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
+        subGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60) });
         subGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         subGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
@@ -415,7 +415,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
             infoBar.Title = await Template.Parse(I18N.InstallSuccessTextTemplate)
                 .RenderAsync(new { name = Id, version = Version });
 
-            await Task.Delay(4000);
+            await Task.Delay(2000);
 
             infoBar.IsOpen = false;
 
