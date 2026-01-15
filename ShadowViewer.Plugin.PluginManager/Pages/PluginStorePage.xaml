@@ -242,12 +242,15 @@
 
                                                         <icon:SymbolIcon
                                                             Grid.Column="0"
+                                                            Margin="0,2,0,0"
+                                                            VerticalAlignment="Center"
                                                             FontSize="14"
                                                             Foreground="{x:Bind GetDependencyColorBrush(SdkVersionStatus), Mode=OneWay}"
                                                             Symbol="{x:Bind GetDependencySymbol(SdkVersionStatus), Mode=OneWay}" />
                                                         <TextBlock
                                                             Grid.Column="1"
                                                             VerticalAlignment="Center"
+                                                            FontSize="16"
                                                             Text="ShadowViewer.Sdk"
                                                             TextTrimming="CharacterEllipsis"
                                                             ToolTipService.ToolTip="ShadowViewer.Sdk" />
@@ -270,7 +273,7 @@
                                                                 </TextBlock>
                                                             </ToolTipService.ToolTip>
                                                             <Run
-                                                                FontSize="15"
+                                                                FontSize="13"
                                                                 Foreground="Gray"
                                                                 Text="{x:Bind SdkVersion, Mode=OneWay}" />
                                                             <Run
@@ -305,12 +308,15 @@
 
                                                                     <icon:SymbolIcon
                                                                         Grid.Column="0"
+                                                                        Margin="0,2,0,0"
+                                                                        VerticalAlignment="Center"
                                                                         FontSize="14"
                                                                         Foreground="{x:Bind GetDependencyColorBrush(Status), Mode=OneWay}"
                                                                         Symbol="{x:Bind GetDependencySymbol(Status), Mode=OneWay}" />
                                                                     <TextBlock
                                                                         Grid.Column="1"
                                                                         VerticalAlignment="Center"
+                                                                        FontSize="16"
                                                                         Text="{x:Bind helpers:PluginNameHelper.GetPluginId(Id), Mode=OneWay}"
                                                                         TextTrimming="CharacterEllipsis"
                                                                         ToolTipService.ToolTip="{x:Bind Id}" />

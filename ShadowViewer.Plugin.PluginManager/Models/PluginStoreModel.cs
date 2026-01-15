@@ -2,9 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.Helpers;
 using DryIoc;
-using FluentIcons.Common;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.UI;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using NuGet.Versioning;
 using Scriban;
@@ -20,8 +21,12 @@ using ShadowViewer.Sdk.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ShadowPluginLoader.WinUI.Enums;
+using ShadowPluginLoader.WinUI.Models;
+using Symbol = FluentIcons.Common.Symbol;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -260,6 +265,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
             InstallStatus = PluginInstallStatus.Downgrade;
         }
     }
+
     [RelayCommand]
     private void CheckDependencies()
     {
@@ -287,33 +293,151 @@ public partial class PluginStoreModel : PluginStoreBaseModel
         DependencyCheckStatus = flag;
     }
 
+    private async Task ShowInstallContentDialog(Func<IProgress<PipelineProgress>, Task> installAction)
+    {
+        var content = await Template.Parse(I18N.InstallTextTemplate)
+            .RenderAsync(new { action = I18N.Install, name = Id, version = Version });
+        var dialog = XamlHelper.CreateMessageDialog(I18N.Install, null, null);
+
+        #region TaskProgressGrid
+
+        var taskProgressGrid = new Grid()
+        {
+            Width = 320,
+            ColumnSpacing = 8,
+            Visibility = Visibility.Collapsed,
+            Padding = new Thickness(0, 4, 0, 4)
+        };
+        taskProgressGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+        taskProgressGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+        taskProgressGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+        var taskProgressValue = new TextBlock() { Text = "00.00%", VerticalAlignment = VerticalAlignment.Center };
+        var taskProgress = new ProgressBar()
+        {
+            Minimum = 0D,
+            Maximum = 1D,
+            Width = 200,
+            VerticalAlignment = VerticalAlignment.Center,
+            Height = 8
+        };
+        var taskProgressStatus = new TextBlock() { Text = nameof(InstallPipelineStep.Feeding), VerticalAlignment = VerticalAlignment.Center };
+
+        Grid.SetColumn(taskProgressValue, 0);
+        Grid.SetColumn(taskProgress, 1);
+        Grid.SetColumn(taskProgressStatus, 2);
+
+        taskProgressGrid.Children.Add(taskProgressValue);
+        taskProgressGrid.Children.Add(taskProgress);
+        taskProgressGrid.Children.Add(taskProgressStatus);
+
+        #endregion
+
+        #region SubTaskProgressGrid
+
+        var subTaskGrid = new Grid()
+        {
+            Width = 320,
+            Visibility = Visibility.Collapsed,
+            Padding = new Thickness(20, 4, 0, 4),
+            ColumnSpacing = 8
+        };
+        subTaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+        subTaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+        subTaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+        var subTaskProgressValue = new TextBlock()
+        {
+            Text = "00.00%",
+            VerticalAlignment = VerticalAlignment.Center
+        };
+
+        var subTaskProgress = new ProgressBar()
+        {
+            Minimum = 0D,
+            Maximum = 1D,
+            Width = 180,
+            VerticalAlignment = VerticalAlignment.Center,
+            Height = 8
+        };
+
+        var subTaskStatus = new TextBlock()
+        {
+            Text = "--",
+            VerticalAlignment = VerticalAlignment.Center
+        };
+
+        Grid.SetColumn(subTaskProgressValue, 0);
+        Grid.SetColumn(subTaskProgress, 1);
+        Grid.SetColumn(subTaskStatus, 2);
+
+        subTaskGrid.Children.Add(subTaskProgressValue);
+        subTaskGrid.Children.Add(subTaskProgress);
+        subTaskGrid.Children.Add(subTaskStatus);
+
+        #endregion
+
+        dialog.Content = new StackPanel()
+        {
+            Orientation = Orientation.Vertical,
+            Spacing = 4,
+            Children =
+            {
+                new TextBlock()
+                {
+                    Text = content
+                },
+                taskProgressGrid,
+                subTaskGrid
+            }
+        };
+        var progress = new Progress<PipelineProgress>(pipelineProgress =>
+        {
+            taskProgress.Value = pipelineProgress.TotalPercentage;
+            taskProgressValue.Text = pipelineProgress.TotalPercentage.ToString("00.00%");
+            taskProgressStatus.Text = pipelineProgress.Step.ToString();
+
+            subTaskProgress.Value = pipelineProgress.SubPercentage;
+            subTaskProgressValue.Text = pipelineProgress.SubPercentage.ToString("00.00%");
+            subTaskStatus.Text = pipelineProgress.SubStep.ToString();
+            if (Math.Abs(pipelineProgress.TotalPercentage - 1D) < 0.001D)
+            {
+                subTaskGrid.Visibility = Visibility.Collapsed;
+            }
+        });
+
+        dialog.PrimaryButtonText = Sdk.I18n.I18N.Confirm;
+        dialog.IsPrimaryButtonEnabled = true;
+        dialog.PrimaryButtonClick +=
+            async void (sender, args) =>
+            {
+                try
+                {
+                    args.Cancel = true;
+                    sender.PrimaryButtonText = I18N.Installing;
+                    taskProgressGrid.Visibility = Visibility.Visible;
+                    subTaskGrid.Visibility = Visibility.Visible;
+                    await installAction.Invoke(progress);
+                    sender.Hide();
+                    CheckVersion();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, "Catch Error in InstallAsync");
+                }
+            };
+        await DialogHelper.ShowDialog(dialog);
+    }
+
     [RelayCommand(CanExecute = nameof(InstallButtonEnabled))]
     private async Task Install()
     {
         var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
+
         if (DownloadUrl == null) return;
         if (InstallStatus == PluginInstallStatus.Install)
         {
-            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(I18N.Install,
-                await Template.Parse(I18N.InstallTextTemplate)
-                    .RenderAsync(new { action = I18N.Install, name = Id, version = Version }),
-                async void (sender, args) =>
-                {
-                    try
-                    {
-                        args.Cancel = true;
-                        sender.PrimaryButtonText = I18N.Installing;
-                        var pipeline = pluginManager.CreatePipeline();
-                        await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync();
-                        sender.Hide();
-                        CheckVersion();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e, "Catch Error in InstallAsync");
-                    }
-                }
-            ));
+            await ShowInstallContentDialog(InstallPluginFronUrl);
         }
         else if (InstallStatus is PluginInstallStatus.Upgrade or PluginInstallStatus.Downgrade)
         {
@@ -333,11 +457,9 @@ public partial class PluginStoreModel : PluginStoreBaseModel
                     {
                         args.Cancel = true;
                         sender.PrimaryButtonText = I18N.Installing;
-                        var pipeline = pluginManager.CreatePipeline();
-                        await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync();
+                        await InstallPluginFronUrl();
                         sender.Hide();
                         CheckVersion();
-
                     }
                     catch (Exception e)
                     {
@@ -345,6 +467,14 @@ public partial class PluginStoreModel : PluginStoreBaseModel
                     }
                 }
             ));
+        }
+
+        return;
+
+        async Task InstallPluginFronUrl(IProgress<PipelineProgress>? progress = null)
+        {
+            var pipeline = pluginManager.CreatePipeline();
+            await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync(progress);
         }
     }
 }
