@@ -9,6 +9,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:controls1="using:ShadowViewer.Controls"
     xmlns:winUi="using:FluentIcons.WinUI"
+    xmlns:icx="using:FluentIcons.WinUI.Markup"
     xmlns:pluginManager="using:ShadowViewer.Plugin.PluginManager"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -36,7 +37,7 @@
                     </StackPanel.ChildrenTransitions>
                     <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                                Text="{i18N:Locale Key=GeneralSetting}" />
-                    <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=BuildingBank}"
+                    <controls:SettingsCard HeaderIcon="{icx:SymbolIcon Symbol=BuildingBank}"
                                            Header="{i18N:Locale Key=PluginSecurityStatement}">
                         <controls:SettingsCard.Description>
                             <TextBlock>
@@ -64,9 +65,9 @@
                     <controls:SettingsExpander IsExpanded="True"
                                                Header="{i18N:Locale Key=StorePing}"
                                                Description="{i18N:Locale Key=StorePingDescription}"
-                                               HeaderIcon="{winUi:SymbolIcon Symbol=WindowApps}">
+                                               HeaderIcon="{icx:SymbolIcon Symbol=WindowApps}">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard HeaderIcon="{winUi:SymbolIcon Symbol=GlobeSearch}"
+                            <controls:SettingsCard HeaderIcon="{icx:SymbolIcon Symbol=GlobeSearch}"
                                                    Description="{i18N:Locale Key=StoreUriDescription}"
                                                    Header="{i18N:Locale Key=StoreUri}">
                                 <TextBox   Text="{x:Bind ViewModel.PluginManagerConfig.StoreUri, Mode=TwoWay}"  ></TextBox>

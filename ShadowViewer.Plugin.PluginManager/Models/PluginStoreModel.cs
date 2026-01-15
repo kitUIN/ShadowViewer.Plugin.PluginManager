@@ -3,13 +3,17 @@ using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using NuGet.Versioning;
 using ShadowPluginLoader.WinUI;
+using ShadowPluginLoader.WinUI.Converters;
+using ShadowPluginLoader.WinUI.Extensions;
 using ShadowViewer.Plugin.PluginManager.Enums;
+using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Sdk;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ShadowViewer.Plugin.PluginManager.I18n;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ShadowViewer.Plugin.PluginManager.Models;
 
@@ -92,7 +96,8 @@ public partial class PluginStoreModel : ObservableObject
     /// </summary>
     [JsonPropertyName("SdkVersion")]
     [ObservableProperty]
-    public partial string SdkVersion { get; set; } = null!;
+    [JsonConverter(typeof(NuGetVersionJsonConverter))]
+    public partial NuGetVersion SdkVersion { get; set; } = null!;
 
     /// <summary>
     /// 插件依赖项列表
@@ -177,13 +182,32 @@ public partial class PluginStoreModel : ObservableObject
         }
     }
 
+    private void CheckDependencies()
+    {
+        var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
+        Dictionary<string, NuGetVersion> installedPlugins = new();
+        foreach (var plugin in pluginManager.GetPlugins())
+        {
+            installedPlugins[plugin.MetaData.Id] = plugin.MetaData.Version;
+        }
+
+        foreach (var dependency in Dependencies)
+        {
+            if (installedPlugins.TryGetValue(dependency.Id, out var version) && dependency.Need.Satisfies(version))
+            {
+                dependency.Installed = version;
+            }
+        }
+    }
+
     [RelayCommand(CanExecute = nameof(InstallButtonEnabled))]
     private async Task Install()
     {
         var pluginManager = DiFactory.Services.Resolve<PluginLoader>();
-        if (InstallStatus == PluginInstallStatus.Install)
+        if (InstallStatus == PluginInstallStatus.Install && !DownloadUrl.IsNullOrEmpty())
         {
-            await pluginManager.InstallAsync([DownloadUrl]);
+            var pipeline = pluginManager.CreatePipeline();
+            await pipeline.Feed(new Uri(DownloadUrl!)).ProcessAsync();
         }
     }
 }
@@ -203,5 +227,12 @@ public class PluginItemDependency
     /// 依赖需求描述
     /// </summary>
     [JsonPropertyName("Need")]
-    public string Need { get; set; } = null!;
+    [JsonConverter(typeof(VersionRangeJsonConverter))]
+    public VersionRange Need { get; set; } = null!;
+
+    /// <summary>
+    /// 已经安装依赖版本
+    /// </summary>
+    [JsonIgnore]
+    public NuGetVersion? Installed { get; set; }
 }

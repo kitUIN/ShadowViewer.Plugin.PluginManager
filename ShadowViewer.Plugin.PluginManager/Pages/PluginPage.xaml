@@ -10,6 +10,7 @@
     xmlns:fluent="using:FluentIcons.WinUI"
     xmlns:helpers="using:ShadowViewer.Plugin.PluginManager.Helpers"
     xmlns:i18N="using:ShadowViewer.Plugin.PluginManager.I18n"
+    xmlns:icx="using:FluentIcons.WinUI.Markup"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ShadowViewer.Plugin.PluginManager.Models"
     x:Name="ThisPage"
@@ -56,10 +57,10 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.AddPluginCommand}"
                         CommandParameter="{x:Bind XamlRoot}"
-                        Icon="{fluent:SymbolIcon Symbol=AddCircle}"
+                        Icon="{icx:SymbolIcon Symbol=AddCircle}"
                         Label="{i18N:Locale Key=AddPlugin}"
                         ToolTipService.ToolTip="{i18N:Locale Key=AddPlugin}" />
-                    <AppBarButton Icon="{fluent:SymbolIcon Symbol=Premium}" Label="">
+                    <AppBarButton Icon="{icx:SymbolIcon Symbol=Premium}" Label="">
                         <ToolTipService.ToolTip>
                             <ToolTip>
                                 <TextBlock>
@@ -71,7 +72,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.ToPluginStorePageCommand}"
-                        Icon="{fluent:SymbolIcon Symbol=Search}"
+                        Icon="{icx:SymbolIcon Symbol=Search}"
                         IsEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
                         Label="{i18N:Locale Key=PluginStore}"
                         ToolTipService.ToolTip="{i18N:Locale Key=GoPluginTip}" />
