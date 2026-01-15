@@ -1,23 +1,24 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Windows.Storage.Pickers;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using Scriban;
 using Serilog;
-using ShadowViewer.Sdk.Helpers;
+using ShadowPluginLoader.Attributes;
+using ShadowViewer.Plugin.PluginManager.Configs;
+using ShadowViewer.Plugin.PluginManager.I18n;
+using ShadowViewer.Plugin.PluginManager.Models;
+using ShadowViewer.Plugin.PluginManager.Pages;
 using ShadowViewer.Sdk;
 using ShadowViewer.Sdk.Extensions;
+using ShadowViewer.Sdk.Helpers;
 using ShadowViewer.Sdk.Services;
-using ShadowViewer.Plugin.PluginManager.Models;
-using Microsoft.UI.Xaml.Controls;
-using ShadowPluginLoader.Attributes;
-using ShadowViewer.Plugin.PluginManager.I18n;
-using ShadowViewer.Plugin.PluginManager.Pages;
+using System;
+using System.Collections.ObjectModel;
 using System.Linq;
-using ShadowViewer.Plugin.PluginManager.Configs;
+using System.Threading.Tasks;
+using Windows.Storage.Pickers;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -139,18 +140,23 @@ public partial class PluginViewModel : ObservableObject
     {
         try
         {
-            var dialog = new ContentDialog
-            {
-                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                DefaultButton = ContentDialogButton.Close,
-                Title = I18N.Delete,
-                Content = I18N.Delete,
-                IsPrimaryButtonEnabled = false,
-                PrimaryButtonText = I18N.Accept,
-                CloseButtonText = I18N.Cancel,
-            };
-            dialog.PrimaryButtonClick += (_, _) => PluginService.RemovePlugin(pluginId);
-            await DialogHelper.ShowDialog(dialog);
+            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(I18N.Delete + pluginId + "?",
+                Sdk.I18n.I18N.Confirm + I18N.Delete + pluginId + "?",
+                async void (sender, args) =>
+                {
+                    try
+                    {
+                        args.Cancel = true;
+                        sender.PrimaryButtonText = I18N.Installing;
+                        await PluginService.RemovePlugin(pluginId);
+                        sender.Hide();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "Catch Error in InstallAsync");
+                    }
+                }
+            ));
         }
         catch (Exception ex)
         {
