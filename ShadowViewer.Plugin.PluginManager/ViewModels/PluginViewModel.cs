@@ -69,6 +69,12 @@ public partial class PluginViewModel : ObservableObject
     public ILogger Logger { get; }
 
     /// <summary>
+    /// 文件选择服务
+    /// </summary>
+    [Autowired]
+    public IFilePickerService FilePickerService { get; }
+
+    /// <summary>
     /// 插件列表
     /// </summary>
     public ObservableCollection<UiPlugin> Plugins { get; } = [];
@@ -178,8 +184,11 @@ public partial class PluginViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(PluginSecurityCheck))]
     private async Task AddPlugin(XamlRoot root)
     {
-        var file = await FileHelper.SelectFileAsync("ShadowViewer_AddPlugin",
-            PickerViewMode.List, FileHelper.Zips);
+        var file = await FilePickerService.PickSingleFileAsync(
+            [".zip", ".rar", ".7z", ".tar"],
+            PickerLocationId.Downloads,
+            PickerViewMode.List,
+            "ShadowViewer_AddPlugin");
         if (file != null)
         {
             // try
