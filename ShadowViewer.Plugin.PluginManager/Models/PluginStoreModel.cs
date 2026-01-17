@@ -24,6 +24,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ShadowPluginLoader.Attributes;
 using ShadowPluginLoader.WinUI.Enums;
 using ShadowPluginLoader.WinUI.Models;
 using ShadowViewer.Sdk.Enums;
@@ -36,7 +37,7 @@ namespace ShadowViewer.Plugin.PluginManager.Models;
 /// 
 /// </summary>
 /// <seealso cref="CommunityToolkit.Mvvm.ComponentModel.ObservableObject" />
-public class PluginStoreBaseModel : ObservableObject
+public partial class PluginStoreBaseModel : ObservableObject
 {
     /// <summary>
     /// 获取依赖检查的图标
@@ -83,6 +84,11 @@ public class PluginStoreBaseModel : ObservableObject
 /// </summary>
 public partial class PluginStoreModel : PluginStoreBaseModel
 {
+    /// <summary>
+    /// Gets the notify service.
+    /// </summary>
+    protected INotifyService NotifyService { get; } = DiFactory.Services.Resolve<INotifyService>();
+
     /// <summary>
     /// 插件唯一标识
     /// </summary>
@@ -317,9 +323,9 @@ public partial class PluginStoreModel : PluginStoreBaseModel
 
         taskGrid.Children.Add(new TextBlock { Name = "TaskProgressValue", Text = "00.00%" });
         taskGrid.Children.Add(new ProgressBar
-        { Name = "TaskProgress", Minimum = 0, Maximum = 1, Width = 160, Height = 8 });
+            { Name = "TaskProgress", Minimum = 0, Maximum = 1, Width = 160, Height = 8 });
         taskGrid.Children.Add(new TextBlock
-        { Name = "TaskProgressStatus", Text = nameof(InstallPipelineStep.Feeding) });
+            { Name = "TaskProgressStatus", Text = nameof(InstallPipelineStep.Feeding) });
 
         Grid.SetColumn(taskGrid.Children[0] as FrameworkElement, 0);
         Grid.SetColumn(taskGrid.Children[1] as FrameworkElement, 1);
@@ -333,7 +339,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
 
         subGrid.Children.Add(new TextBlock { Name = "SubTaskProgressValue", Text = "00.00%" });
         subGrid.Children.Add(new ProgressBar
-        { Name = "SubTaskProgress", Minimum = 0, Maximum = 1, Width = 140, Height = 8 });
+            { Name = "SubTaskProgress", Minimum = 0, Maximum = 1, Width = 140, Height = 8 });
         subGrid.Children.Add(new TextBlock { Name = "SubTaskStatus", Text = "----" });
 
         Grid.SetColumn(subGrid.Children[0] as FrameworkElement, 0);
@@ -345,6 +351,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
 
         return panel;
     }
+
     /// <summary>
     /// Notifies the information bar.
     /// </summary>
@@ -362,7 +369,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
         infoBar.Loaded += async (_, _) => { await RunInstallPipelineAsync(infoBar, installAction); };
         var content = await Template.Parse(I18N.InstallTextTemplate)
             .RenderAsync(new { action = I18N.Install, name = Id, version = Version });
-        await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(I18N.Install, content,
+        await NotifyService.ShowDialog(this, XamlHelper.CreateMessageDialog(I18N.Install, content,
             async void (sender, args) =>
             {
                 try
@@ -379,6 +386,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
             }
         ));
     }
+
     /// <summary>
     /// Runs the install pipeline asynchronous.
     /// </summary>
@@ -445,7 +453,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
         else if (InstallStatus is PluginInstallStatus.Upgrade or PluginInstallStatus.Downgrade)
         {
             var action = InstallStatus == PluginInstallStatus.Upgrade ? I18N.Upgrade : I18N.Downgrade;
-            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(action,
+            await NotifyService.ShowDialog(this, XamlHelper.CreateMessageDialog(action,
                 await Template.Parse(I18N.UpgradeTextTemplate)
                     .RenderAsync(new
                     {

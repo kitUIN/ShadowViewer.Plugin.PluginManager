@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Scriban;
 using Serilog;
 using ShadowPluginLoader.Attributes;
+using ShadowPluginLoader.WinUI;
 using ShadowViewer.Plugin.PluginManager.Configs;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Plugin.PluginManager.Models;
@@ -48,6 +49,12 @@ public partial class PluginViewModel : ObservableObject
     /// </summary>
     [Autowired]
     public PluginLoader PluginService { get; }
+
+    /// <summary>
+    /// 通知服务
+    /// </summary>
+    [Autowired]
+    public INotifyService NotifyService { get; }
 
     /// <summary>
     /// 导航服务
@@ -140,7 +147,7 @@ public partial class PluginViewModel : ObservableObject
     {
         try
         {
-            await DialogHelper.ShowDialog(XamlHelper.CreateMessageDialog(I18N.Delete + pluginId + "?",
+            await NotifyService.ShowDialog(this, XamlHelper.CreateMessageDialog(I18N.Delete + pluginId + "?",
                 Sdk.I18n.I18N.Confirm + I18N.Delete + pluginId + "?",
                 async void (sender, args) =>
                 {
