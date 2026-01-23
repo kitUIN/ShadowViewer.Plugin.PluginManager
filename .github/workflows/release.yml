@@ -13,6 +13,7 @@ on:
 
 env:
   Solution_Name: ShadowViewer.Plugin.PluginManager
+  Configuration: Release
   RELEASE_TAG: ${{ github.event.inputs.release_tag || github.ref_name }}
 
 jobs:
@@ -23,6 +24,12 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      
+      - name: Checkout sdk repo
+        uses: actions/checkout@v4
+        with:
+          repository: kitUIN/ShadowViewer.Sdk
+          path: ShadowViewer.Sdk
 
       - name: Install .NET
         uses: actions/setup-dotnet@v4
@@ -42,7 +49,7 @@ jobs:
       - name: Build Packages
         run: |
           dotnet restore $env:Solution_Name/$env:Solution_Name.csproj
-          msbuild $env:Solution_Name/$env:Solution_Name.csproj -p:Configuration=Release -p:GithubAction=true
+          msbuild $env:Solution_Name/$env:Solution_Name.csproj -p:Configuration=$env:Configuration -p:GithubAction=true
           
       - name: Copy NugetPackages to repo
         run: |
@@ -57,7 +64,7 @@ jobs:
             NugetPackages/*
             ${{ env.Solution_Name }}/bin/**/plugin.json
             ${{ env.Solution_Name }}/Packages/${{ env.Solution_Name }}*.sdow
-
+            
   release:
     runs-on: windows-latest
     needs: build
