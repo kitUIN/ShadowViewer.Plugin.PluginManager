@@ -363,7 +363,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
                 .RenderAsync(new { action = I18N.Install, name = Id, version = Version }),
             IsOpen = true,
             Severity = InfoBarSeverity.Informational,
-            IsClosable = false,
+            IsClosable = true,
             Content = BuildProgressContent()
         };
         infoBar.Loaded += async (_, _) => { await RunInstallPipelineAsync(infoBar, installAction); };
