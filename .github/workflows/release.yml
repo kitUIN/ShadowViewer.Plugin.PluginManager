@@ -14,6 +14,7 @@ on:
 env:
   Solution_Name: ShadowViewer.Plugin.PluginManager
   Configuration: Release
+  DepsUseNuget: true
   RELEASE_TAG: ${{ github.event.inputs.release_tag || github.ref_name }}
 
 jobs:
@@ -49,7 +50,7 @@ jobs:
       - name: Build Packages
         run: |
           dotnet restore $env:Solution_Name/$env:Solution_Name.csproj
-          msbuild $env:Solution_Name/$env:Solution_Name.csproj -p:Configuration=$env:Configuration -p:GithubAction=true
+          msbuild $env:Solution_Name/$env:Solution_Name.csproj -p:Configuration=$env:Configuration -p:GithubAction=true -p:DepsUseNuget=$env:DepsUseNuget
           
       - name: Copy NugetPackages to repo
         run: |
@@ -64,7 +65,7 @@ jobs:
             NugetPackages/*
             ${{ env.Solution_Name }}/bin/**/plugin.json
             ${{ env.Solution_Name }}/Packages/${{ env.Solution_Name }}*.sdow
-            
+
   release:
     runs-on: windows-latest
     needs: build

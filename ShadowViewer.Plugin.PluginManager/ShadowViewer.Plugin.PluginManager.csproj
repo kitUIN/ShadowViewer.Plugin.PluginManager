@@ -28,16 +28,19 @@
 		<PackageTags>kitUIN;wasdk;ShadowViewer;plugin;winui</PackageTags>
 		<PackageOutputPath>..\..\..\NugetPackages</PackageOutputPath>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<NoWarn>MSB3277</NoWarn>
+		<NoWarn>MSB3277;NU5118</NoWarn>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Debug' Or '$(MainGithubAction)' == 'true'">
+	<ItemGroup Condition="'$(Configuration)' == 'Debug' Or '$(DepsUseNuget)' != 'true'">
 		<ProjectReference Include="..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="ShadowViewer.Sdk" Version="3.1.0" />
+	<ItemGroup Condition="'$(Configuration)' == 'Release' Or '$(DepsUseNuget)' == 'true'">
+		<PackageReference Include="ShadowViewer.Sdk" Version="3.1.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Remove="D:\VsProject\ShadowViewer\ShadowViewer.Plugin.PluginManager\ShadowViewer.Plugin.PluginManager\plugin.d.json" />
 	</ItemGroup>
   
 </Project>
