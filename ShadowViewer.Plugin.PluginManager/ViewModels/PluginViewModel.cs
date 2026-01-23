@@ -185,7 +185,7 @@ public partial class PluginViewModel : ObservableObject
     private async Task AddPlugin(XamlRoot root)
     {
         var file = await FilePickerService.PickSingleFileAsync(
-            [".zip", ".rar", ".shad"],
+            [".zip", ".rar", ".sdow"],
             PickerLocationId.Downloads,
             PickerViewMode.List,
             "ShadowViewer_AddPlugin");
