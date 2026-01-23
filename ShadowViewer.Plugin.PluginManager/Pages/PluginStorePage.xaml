@@ -368,7 +368,7 @@
                                     HorizontalAlignment="Stretch"
                                     Command="{x:Bind InstallCommand, Mode=OneWay}"
                                     Content="{x:Bind InstallButtonText, Mode=OneWay}" />
-                                <Button Grid.Column="1" Height="32">
+                                <Button Grid.Column="1" Height="32" Command="{x:Bind DownloadToLocalCommand, Mode=OneWay}" ToolTipService.ToolTip="{i18N:Locale Key=DownloadToLocal}">
                                     <icon:SymbolIcon FontSize="15" Symbol="ArrowDownload" />
                                 </Button>
                             </Grid>
