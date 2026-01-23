@@ -60,16 +60,10 @@
                         Icon="{icx:SymbolIcon Symbol=AddCircle}"
                         Label="{i18N:Locale Key=AddPlugin}"
                         ToolTipService.ToolTip="{i18N:Locale Key=AddPlugin}" />
-                    <AppBarButton Icon="{icx:SymbolIcon Symbol=Premium}" Label="">
-                        <ToolTipService.ToolTip>
-                            <ToolTip>
-                                <TextBlock>
-                                    <Run Text="{i18N:Locale Key=MinVersion}" />
-                                    <Run Text="" />
-                                </TextBlock>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                    </AppBarButton>
+                    <AppBarButton
+                        Icon="{icx:SymbolIcon Symbol=Tag}"
+                        Label="{x:Bind ViewModel.SdkVersion, Mode=OneWay}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.SdkVersion, Mode=OneWay}" />
                     <AppBarButton
                         Command="{x:Bind ViewModel.ToPluginStorePageCommand}"
                         Icon="{icx:SymbolIcon Symbol=Search}"
@@ -223,8 +217,7 @@
                                     Height="37"
                                     Padding="5"
                                     Command="{Binding ElementName=ThisPage, Path=ViewModel.ToPluginSettingPageCommand}"
-                                    CommandParameter="{x:Bind SettingsPage, Mode=OneWay}"
-                                    Visibility="{x:Bind SettingsPage, Mode=OneWay, Converter={StaticResource EmptyObjectToVisibilityConverter}}">
+                                    CommandParameter="{x:Bind SettingsPage, Mode=OneWay}">
                                     <fluent:SymbolIcon Symbol="Settings" />
                                 </HyperlinkButton>
                                 <HyperlinkButton
@@ -232,8 +225,7 @@
                                     Width="37"
                                     Height="37"
                                     Padding="5"
-                                    extensions:ButtonExtensions.ClickShowFlyout="True"
-                                    Visibility="{x:Bind Converter={StaticResource PluginMoreVisibilityConverter}}">
+                                    extensions:ButtonExtensions.ClickShowFlyout="True">
                                     <fluent:SymbolIcon Symbol="MoreHorizontal" />
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout Placement="Right">

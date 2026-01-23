@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
+using ShadowViewer.Plugin.PluginManager.Constants;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -43,6 +44,10 @@ public partial class PluginViewModel : ObservableObject
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
     public partial bool PluginSecurityCheck { get; set; }
+    /// <summary>
+    /// Sdk 版本号
+    /// </summary>
+    public string SdkVersion { get; } = I18N.SdkVersion + ": " + PluginConstants.SdkVersion;
 
     /// <summary>
     /// 插件服务

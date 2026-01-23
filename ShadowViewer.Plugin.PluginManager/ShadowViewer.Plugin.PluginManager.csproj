@@ -39,8 +39,4 @@
 	<ItemGroup Condition="'$(Configuration)' == 'Release' Or '$(DepsUseNuget)' == 'true'">
 		<PackageReference Include="ShadowViewer.Sdk" Version="3.1.2" />
 	</ItemGroup>
-	<ItemGroup>
-	  <AdditionalFiles Remove="D:\VsProject\ShadowViewer\ShadowViewer.Plugin.PluginManager\ShadowViewer.Plugin.PluginManager\plugin.d.json" />
-	</ItemGroup>
-  
 </Project>

@@ -297,4 +297,7 @@
   <data name="DownloadSuccess" xml:space="preserve">
     <value>下载成功</value>
   </data>
+  <data name="SdkVersion" xml:space="preserve">
+    <value>Sdk</value>
+  </data>
 </root>

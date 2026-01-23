@@ -5,9 +5,5 @@
   "Description": "{{ Description }}",
   "Authors": "{{ Authors }}",
   "WebUri": "{{ PackageProjectUrl }}",
-  "Logo": "fluent://regular/Apps",
-  "PluginManage": {
-    "CanSwitch": false,
-    "CanOpenFolder": false
-  }
+  "Logo": "fluent://regular/Apps"
 }
