@@ -33,10 +33,10 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Debug' and '$(GithubAction)' != 'true'">
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<ProjectReference Include="..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' == 'Release' or '$(GithubAction)' == 'true'">
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<PackageReference Include="ShadowViewer.Sdk" Version="3.0.1" />
 	</ItemGroup>
   
