@@ -22,8 +22,8 @@ public static class MetaDataExtension
         {
             return new PluginManage()
             {
-                CanOpenFolder = metaData.Raw.GetProperty(nameof(PluginManage.CanOpenFolder)).GetBoolean(),
-                CanSwitch = metaData.Raw.GetProperty(nameof(PluginManage.CanSwitch)).GetBoolean(),
+                CanOpenFolder = jsonElement.GetProperty(nameof(PluginManage.CanOpenFolder)).GetBoolean(),
+                CanSwitch = jsonElement.GetProperty(nameof(PluginManage.CanSwitch)).GetBoolean(),
                 SettingsPage = metaData.EntryPoints
                     .FirstOrDefault(x => x.Name == nameof(PluginManage.SettingsPage))
             };
