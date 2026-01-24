@@ -6,6 +6,8 @@ using Serilog;
 using ShadowPluginLoader.WinUI;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
 using System;
+using Microsoft.IdentityModel.Tokens;
+using ShadowViewer.Sdk.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -13,7 +15,7 @@ using System;
 namespace ShadowViewer.Plugin.PluginManager.Pages;
 
 /// <summary>
-/// …ÃµÍ“≥
+/// ÂïÜÂ∫óÈ°µ
 /// </summary>
 public sealed partial class PluginStorePage
 {
@@ -31,12 +33,19 @@ public sealed partial class PluginStorePage
     }
 
     /// <summary>
-    /// Init
+    /// ËøõÂÖ•È°µÈù¢
     /// </summary>
-    /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+    protected async override void OnNavigatedTo(NavigationEventArgs e)
     {
+        if (e.Parameter is Uri uri) _ = ViewModel.NavigateTo(uri);
+        
+        if (ViewModel.PluginManagerConfig.StoreUri.IsNullOrEmpty())
+        {
+            StoreUriTeachingTip.IsOpen = true;
+            return;
+        }
+        
         try
         {
             LoadingProgress.Visibility = Visibility.Visible;
@@ -44,8 +53,8 @@ public sealed partial class PluginStorePage
         }
         catch (Exception exception)
         {
-            Log.Error("ªÒ»°≤Âº˛±®¥Ì:{E}", exception);
-            ViewModel.NotifyService.NotifyTip(this, $"ªÒ»°≤Âº˛±®¥Ì:{exception}",
+            Log.Error("Ëé∑ÂèñÊèí‰ª∂Êä•Èîô:{E}", exception);
+            ViewModel.NotifyService.NotifyTip(this, $"Ëé∑ÂèñÊèí‰ª∂Êä•Èîô:{exception}",
                 InfoBarSeverity.Error);
         }
         finally
@@ -55,11 +64,12 @@ public sealed partial class PluginStorePage
     }
 
     /// <summary>
-    /// Ω¯»Î“≥√Ê
+    /// Navigate to settings page
     /// </summary>
-    /// <param name="e"></param>
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    private void GoToSettings_Click(TeachingTip sender, object args)
     {
-        if (e.Parameter is Uri uri) _ = ViewModel.NavigateTo(uri);
+        StoreUriTeachingTip.IsOpen = false;
+        var navigateService = DiFactory.Services.Resolve<INavigateService>();
+        navigateService.Navigate(new Uri("shadow://pluginmanager/settings"));
     }
 }

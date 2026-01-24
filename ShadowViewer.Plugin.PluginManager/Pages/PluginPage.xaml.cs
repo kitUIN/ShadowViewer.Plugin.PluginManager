@@ -48,7 +48,6 @@ namespace ShadowViewer.Plugin.PluginManager.Pages
         /// <inheritdoc />
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
         }
     }
 }

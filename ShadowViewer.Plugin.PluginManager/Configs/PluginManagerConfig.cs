@@ -9,8 +9,7 @@ public partial class PluginManagerConfig
     /// 商店列表api
     /// </summary>
     [ObservableConfigProperty(Description = "商店列表api")]
-    private string storeUri =
-        "https://shadowviewerplugin.kituin.fun/api";
+    private string storeUri = "";
 
     /// <summary>
     /// github代理下载加速

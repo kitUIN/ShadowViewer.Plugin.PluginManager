@@ -58,6 +58,7 @@ public partial class PluginStoreViewModel : ObservableObject
     /// </summary>
     public async Task Refresh()
     {
+        if (PluginManagerConfig.StoreUri.IsNullOrEmpty()) return;
         Models.Clear();
         var response = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri, Page);
         if (response == null || response.Items.Count == 0) return;

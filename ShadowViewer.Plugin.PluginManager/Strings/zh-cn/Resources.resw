@@ -300,4 +300,13 @@
   <data name="SdkVersion" xml:space="preserve">
     <value>Sdk</value>
   </data>
-</root>
+  <data name="StoreApiRequired" xml:space="preserve">
+  <value>需要配置插件商店API</value>  
+  </data>  
+  <data name="PleaseConfigureStoreApi" xml:space="preserve">    
+  <value>请先在设置中配置插件商店请求地址以使用插件商店功能</value>  
+  </data>  
+  <data name="GoToSettings" xml:space="preserve">   
+  <value>前往设置</value>  
+  </data>
+  </root>

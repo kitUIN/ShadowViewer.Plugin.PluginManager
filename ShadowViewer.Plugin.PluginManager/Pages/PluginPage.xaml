@@ -64,12 +64,6 @@
                         Icon="{icx:SymbolIcon Symbol=Tag}"
                         Label="{x:Bind ViewModel.SdkVersion, Mode=OneWay}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.SdkVersion, Mode=OneWay}" />
-                    <AppBarButton
-                        Command="{x:Bind ViewModel.ToPluginStorePageCommand}"
-                        Icon="{icx:SymbolIcon Symbol=Search}"
-                        IsEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
-                        Label="{i18N:Locale Key=PluginStore}"
-                        ToolTipService.ToolTip="{i18N:Locale Key=GoPluginTip}" />
                 </CommandBar>
             </Grid>
 
