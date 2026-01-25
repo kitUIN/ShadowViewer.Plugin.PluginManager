@@ -40,7 +40,7 @@ public class PluginManagerNavigationResponder : AbstractNavigationResponder
                 pluginId: "ShadowViewer.Plugin.PluginManager",
                 id: "PluginManager",
                 uri: ShadowUri.Parse("shadow://pluginmanager"),
-                icon: new FontIcon { Glyph = "\uE74C" },
+                icon: "font://\uE74C",
                 content: I18N.PluginManager)
         };
 
