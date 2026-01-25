@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using ShadowViewer.Plugin.PluginManager.Constants;
+using ShadowPluginLoader.WinUI.Extensions;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -44,6 +45,7 @@ public partial class PluginViewModel : ObservableObject
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(AddPluginCommand))]
     public partial bool PluginSecurityCheck { get; set; }
+
     /// <summary>
     /// Sdk 版本号
     /// </summary>
@@ -196,18 +198,17 @@ public partial class PluginViewModel : ObservableObject
             "ShadowViewer_AddPlugin");
         if (file != null)
         {
-            // try
-            // {
-            //     await PluginService.ScanAsync(file.Path);
-            //     await PluginService.Load();
-            // }
-            // catch (Exception ex)
-            // {
-            //     Logger.Error("添加插件失败:{Ex}", ex);
-            //     return;
-            // }
-            //
-            // InitPlugins();
+            try
+            {
+                await PluginService.CreatePipeline().Feed(new Uri(file.Path)).ProcessAsync();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("添加插件失败:{Ex}", ex);
+                return;
+            }
+
+            InitPlugins();
         }
     }
 }
