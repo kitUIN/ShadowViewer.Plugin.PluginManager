@@ -302,11 +302,17 @@
   </data>
   <data name="StoreApiRequired" xml:space="preserve">
   <value>需要配置插件商店API</value>  
-  </data>  
+  </data>
   <data name="PleaseConfigureStoreApi" xml:space="preserve">    
   <value>请先在设置中配置插件商店请求地址以使用插件商店功能</value>  
-  </data>  
+  </data>
   <data name="GoToSettings" xml:space="preserve">   
   <value>前往设置</value>  
   </data>
-  </root>
+  <data name="RestartApp" xml:space="preserve">
+    <value>重启当前应用</value>
+  </data>
+  <data name="RestartAppForPluginDelete" xml:space="preserve">
+    <value>插件删除后，只有重启应用后才会生效</value>
+  </data>
+</root>

@@ -7,7 +7,9 @@ using Scriban;
 using Serilog;
 using ShadowPluginLoader.Attributes;
 using ShadowPluginLoader.WinUI;
+using ShadowPluginLoader.WinUI.Extensions;
 using ShadowViewer.Plugin.PluginManager.Configs;
+using ShadowViewer.Plugin.PluginManager.Constants;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Plugin.PluginManager.Pages;
@@ -17,11 +19,10 @@ using ShadowViewer.Sdk.Helpers;
 using ShadowViewer.Sdk.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
-using ShadowViewer.Plugin.PluginManager.Constants;
-using ShadowPluginLoader.WinUI.Extensions;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -160,8 +161,15 @@ public partial class PluginViewModel : ObservableObject
     {
         try
         {
-            await NotifyService.ShowDialog(this, XamlHelper.CreateMessageDialog(I18N.Delete + pluginId + "?",
-                Sdk.I18n.I18N.Confirm + I18N.Delete + pluginId + "?",
+            var plugin = PluginService.GetPlugin(pluginId);
+            if (plugin == null)
+            {
+                return;
+            }
+
+            await NotifyService.ShowDialog(this, XamlHelper.CreateMessageDialog(
+                $"{I18N.Delete}{plugin.DisplayName}(v{plugin.MetaData.Version})?",
+                $"{Sdk.I18n.I18N.Confirm}{I18N.Delete}{plugin.DisplayName}(v{plugin.MetaData.Version})?",
                 async void (sender, args) =>
                 {
                     try
@@ -170,18 +178,40 @@ public partial class PluginViewModel : ObservableObject
                         sender.PrimaryButtonText = I18N.Installing;
                         await PluginService.RemovePlugin(pluginId);
                         sender.Hide();
+                        await NotifyService.ShowDialog(this, XamlHelper.CreateMessageDialog(
+                            $"{I18N.RestartApp}?",
+                            I18N.RestartAppForPluginDelete,
+                            RestartApp
+                        ));
                     }
                     catch (Exception e)
                     {
-                        Log.Error(e, "Catch Error in InstallAsync");
+                        Log.Error(e, "Catch Error in DeleteAsync");
                     }
                 }
             ));
+            
         }
         catch (Exception ex)
         {
             Log.Error("Delete_Click Error,{ex}", ex);
         }
+    }
+
+    private void RestartApp(ContentDialog dialog, ContentDialogButtonClickEventArgs args)
+    {
+
+        var appUserModelId = "kitUIN.ShadowViewer_fka8f3r9nhqje!App";
+
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "cmd.exe",
+            Arguments = $"/c timeout /t 3 & explorer.exe shell:AppsFolder\\{appUserModelId}",
+            CreateNoWindow = true,
+            UseShellExecute = false
+        });
+
+        Environment.Exit(0);
     }
 
 
