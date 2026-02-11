@@ -20,34 +20,49 @@ public partial class UiPlugin : ObservableObject
     public partial PluginMetaData MetaData { get; set; }
 
     /// <summary>
+    /// 是否来自zip
+    /// </summary>
+    public bool IsZip { get; }
+    /// <summary>
+    /// Gets the zip path.
+    /// </summary>
+    public string? ZipPath { get; }
+
+    /// <summary>
     /// 是否开启插件
     /// </summary>
-    [ObservableProperty] public partial bool IsEnabled { get; set; }
+    [ObservableProperty]
+    public partial bool IsEnabled { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManage.CanSwitch"/>
     /// </summary>
-    [ObservableProperty] public partial bool CanSwitch { get; set; }
+    [ObservableProperty]
+    public partial bool CanSwitch { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    [ObservableProperty] public partial bool CanDelete { get; set; }
+    [ObservableProperty]
+    public partial bool CanDelete { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManage.CanOpenFolder"/>
     /// </summary>
-    [ObservableProperty] public partial bool CanOpenFolder { get; set; }
+    [ObservableProperty]
+    public partial bool CanOpenFolder { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="PluginManage.SettingsPage"/>
     /// </summary>
-    [ObservableProperty] public partial Type? SettingsPage { get; set; }
+    [ObservableProperty]
+    public partial Type? SettingsPage { get; set; }
 
     /// <summary>
     /// 插件Type
     /// </summary>
-    [ObservableProperty] public partial Type PluginType { get; set; }
+    [ObservableProperty]
+    public partial Type? PluginType { get; set; }
 
     /// <summary>
     /// 
@@ -57,12 +72,29 @@ public partial class UiPlugin : ObservableObject
     {
         MetaData = plugin.MetaData;
         var pluginManage = MetaData.GetPluginManage();
-        IsEnabled = plugin.IsEnabled;
-        CanOpenFolder = pluginManage.CanOpenFolder && !plugin.MetaData.BuiltIn;
-        CanSwitch = pluginManage.CanSwitch && !plugin.MetaData.BuiltIn;
-        CanDelete = !plugin.MetaData.BuiltIn;
+        CanOpenFolder = pluginManage.CanOpenFolder && !MetaData.BuiltIn;
+        CanSwitch = pluginManage.CanSwitch && !MetaData.BuiltIn;
+        CanDelete = !MetaData.BuiltIn;
         SettingsPage = pluginManage.SettingsPage?.EntryPointType;
         PluginType = plugin.GetType();
+        IsEnabled = plugin.IsEnabled;
+        ZipPath = null;
+        IsZip = false;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UiPlugin"/> class.
+    /// </summary>
+    public UiPlugin(PluginMetaData metaData, string? zipPath)
+    {
+        MetaData = metaData;
+        var pluginManage = MetaData.GetPluginManage();
+        CanOpenFolder = pluginManage.CanOpenFolder && !MetaData.BuiltIn;
+        CanSwitch = pluginManage.CanSwitch && !MetaData.BuiltIn;
+        CanDelete = !MetaData.BuiltIn;
+        SettingsPage = pluginManage.SettingsPage?.EntryPointType;
+        ZipPath = zipPath;
+        IsZip = zipPath != null;
     }
 
     /// <summary>

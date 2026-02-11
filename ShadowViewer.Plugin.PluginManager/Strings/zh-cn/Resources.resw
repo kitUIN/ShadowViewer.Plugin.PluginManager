@@ -315,4 +315,25 @@
   <data name="RestartAppForPluginDelete" xml:space="preserve">
     <value>插件删除后，只有重启应用后才会生效</value>
   </data>
+  <data name="PluginMetaDataExtractError" xml:space="preserve">
+    <value>无法提取插件元数据，请检查插件包是否有效</value>
+  </data>
+  <data name="PluginPreviewTitle" xml:space="preserve">
+    <value>插件预览</value>
+  </data>
+  <data name="PluginInstallSuccess" xml:space="preserve">
+    <value>插件安装成功</value>
+  </data>
+  <data name="PluginInstallError" xml:space="preserve">
+    <value>插件安装失败</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="WebUri" xml:space="preserve">
+    <value>项目地址</value>
+  </data>
+  <data name="PluginAlreadyInstalledWarning" xml:space="preserve">
+    <value>已安装相同ID的插件，继续安装将覆盖现有版本</value>
+  </data>
 </root>

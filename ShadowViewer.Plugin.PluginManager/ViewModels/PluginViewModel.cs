@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using NuGet.Versioning;
 using Scriban;
 using Serilog;
 using ShadowPluginLoader.Attributes;
@@ -10,19 +11,27 @@ using ShadowPluginLoader.WinUI;
 using ShadowPluginLoader.WinUI.Extensions;
 using ShadowViewer.Plugin.PluginManager.Configs;
 using ShadowViewer.Plugin.PluginManager.Constants;
+using ShadowViewer.Plugin.PluginManager.Controls;
+using ShadowViewer.Plugin.PluginManager.Helpers;
 using ShadowViewer.Plugin.PluginManager.I18n;
 using ShadowViewer.Plugin.PluginManager.Models;
 using ShadowViewer.Plugin.PluginManager.Pages;
 using ShadowViewer.Sdk;
 using ShadowViewer.Sdk.Extensions;
 using ShadowViewer.Sdk.Helpers;
+using ShadowViewer.Sdk.Plugins;
 using ShadowViewer.Sdk.Services;
+using SharpCompress.Archives;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Storage.Pickers;
+using ShadowPluginLoader.WinUI.Helpers;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -190,7 +199,6 @@ public partial class PluginViewModel : ObservableObject
                     }
                 }
             ));
-            
         }
         catch (Exception ex)
         {
@@ -200,7 +208,6 @@ public partial class PluginViewModel : ObservableObject
 
     private void RestartApp(ContentDialog dialog, ContentDialogButtonClickEventArgs args)
     {
-
         var appUserModelId = "kitUIN.ShadowViewer_fka8f3r9nhqje!App";
 
         Process.Start(new ProcessStartInfo
@@ -228,17 +235,79 @@ public partial class PluginViewModel : ObservableObject
             "ShadowViewer_AddPlugin");
         if (file != null)
         {
+            // 从压缩包提取元数据进行预览
+            var previewModel = await ExtractPluginMetaDataAsync(file);
+            if (previewModel == null)
+            {
+                NotifyService.NotifyTip(this, I18N.PluginMetaDataExtractError, InfoBarSeverity.Error);
+                return;
+            }
+
+            // 检查是否已安装
+            var existingPlugin = PluginService.GetPlugin(previewModel.MetaData.Id);
+            if (existingPlugin != null)
+            {
+                // previewModel.IsAlreadyInstalled = true;
+                // previewModel.InstalledVersion = existingPlugin.MetaData.Version;
+            }
+
+            // 创建预览对话框
+            var previewControl = new PluginPreviewControl
+            {
+                ViewModel = previewModel
+            };
+
+            // 创建ContentDialog
+            var dialog = new ContentDialog
+            {
+                XamlRoot = root,
+                Title = I18N.PluginPreviewTitle,
+                Content = previewControl,
+                PrimaryButtonText = I18N.Install,
+                CloseButtonText = I18N.Cancel,
+                DefaultButton = ContentDialogButton.Primary
+            };
+
+            var result = await NotifyService.ShowDialog(this, dialog);
+            if (result != ContentDialogResult.Primary)
+            {
+                return; // 用户取消安装
+            }
+
+            // 执行安装
             try
             {
                 await PluginService.CreatePipeline().Feed(new Uri(file.Path)).ProcessAsync();
+                NotifyService.NotifyTip(this, I18N.PluginInstallSuccess, InfoBarSeverity.Success);
             }
             catch (Exception ex)
             {
                 Logger.Error("添加插件失败:{Ex}", ex);
+                NotifyService.NotifyTip(this, I18N.PluginInstallError, InfoBarSeverity.Error);
                 return;
             }
 
             InitPlugins();
         }
+    }
+
+    /// <summary>
+    /// 从插件压缩包中提取元数据
+    /// </summary>
+    private async Task<UiPlugin?> ExtractPluginMetaDataAsync(StorageFile file)
+    {
+        return await Task.Run(async () =>
+        {
+            try
+            {
+                var metaData = await MetaDataHelper.ToMetaAsyncFromZip<PluginMetaData>(file.Path);
+                return new UiPlugin(metaData, file.Path);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("提取插件元数据失败:{Ex}", ex);
+                return null;
+            }
+        });
     }
 }
