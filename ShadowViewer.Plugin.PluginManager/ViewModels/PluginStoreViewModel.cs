@@ -8,6 +8,7 @@ using ShadowViewer.Sdk;
 using ShadowViewer.Sdk.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
@@ -60,26 +61,37 @@ public partial class PluginStoreViewModel : ObservableObject
     {
         if (PluginManagerConfig.StoreUri.IsNullOrEmpty()) return;
         Models.Clear();
-        var response = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri, Page);
+        var response = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri, Page,
+            githubProxyUrl: PluginManagerConfig.GithubProxyUrl);
         if (response == null || response.Items.Count == 0) return;
         foreach (var model in response.Items)
         {
-            if (!PluginManagerConfig.GithubProxyUrl.IsNullOrEmpty())
-            {
-                if (model.Logo?.StartsWith("https://raw.githubusercontent.com") == true)
-                {
-                    model.Logo = PluginManagerConfig.GithubProxyUrl + model.Logo;
-                }
-
-                if (model.DownloadUrl?.StartsWith("https://github.com") == true)
-                {
-                    model.DownloadUrl = PluginManagerConfig.GithubProxyUrl + model.DownloadUrl;
-                }
-            }
-
-            _ = Task.Run(() => model.CheckDependenciesCommand.Execute(null));
             Models.Add(model);
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    public async Task ChangeVersion(string id)
+    {
+        var selectModel = Models.FirstOrDefault(m => m.Id == id);
+        if (selectModel?.Version == null) return;
+        var model = await PluginStoreHelper.Instance.GetPluginVersion(PluginManagerConfig.StoreUri,
+            selectModel.Id, selectModel.Version, githubProxyUrl: PluginManagerConfig.GithubProxyUrl);
+        if (model == null) return;
+        var index = Models.IndexOf(selectModel);
+        if (index < 0) return;
+        Models[index].Authors = model.Authors;
+        Models[index].Dependencies = model.Dependencies;
+        Models[index].Description = model.Description;
+        Models[index].DownloadUrl = model.DownloadUrl;
+        Models[index].LastUpdated = model.LastUpdated;
+        Models[index].SdkVersion = model.SdkVersion;
+        Models[index].Tags = model.Tags;
+        Models[index].BackgroundColor = model.BackgroundColor;
+        Models[index].WebUri = Models[index].WebUri;
     }
 
     /// <summary>

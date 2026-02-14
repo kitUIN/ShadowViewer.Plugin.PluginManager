@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.Helpers;
 using DryIoc;
@@ -110,7 +110,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     [JsonPropertyName("Version")]
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(InstallButtonText))]
-    public partial string Version { get; set; } = null!;
+    public partial string? Version { get; set; }
 
     /// <summary>
     /// 所有可用版本号
@@ -164,6 +164,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     /// </summary>
     [JsonPropertyName("SdkVersion")]
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SdkVersionStatus))]
     [JsonConverter(typeof(VersionRangeJsonConverter))]
     public partial VersionRange SdkVersion { get; set; } = null!;
 
@@ -171,7 +172,8 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     /// 插件依赖项列表
     /// </summary>
     [JsonPropertyName("Dependencies")]
-    public ObservableCollection<PluginItemDependency> Dependencies { get; set; } = [];
+    [ObservableProperty]
+    public partial ObservableCollection<PluginItemDependency> Dependencies { get; set; } = [];
 
     /// <summary>
     /// 插件下载链接
@@ -214,7 +216,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     /// 安装按钮是否启用
     /// </summary> 
     [JsonIgnore]
-    public bool InstallButtonEnabled => InstallStatus != PluginInstallStatus.Installed;
+    public bool InstallButtonEnabled => InstallStatus != PluginInstallStatus.Installed && DependencyCheckStatus == true;
 
     /// <summary>
     /// 已经安装的插件版本
@@ -227,13 +229,15 @@ public partial class PluginStoreModel : PluginStoreBaseModel
     /// Sdk版本检查状态
     /// </summary>
     [JsonIgnore]
-    public bool? SdkVersionStatus => SdkVersion.Satisfies(PluginConstants.SdkVersion);
+    public bool? SdkVersionStatus => SdkVersion?.Satisfies(PluginConstants.SdkVersion);
 
     /// <summary>
     /// 依赖检查状态
     /// </summary> 
     [JsonIgnore]
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(InstallButtonEnabled))]
+    [NotifyCanExecuteChangedFor(nameof(InstallCommand))]
     public partial bool? DependencyCheckStatus { get; set; }
 
     partial void OnIdChanged(string oldValue, string newValue)
@@ -242,10 +246,20 @@ public partial class PluginStoreModel : PluginStoreBaseModel
         InstalledVersion = DiFactory.Services.Resolve<PluginLoader>().GetPlugin(Id)?.MetaData.Version;
     }
 
-    partial void OnVersionChanged(string oldValue, string newValue)
+    partial void OnVersionChanged(string? oldValue, string? newValue)
     {
         if (oldValue == newValue) return;
         CheckVersion();
+    }
+
+    partial void OnDependenciesChanged(ObservableCollection<PluginItemDependency> value)
+    {
+        CheckDependencies();
+    }
+
+    partial void OnSdkVersionChanged(VersionRange value)
+    {
+        CheckDependencies();
     }
 
     /// <summary>
@@ -260,6 +274,7 @@ public partial class PluginStoreModel : PluginStoreBaseModel
             return;
         }
 
+        if (Version == null) return;
         var pluginStoreVersion = new NuGetVersion(Version);
         if (pluginStoreVersion > InstalledVersion)
         {
@@ -285,20 +300,24 @@ public partial class PluginStoreModel : PluginStoreBaseModel
             installedPlugins[plugin.MetaData.Id] = plugin.MetaData.Version;
         }
 
-        var flag = true;
+        var flag = SdkVersionStatus == true;
         foreach (var dependency in Dependencies)
         {
             if (installedPlugins.TryGetValue(dependency.Id, out var version))
             {
                 dependency.Installed = version;
                 dependency.Status = dependency.Need.Satisfies(version);
+                if (!dependency.Status)
+                {
+                    flag = false;
+                }
             }
             else
             {
                 flag = false;
             }
         }
-
+        
         DependencyCheckStatus = flag;
     }
 
@@ -363,7 +382,8 @@ public partial class PluginStoreModel : PluginStoreBaseModel
         var filePickerService = DiFactory.Services.Resolve<IFilePickerService>();
         var filename = Path.GetFileName(DownloadUrl);
         var fileExtension = Path.GetExtension(DownloadUrl);
-        var file = await filePickerService.PickSaveFileAsync(new Dictionary<string, IList<string>> { { "Zip File", new List<string> { fileExtension } } },
+        var file = await filePickerService.PickSaveFileAsync(
+            new Dictionary<string, IList<string>> { { "Zip File", new List<string> { fileExtension } } },
             suggestedFileName: filename,
             suggestedStartLocation: PickerLocationId.Downloads, settingsIdentifier: "PluginStoreDownloadToLocal");
         if (file == null) return;

@@ -64,6 +64,10 @@
                         Icon="{icx:SymbolIcon Symbol=Tag}"
                         Label="{x:Bind ViewModel.SdkVersion, Mode=OneWay}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.SdkVersion, Mode=OneWay}" />
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.ToPluginStorePageCommand}"
+                        Icon="{icx:SymbolIcon Symbol=WindowApps}"
+                        Label="{i18N:Locale Key=PluginStore}" />
                 </CommandBar>
             </Grid>
 

@@ -255,7 +255,7 @@
   <data name="Version" xml:space="preserve">
     <value>版本号</value>
   </data>
-  <data name="RuntimeSDK" xml:space="preserve">
+  <data name="RuntimeSdk" xml:space="preserve">
     <value>运行内核(SDK)</value>
   </data>
   <data name="PluginDependencies" xml:space="preserve">

@@ -218,7 +218,9 @@
                                     Grid.Row="0"
                                     HorizontalAlignment="Stretch"
                                     ItemsSource="{x:Bind Versions, Mode=OneWay}"
-                                    SelectedItem="{x:Bind Version, Mode=TwoWay}" />
+                                    SelectedItem="{x:Bind Version, Mode=TwoWay}"
+                                    SelectionChanged="VersionChanged"
+                                    Tag="{x:Bind Id, Mode=OneWay}" />
                                 <Button
                                     Grid.Column="1"
                                     Height="32"
@@ -274,7 +276,7 @@
                                                                 <TextBlock>
                                                                     <Run Text="{i18N:Locale Key=NeedVersion}" />
                                                                     <Run Text=": " />
-                                                                    <Run Text="{x:Bind SdkVersion}" />
+                                                                    <Run Text="{x:Bind SdkVersion, Mode=OneWay}" />
                                                                     <LineBreak />
                                                                     <Run Text="{i18N:Locale Key=CurrentVersion}" />
                                                                     <Run Text=": " />
@@ -337,7 +339,7 @@
                                                                             <TextBlock>
                                                                                 <Run Text="{i18N:Locale Key=NeedVersion}" />
                                                                                 <Run Text=": " />
-                                                                                <Run Text="{x:Bind Need}" />
+                                                                                <Run Text="{x:Bind Need, Mode=OneWay}" />
                                                                                 <LineBreak />
                                                                                 <Run Text="{i18N:Locale Key=CurrentVersion}" />
                                                                                 <Run Text=": " />
@@ -347,7 +349,7 @@
                                                                         <Run
                                                                             FontSize="13"
                                                                             Foreground="Gray"
-                                                                            Text="{x:Bind Need}" />
+                                                                            Text="{x:Bind Need, Mode=OneWay}" />
                                                                         <Run
                                                                             FontSize="16"
                                                                             Foreground="{x:Bind GetDependencyColorBrush(Status), Mode=OneWay}"

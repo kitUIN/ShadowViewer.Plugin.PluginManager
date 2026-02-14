@@ -1,13 +1,14 @@
 using DryIoc;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Serilog;
 using ShadowPluginLoader.WinUI;
+using ShadowViewer.Plugin.PluginManager.Helpers;
 using ShadowViewer.Plugin.PluginManager.ViewModels;
-using System;
-using Microsoft.IdentityModel.Tokens;
 using ShadowViewer.Sdk.Services;
+using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -71,5 +72,14 @@ public sealed partial class PluginStorePage
         StoreUriTeachingTip.IsOpen = false;
         var navigateService = DiFactory.Services.Resolve<INavigateService>();
         navigateService.Navigate(new Uri("shadow://pluginmanager/settings"));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private async void VersionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not FrameworkElement { Tag: string id }) return;
+        await ViewModel.ChangeVersion(id);
     }
 }
