@@ -1,76 +1,75 @@
 <Page
+    mc:Ignorable="d"
     x:Class="ShadowViewer.Plugin.PluginManager.Pages.PluginManagerSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ShadowViewer.Plugin.PluginManager.Pages"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:i18N="using:ShadowViewer.Plugin.PluginManager.I18n"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:controls1="using:ShadowViewer.Controls"
-    xmlns:winUi="using:FluentIcons.WinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i18N="using:ShadowViewer.Plugin.PluginManager.I18n"
     xmlns:icx="using:FluentIcons.WinUI.Markup"
+    xmlns:local="using:ShadowViewer.Plugin.PluginManager.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pluginManager="using:ShadowViewer.Plugin.PluginManager"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
-          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-          BorderThickness="1"
-          CornerRadius="{ThemeResource NavigationViewContentGridCornerRadius}">
+    xmlns:winUi="using:FluentIcons.WinUI"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Style="{ThemeResource ShadowRootGridStyle}">
 
-        <Grid
-            RowSpacing="10">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock
+                FontSize="{ThemeResource ShadowRootTextFontSize}"
                 Grid.Row="0"
-                Margin="20,10,0,0"
-                FontSize="25"
+                Margin="{ThemeResource ShadowSettingRootTextMargin}"
                 Text="{i18N:Locale Key=PluginManagerSettings}" />
-            <ScrollViewer Grid.Row="1" Padding="20,0">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
                 <StackPanel HorizontalAlignment="Stretch" Spacing="{StaticResource SettingsCardSpacing}">
                     <StackPanel.ChildrenTransitions>
                         <EntranceThemeTransition FromVerticalOffset="50" />
                         <RepositionThemeTransition IsStaggeringEnabled="False" />
                     </StackPanel.ChildrenTransitions>
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                               Text="{i18N:Locale Key=GeneralSetting}" />
-                    <controls:SettingsCard HeaderIcon="{icx:SymbolIcon Symbol=BuildingBank}"
-                                           Header="{i18N:Locale Key=PluginSecurityStatement}">
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="{i18N:Locale Key=GeneralSetting}" />
+                    <controls:SettingsCard Header="{i18N:Locale Key=PluginSecurityStatement}" HeaderIcon="{icx:SymbolIcon Symbol=BuildingBank}">
                         <controls:SettingsCard.Description>
                             <TextBlock>
-                                <Run Text="{i18N:Locale Key=PluginSecurityStatementVersion}"></Run>
-                                <Run Text=": "></Run>
-                                <Run Text="{x:Bind ViewModel.PluginManagerConfig.PluginSecurityStatementVersion,Mode=OneWay}"></Run>
+                                <Run Text="{i18N:Locale Key=PluginSecurityStatementVersion}" />
+                                <Run Text=": " />
+                                <Run Text="{x:Bind ViewModel.PluginManagerConfig.PluginSecurityStatementVersion, Mode=OneWay}" />
                             </TextBlock>
                         </controls:SettingsCard.Description>
-                        <StackPanel Spacing="4" Orientation="Horizontal">
-                            <winUi:FluentIcon VerticalAlignment="Center"
-                                              Foreground="{x:Bind ViewModel.PluginSecurityStatementColor,Mode=OneWay}"
-                                              Icon="{x:Bind ViewModel.PluginSecurityStatementIcon,Mode=OneWay}"
-                                              IconVariant="Filled" />
-                            <TextBlock VerticalAlignment="Center"
-                                       Text="{x:Bind ViewModel.PluginSecurityStatementText,Mode=OneWay}"
-                                       Foreground="{x:Bind ViewModel.PluginSecurityStatementColor,Mode=OneWay}"
-                                       FontWeight="Bold" />
-                            <Button Margin="10,0,0,0" VerticalAlignment="Center" Click="SecurityContentDialog_OnClick"
-                                    Visibility="{x:Bind ViewModel.PluginSecurityStatementVisible,Mode=OneWay}"
-                                    Content="{i18N:Locale Key=ReadPluginSecurityStatement}" />
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <winUi:FluentIcon
+                                Foreground="{x:Bind ViewModel.PluginSecurityStatementColor, Mode=OneWay}"
+                                Icon="{x:Bind ViewModel.PluginSecurityStatementIcon, Mode=OneWay}"
+                                IconVariant="Filled"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                FontWeight="Bold"
+                                Foreground="{x:Bind ViewModel.PluginSecurityStatementColor, Mode=OneWay}"
+                                Text="{x:Bind ViewModel.PluginSecurityStatementText, Mode=OneWay}"
+                                VerticalAlignment="Center" />
+                            <Button
+                                Click="SecurityContentDialog_OnClick"
+                                Content="{i18N:Locale Key=ReadPluginSecurityStatement}"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Visibility="{x:Bind ViewModel.PluginSecurityStatementVisible, Mode=OneWay}" />
                         </StackPanel>
                     </controls:SettingsCard>
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                               Text="{i18N:Locale Key=StoreSetting}" />
-                    <controls:SettingsExpander IsExpanded="True"
-                                               Header="{i18N:Locale Key=StorePing}"
-                                               Description="{i18N:Locale Key=StorePingDescription}"
-                                               HeaderIcon="{icx:SymbolIcon Symbol=WindowApps}">
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="{i18N:Locale Key=StoreSetting}" />
+                    <controls:SettingsExpander
+                        Description="{i18N:Locale Key=StorePingDescription}"
+                        Header="{i18N:Locale Key=StorePing}"
+                        HeaderIcon="{icx:SymbolIcon Symbol=WindowApps}"
+                        IsExpanded="True">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard HeaderIcon="{icx:SymbolIcon Symbol=GlobeSearch}"
-                                                   Description="{i18N:Locale Key=StoreUriDescription}"
-                                                   Header="{i18N:Locale Key=StoreUri}">
-                                <TextBox   Text="{x:Bind ViewModel.PluginManagerConfig.StoreUri, Mode=TwoWay}"  ></TextBox>
+                            <controls:SettingsCard
+                                Description="{i18N:Locale Key=StoreUriDescription}"
+                                Header="{i18N:Locale Key=StoreUri}"
+                                HeaderIcon="{icx:SymbolIcon Symbol=GlobeSearch}">
+                                <TextBox Text="{x:Bind ViewModel.PluginManagerConfig.StoreUri, Mode=TwoWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
 
@@ -81,13 +80,13 @@
 
         </Grid>
         <ContentDialog
-            x:Name="SecurityContentDialog"
-            Title="{i18N:Locale Key=PluginSecurityStatement}"
             CloseButtonText="{i18N:Locale Key=Cancel}"
             DefaultButton="Primary"
             IsPrimaryButtonEnabled="{x:Bind ViewModel.PluginSecurityCheck, Mode=OneWay}"
             PrimaryButtonCommand="{x:Bind ViewModel.SecurityConfirmCommand}"
-            PrimaryButtonText="{i18N:Locale Key=PluginSecurityConfirm}">
+            PrimaryButtonText="{i18N:Locale Key=PluginSecurityConfirm}"
+            Title="{i18N:Locale Key=PluginSecurityStatement}"
+            x:Name="SecurityContentDialog">
             <StackPanel Spacing="10">
                 <TextBlock TextWrapping="Wrap">
                     <Run Text="{i18N:Locale Key=PluginSecurity_Start}" />
@@ -117,8 +116,7 @@
                     <LineBreak /><Run Text="{i18N:Locale Key=PluginSecurity_Responsibility_Content}" />
                 </TextBlock>
 
-                <CheckBox Content="{i18N:Locale Key=PluginSecurityCheck}"
-                          IsChecked="{x:Bind ViewModel.PluginSecurityCheck, Mode=TwoWay}" />
+                <CheckBox Content="{i18N:Locale Key=PluginSecurityCheck}" IsChecked="{x:Bind ViewModel.PluginSecurityCheck, Mode=TwoWay}" />
             </StackPanel>
         </ContentDialog>
     </Grid>
