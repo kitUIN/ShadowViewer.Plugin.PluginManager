@@ -39,7 +39,7 @@
 		<ProjectReference Include="..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" Condition="Exists('..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj')" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Release' Or '$(DepsUseNuget)' == 'true'">
-		<PackageReference Include="ShadowViewer.Sdk" Version="3.1.7" />
+		<PackageReference Include="ShadowViewer.Sdk" Version="3.3.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local.csproj" />
