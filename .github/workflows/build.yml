@@ -37,6 +37,12 @@ jobs:
           repository: kitUIN/ShadowViewer.Sdk
           path: ShadowViewer.Sdk
 
+      - name: Checkout local reader repo
+        uses: actions/checkout@v4
+        with:
+          repository: kitUIN/ShadowViewer.Plugin.Local
+          path: ShadowViewer.Plugin.Local
+
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:

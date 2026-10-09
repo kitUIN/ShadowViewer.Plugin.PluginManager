@@ -1,5 +1,4 @@
 using DryIoc;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -41,7 +40,7 @@ public sealed partial class PluginStorePage
     {
         if (e.Parameter is Uri uri) _ = ViewModel.NavigateTo(uri);
         
-        if (ViewModel.PluginManagerConfig.StoreUri.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(ViewModel.PluginManagerConfig.StoreUri))
         {
             StoreUriTeachingTip.IsOpen = true;
             return;

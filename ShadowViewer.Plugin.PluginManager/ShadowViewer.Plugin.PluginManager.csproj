@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -13,7 +13,7 @@
 		<PackageId>ShadowViewer.Plugin.PluginManager</PackageId>
 		<PluginName>插件可视化管理器</PluginName>
 		<!--插件版本号(nuget包版本号)-->
-		<Version>1.6.1</Version>
+		<Version>2.0.0</Version>
 		<!--插件仓库地址(nuget包仓库地址)-->
 		<PackageProjectUrl>https://github.com/kitUIN/ShadowViewer.Plugin.PluginManager</PackageProjectUrl>
 		<!--插件介绍(nuget包介绍)-->
@@ -37,12 +37,12 @@
 	<ItemGroup Condition="'$(Configuration)' == 'Debug' Or '$(DepsUseNuget)' != 'true'">
 		<ProjectReference Include="..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" Condition="Exists('..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj')" />
 		<ProjectReference Include="..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj" Condition="Exists('..\..\ShadowViewer.Sdk\ShadowViewer.Sdk\ShadowViewer.Sdk.csproj')" />
+		<ProjectReference Include="..\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local.csproj" Condition="Exists('..\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local.csproj')" />
+		<ProjectReference Include="..\..\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local.csproj" Condition="Exists('..\..\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local.csproj')" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' == 'Release' Or '$(DepsUseNuget)' == 'true'">
-		<PackageReference Include="ShadowViewer.Sdk" Version="3.3.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\..\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local\ShadowViewer.Plugin.Local.csproj" />
+	<ItemGroup Condition="'$(Configuration)' == 'Release' And '$(DepsUseNuget)' == 'true'">
+		<PackageReference Include="ShadowViewer.Sdk" Version="4.0.0" />
+		<PackageReference Include="ShadowViewer.Plugin.Local" Version="2.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Requests\" />

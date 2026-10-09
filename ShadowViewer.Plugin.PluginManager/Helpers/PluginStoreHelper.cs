@@ -1,5 +1,3 @@
-using Azure;
-using Microsoft.IdentityModel.Tokens;
 using ShadowPluginLoader.WinUI.Helpers;
 using ShadowViewer.Plugin.PluginManager.Configs;
 using ShadowViewer.Plugin.PluginManager.Models;
@@ -49,7 +47,7 @@ public class PluginStoreHelper : BaseHttpHelper
             { "limit", limit.ToString() }
         });
         if (response == null || response.Items.Count == 0) return null;
-        foreach (var model in response.Items.Where(_ => !githubProxyUrl.IsNullOrEmpty()))
+        foreach (var model in response.Items.Where(_ => !string.IsNullOrEmpty(githubProxyUrl)))
         {
             CheckModel(model, githubProxyUrl!);
         }

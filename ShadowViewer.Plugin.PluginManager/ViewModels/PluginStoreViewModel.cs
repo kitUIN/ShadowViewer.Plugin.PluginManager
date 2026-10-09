@@ -10,7 +10,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ShadowViewer.Plugin.PluginManager.ViewModels;
 
@@ -59,7 +58,7 @@ public partial class PluginStoreViewModel : ObservableObject
     /// </summary>
     public async Task Refresh()
     {
-        if (PluginManagerConfig.StoreUri.IsNullOrEmpty()) return;
+        if (string.IsNullOrEmpty(PluginManagerConfig.StoreUri)) return;
         Models.Clear();
         var response = await PluginStoreHelper.Instance.GetPluginList(PluginManagerConfig.StoreUri, Page,
             githubProxyUrl: PluginManagerConfig.GithubProxyUrl);
